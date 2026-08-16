@@ -1,0 +1,110 @@
+{
+  "elements": [
+    {
+      "itemId": "LU5gZ",
+      "id": "Bob8HYsxEeuqDwqw9ez0Fw~LU5gZ",
+      "courseId": "Bob8HYsxEeuqDwqw9ez0Fw"
+    }
+  ],
+  "paging": {},
+  "linked": {
+    "onDemandVideos.v1": [
+      {
+        "subtitles": {
+          "de": "/api/subtitleAssetProxy.v1/1G6SC0HgTXyukgtB4B18zw?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "hi": "/api/subtitleAssetProxy.v1/vmc3NFf5TvenNzRX-c73yg?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "ps": "/api/subtitleAssetProxy.v1/bQ8kzMGGTmePJMzBhg5nxQ?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "ru": "/api/subtitleAssetProxy.v1/pLDDbfMeTyqww23zHs8qzg?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "fr": "/api/subtitleAssetProxy.v1/UbQbe-_9QvO0G3vv_XLzcg?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "bn": "/api/subtitleAssetProxy.v1/kg5Rz44VQ2mOUc-OFQNp2A?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "zh-CN": "/api/subtitleAssetProxy.v1/7_48Eg11Qxu-PBINdWMb9Q?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "hu": "/api/subtitleAssetProxy.v1/1N92dyr1Rjefdncq9dY3VA?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "ka": "/api/subtitleAssetProxy.v1/KVpGG9fmRv2aRhvX5gb9cQ?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "uk": "/api/subtitleAssetProxy.v1/Qq0D1u1WRjutA9btVmY7iw?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "id": "/api/subtitleAssetProxy.v1/yfHqXRguQmyx6l0YLgJsIg?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "ur": "/api/subtitleAssetProxy.v1/UgHMyO5WQOCBzMjuVnDg3A?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "kk": "/api/subtitleAssetProxy.v1/0U2GQjZZQ9ONhkI2WTPTOg?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "sv": "/api/subtitleAssetProxy.v1/rG6lvwiXQnGupb8IlyJxNA?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "ko": "/api/subtitleAssetProxy.v1/7OJjb9RmRMeiY2_UZpTHJQ?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "uz": "/api/subtitleAssetProxy.v1/dNQj4qwOTeGUI-KsDm3huw?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "pt-BR": "/api/subtitleAssetProxy.v1/0u5t4umoTfCubeLpqI3wCQ?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "el": "/api/subtitleAssetProxy.v1/gsmN8NUaTOSJjfDVGtzkhg?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "en": "/api/subtitleAssetProxy.v1/Do5tLkgfS9mObS5IH2vZEA?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "it": "/api/subtitleAssetProxy.v1/esCZPbLmQDmAmT2y5vA5gg?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "es": "/api/subtitleAssetProxy.v1/LaHLsgUvQeqhy7IFL7Hqrg?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "ar": "/api/subtitleAssetProxy.v1/0Q1eYnQGR9mNXmJ0BqfZVQ?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "vi": "/api/subtitleAssetProxy.v1/FVYCbIz3T_mWAmyM91_5wg?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "th": "/api/subtitleAssetProxy.v1/05OtkOUER2STrZDlBNdkmQ?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "ja": "/api/subtitleAssetProxy.v1/1F-wpWfFTMKfsKVnxdzCZw?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "az": "/api/subtitleAssetProxy.v1/lRcel_PlSa2XHpfz5fmtxA?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "pl": "/api/subtitleAssetProxy.v1/LSvc3QwwSAqr3N0MMMgKuw?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "fa-AF": "/api/subtitleAssetProxy.v1/Y7H1W5k7S7Kx9VuZO0uyow?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "nl": "/api/subtitleAssetProxy.v1/zGT0mCbxQNqk9Jgm8fDagA?expiry=REDACTED&hmac=REDACTED&fileExtension=srt",
+          "tr": "/api/subtitleAssetProxy.v1/K4f-enZFRimH_np2RZYpDw?expiry=REDACTED&hmac=REDACTED&fileExtension=srt"
+        },
+        "sources": {
+          "playlists": {
+            "mpeg-dash": "https://d3c33hcgiwev3.cloudfront.net/assetMpegDashPlaylists.v1/A14NHnYATsKeDR52AP7CWg?expiry=REDACTED&hmac=REDACTED&mediaCdn=cloudfront",
+            "hls": "https://d3c33hcgiwev3.cloudfront.net/assetMasterHlsPlaylists.v1/A14NHnYATsKeDR52AP7CWg?expiry=REDACTED&hmac=REDACTED&mediaCdn=cloudfront"
+          },
+          "audio": [],
+          "byResolution": {
+            "720p": {
+              "webMVideoUrl": "https://d3c33hcgiwev3.cloudfront.net/A14NHnYATsKeDR52AP7CWg.processed/full/720p/index.webm?Expires=REDACTED&Signature=REDACTED&Key-Pair-Id=REDACTED",
+              "mp4VideoUrl": "https://d3c33hcgiwev3.cloudfront.net/A14NHnYATsKeDR52AP7CWg.processed/full/720p/index.mp4?Expires=REDACTED&Signature=REDACTED&Key-Pair-Id=REDACTED",
+              "previewImageUrl": "https://d3c33hcgiwev3.cloudfront.net/imageAssetProxy.v1/A14NHnYATsKeDR52AP7CWg.processed/thumbnails/720p/0.jpg?expiry=REDACTED&hmac=REDACTED"
+            },
+            "360p": {
+              "webMVideoUrl": "https://d3c33hcgiwev3.cloudfront.net/A14NHnYATsKeDR52AP7CWg.processed/full/360p/index.webm?Expires=REDACTED&Signature=REDACTED&Key-Pair-Id=REDACTED",
+              "mp4VideoUrl": "https://d3c33hcgiwev3.cloudfront.net/A14NHnYATsKeDR52AP7CWg.processed/full/360p/index.mp4?Expires=REDACTED&Signature=REDACTED&Key-Pair-Id=REDACTED",
+              "previewImageUrl": "https://d3c33hcgiwev3.cloudfront.net/imageAssetProxy.v1/A14NHnYATsKeDR52AP7CWg.processed/thumbnails/360p/0.jpg?expiry=REDACTED&hmac=REDACTED"
+            },
+            "240p": {
+              "webMVideoUrl": "https://d3c33hcgiwev3.cloudfront.net/A14NHnYATsKeDR52AP7CWg.processed/full/240p/index.webm?Expires=REDACTED&Signature=REDACTED&Key-Pair-Id=REDACTED",
+              "mp4VideoUrl": "https://d3c33hcgiwev3.cloudfront.net/A14NHnYATsKeDR52AP7CWg.processed/full/240p/index.mp4?Expires=REDACTED&Signature=REDACTED&Key-Pair-Id=REDACTED",
+              "previewImageUrl": "https://d3c33hcgiwev3.cloudfront.net/imageAssetProxy.v1/A14NHnYATsKeDR52AP7CWg.processed/thumbnails/240p/0.jpg?expiry=REDACTED&hmac=REDACTED"
+            },
+            "540p": {
+              "webMVideoUrl": "https://d3c33hcgiwev3.cloudfront.net/A14NHnYATsKeDR52AP7CWg.processed/full/540p/index.webm?Expires=REDACTED&Signature=REDACTED&Key-Pair-Id=REDACTED",
+              "mp4VideoUrl": "https://d3c33hcgiwev3.cloudfront.net/A14NHnYATsKeDR52AP7CWg.processed/full/540p/index.mp4?Expires=REDACTED&Signature=REDACTED&Key-Pair-Id=REDACTED",
+              "previewImageUrl": "https://d3c33hcgiwev3.cloudfront.net/imageAssetProxy.v1/A14NHnYATsKeDR52AP7CWg.processed/thumbnails/540p/0.jpg?expiry=REDACTED&hmac=REDACTED"
+            }
+          }
+        },
+        "subtitlesVtt": {
+          "de": "/api/subtitleAssetProxy.v1/1G6SC0HgTXyukgtB4B18zw?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "hi": "/api/subtitleAssetProxy.v1/vmc3NFf5TvenNzRX-c73yg?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "ps": "/api/subtitleAssetProxy.v1/bQ8kzMGGTmePJMzBhg5nxQ?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "ru": "/api/subtitleAssetProxy.v1/pLDDbfMeTyqww23zHs8qzg?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "fr": "/api/subtitleAssetProxy.v1/UbQbe-_9QvO0G3vv_XLzcg?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "bn": "/api/subtitleAssetProxy.v1/kg5Rz44VQ2mOUc-OFQNp2A?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "zh-CN": "/api/subtitleAssetProxy.v1/7_48Eg11Qxu-PBINdWMb9Q?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "hu": "/api/subtitleAssetProxy.v1/1N92dyr1Rjefdncq9dY3VA?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "ka": "/api/subtitleAssetProxy.v1/KVpGG9fmRv2aRhvX5gb9cQ?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "uk": "/api/subtitleAssetProxy.v1/Qq0D1u1WRjutA9btVmY7iw?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "id": "/api/subtitleAssetProxy.v1/yfHqXRguQmyx6l0YLgJsIg?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "ur": "/api/subtitleAssetProxy.v1/UgHMyO5WQOCBzMjuVnDg3A?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "kk": "/api/subtitleAssetProxy.v1/0U2GQjZZQ9ONhkI2WTPTOg?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "sv": "/api/subtitleAssetProxy.v1/rG6lvwiXQnGupb8IlyJxNA?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "ko": "/api/subtitleAssetProxy.v1/7OJjb9RmRMeiY2_UZpTHJQ?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "uz": "/api/subtitleAssetProxy.v1/dNQj4qwOTeGUI-KsDm3huw?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "pt-BR": "/api/subtitleAssetProxy.v1/0u5t4umoTfCubeLpqI3wCQ?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "el": "/api/subtitleAssetProxy.v1/gsmN8NUaTOSJjfDVGtzkhg?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "en": "/api/subtitleAssetProxy.v1/Do5tLkgfS9mObS5IH2vZEA?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "it": "/api/subtitleAssetProxy.v1/esCZPbLmQDmAmT2y5vA5gg?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "es": "/api/subtitleAssetProxy.v1/LaHLsgUvQeqhy7IFL7Hqrg?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "ar": "/api/subtitleAssetProxy.v1/0Q1eYnQGR9mNXmJ0BqfZVQ?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "vi": "/api/subtitleAssetProxy.v1/FVYCbIz3T_mWAmyM91_5wg?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "th": "/api/subtitleAssetProxy.v1/05OtkOUER2STrZDlBNdkmQ?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "ja": "/api/subtitleAssetProxy.v1/1F-wpWfFTMKfsKVnxdzCZw?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "az": "/api/subtitleAssetProxy.v1/lRcel_PlSa2XHpfz5fmtxA?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "pl": "/api/subtitleAssetProxy.v1/LSvc3QwwSAqr3N0MMMgKuw?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "fa-AF": "/api/subtitleAssetProxy.v1/Y7H1W5k7S7Kx9VuZO0uyow?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "nl": "/api/subtitleAssetProxy.v1/zGT0mCbxQNqk9Jgm8fDagA?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt",
+          "tr": "/api/subtitleAssetProxy.v1/K4f-enZFRimH_np2RZYpDw?expiry=REDACTED&hmac=REDACTED&fileExtension=vtt"
+        },
+        "id": "lW5Omv92EeuYLRIMzXGxjQ"
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+node_modules/
+*.log
+.env
+# Descargas locales: contenido con copyright de Coursera, nunca al repo
+downloads/
+out/

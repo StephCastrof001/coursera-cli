@@ -1,0 +1,72 @@
+{
+  "elements": [
+    {
+      "role": "LEARNER",
+      "id": "64494534~yFgPijrAEe6U4g7a-RyA1w",
+      "userId": 64494534,
+      "courseId": "yFgPijrAEe6U4g7a-RyA1w"
+    },
+    {
+      "role": "LEARNER",
+      "id": "64494534~daG-a-O1EeijKBISCWxf6g",
+      "userId": 64494534,
+      "courseId": "daG-a-O1EeijKBISCWxf6g"
+    },
+    {
+      "role": "LEARNER",
+      "id": "64494534~EdKScTVwEeWW9BKhJ4xW0Q",
+      "userId": 64494534,
+      "courseId": "EdKScTVwEeWW9BKhJ4xW0Q"
+    },
+    {
+      "role": "LEARNER",
+      "id": "64494534~6lQZLjVvEeWfzhKP8GtZlQ",
+      "userId": 64494534,
+      "courseId": "6lQZLjVvEeWfzhKP8GtZlQ"
+    },
+    {
+      "role": "LEARNER",
+      "id": "64494534~NpTR4zVwEeWfzhKP8GtZlQ",
+      "userId": 64494534,
+      "courseId": "NpTR4zVwEeWfzhKP8GtZlQ"
+    }
+  ],
+  "paging": {
+    "next": "5",
+    "total": 215
+  },
+  "linked": {
+    "courses.v1": [
+      {
+        "courseType": "v2.ondemand",
+        "id": "yFgPijrAEe6U4g7a-RyA1w",
+        "slug": "product-management-an-introduction",
+        "name": "Product Management: An Introduction"
+      },
+      {
+        "courseType": "v2.ondemand",
+        "id": "daG-a-O1EeijKBISCWxf6g",
+        "slug": "ai-for-everyone",
+        "name": "AI For Everyone"
+      },
+      {
+        "courseType": "v2.ondemand",
+        "id": "EdKScTVwEeWW9BKhJ4xW0Q",
+        "slug": "client-needs-and-software-requirements",
+        "name": "Client Needs and Software Requirements "
+      },
+      {
+        "courseType": "v2.ondemand",
+        "id": "6lQZLjVvEeWfzhKP8GtZlQ",
+        "slug": "software-processes-and-agile-practices",
+        "name": "Software Processes and Agile Practices"
+      },
+      {
+        "courseType": "v2.ondemand",
+        "id": "NpTR4zVwEeWfzhKP8GtZlQ",
+        "slug": "agile-planning-for-software-products",
+        "name": "Agile Planning for Software Products"
+      }
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "elements": [
+    {
+      "itemId": "O1gOL",
+      "id": "Bob8HYsxEeuqDwqw9ez0Fw~O1gOL",
+      "courseId": "Bob8HYsxEeuqDwqw9ez0Fw"
+    }
+  ],
+  "paging": {},
+  "linked": {
+    "openCourseAssets.v1": [
+      {
+        "itemId": "O1gOL",
+        "typeName": "cml",
+        "definition": {
+          "dtdId": "supplement/1",
+          "renderableHtmlWithMetadata": {
+            "metadata": {
+              "hasMath": false,
+              "isPlainText": false,
+              "hasAssetBlock": false,
+              "hasCodeBlock": false
+            },
+            "renderableHtml": "<div class=\"cmlToHtml-content-container\" style=\"white-space: pre-wrap\"><h2>Course overview</h2><p>In this first course of the AI Product Management Specialization you will build a foundational understanding of what machine learning is, how it works and when and why it is applied.  To successfully manage an AI team or product and work collaboratively with data scientists, software engineers and customers you need to understand the basics of machine learning technology.  This course provides a no-coding introduction to machine learning, with focus on the process of developing models, ML model evaluation and interpretation, and the intuition behind common ML and deep learning algorithms. </p><h2>Who is this course intended for?</h2><p>Anyone and everyone who wants to learn about how machine learning &amp; AI works and can be applied to solve problems in your domain.  Product managers, engineering team managers, executives, technical sales people, and others will benefit from the knowledge and skills built in this course.  The course introduces the ML modeling process, how to build and evaluate models, and the primary ML algorithms at a conceptual level without delving into any programming.  </p><h2>Course learning objectives</h2><p>At the conclusion of this course, you should be able to:</p><ul><li><p>Explain how machine learning works and the types of machine learning</p></li><li><p> Describe the challenges of modeling and strategies to overcome them'</p></li><li><p>Identify the primary algorithms used for common ML tasks and their use cases</p></li><li><p>Explain deep learning and its strengths and challenges relative to other forms of machine learning</p></li><li><p>Implement best practices in evaluating and interpreting ML models</p></li></ul><h2>Pre-requisites</h2><ul><li><p>Basic understanding of algebra and calculus</p></li><li><p>No prior knowledge of machine learning / AI</p></li><li><p>N​o prior programming experience required</p></li></ul><p></p></div>"
+          },
+          "value": "<co-content><heading level=\"2\">Course overview</heading><text>In this first course of the AI Product Management Specialization you will build a foundational understanding of what machine learning is, how it works and when and why it is applied.  To successfully manage an AI team or product and work collaboratively with data scientists, software engineers and customers you need to understand the basics of machine learning technology.  This course provides a no-coding introduction to machine learning, with focus on the process of developing models, ML model evaluation and interpretation, and the intuition behind common ML and deep learning algorithms. </text><heading level=\"2\">Who is this course intended for?</heading><text>Anyone and everyone who wants to learn about how machine learning &amp; AI works and can be applied to solve problems in your domain.  Product managers, engineering team managers, executives, technical sales people, and others will benefit from the knowledge and skills built in this course.  The course introduces the ML modeling process, how to build and evaluate models, and the primary ML algorithms at a conceptual level without delving into any programming.  </text><heading level=\"2\">Course learning objectives</heading><text>At the conclusion of this course, you should be able to:</text><list bulletType=\"bullets\"><li><text>Explain how machine learning works and the types of machine learning</text></li><li><text> Describe the challenges of modeling and strategies to overcome them'</text></li><li><text>Identify the primary algorithms used for common ML tasks and their use cases</text></li><li><text>Explain deep learning and its strengths and challenges relative to other forms of machine learning</text></li><li><text>Implement best practices in evaluating and interpreting ML models</text></li></list><heading level=\"2\">Pre-requisites</heading><list bulletType=\"bullets\"><li><text>Basic understanding of algebra and calculus</text></li><li><text>No prior knowledge of machine learning / AI</text></li><li><text>N​o prior programming experience required</text></li></list><text></text></co-content>"
+        },
+        "id": "Bob8HYsxEeuqDwqw9ez0Fw~O1gOL",
+        "courseId": "Bob8HYsxEeuqDwqw9ez0Fw"
+      }
+    ]
+  }
+}

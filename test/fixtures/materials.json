@@ -1,0 +1,1403 @@
+{
+  "elements": [
+    {
+      "moduleIds": [
+        "eEphX",
+        "awp1I",
+        "DalLb",
+        "5hMHy",
+        "4YA27",
+        "5FAbo"
+      ],
+      "id": "Bob8HYsxEeuqDwqw9ez0Fw"
+    }
+  ],
+  "paging": {},
+  "linked": {
+    "onDemandCourseMaterialLessons.v1": [
+      {
+        "itemIds": [
+          "LU5gZ",
+          "jO7Pz",
+          "fEsQM",
+          "O1gOL",
+          "qDwBD",
+          "Ra7aq",
+          "yesgR"
+        ],
+        "name": "Course Overview",
+        "timeCommitment": 2409000,
+        "id": "b9SSI",
+        "moduleId": "eEphX",
+        "slug": "course-overview"
+      },
+      {
+        "itemIds": [
+          "8qRIs",
+          "9XRkO",
+          "azqhW",
+          "R4uc3",
+          "N3F1W",
+          "rmTcV"
+        ],
+        "name": "Introduction to Machine Learning",
+        "timeCommitment": 2098000,
+        "id": "7pI7F",
+        "moduleId": "eEphX",
+        "slug": "introduction-to-machine-learning"
+      },
+      {
+        "itemIds": [
+          "u6JJx",
+          "PpkTm"
+        ],
+        "name": "Review",
+        "timeCommitment": 1910000,
+        "id": "f4VsV",
+        "moduleId": "eEphX",
+        "slug": "review"
+      },
+      {
+        "itemIds": [
+          "Bcjna",
+          "Al7pu",
+          "TmXPp",
+          "P5YOB",
+          "IBPL7"
+        ],
+        "name": "Building a Model",
+        "timeCommitment": 3105000,
+        "id": "W0L49",
+        "moduleId": "awp1I",
+        "slug": "building-a-model"
+      },
+      {
+        "itemIds": [
+          "6l3ZI",
+          "zU4yg",
+          "Nz9UX"
+        ],
+        "name": "Model Selection",
+        "timeCommitment": 921000,
+        "id": "UWD0v",
+        "moduleId": "awp1I",
+        "slug": "model-selection"
+      },
+      {
+        "itemIds": [
+          "x2Kp3",
+          "Dk8oL"
+        ],
+        "name": "Review",
+        "timeCommitment": 1960000,
+        "id": "1Mdb9",
+        "moduleId": "awp1I",
+        "slug": "review"
+      },
+      {
+        "itemIds": [
+          "garx8",
+          "Z6kz3",
+          "peY2B",
+          "unKfL"
+        ],
+        "name": "Metrics in ML Projects",
+        "timeCommitment": 2200000,
+        "id": "mGvTr",
+        "moduleId": "DalLb",
+        "slug": "metrics-in-ml-projects"
+      },
+      {
+        "itemIds": [
+          "tyvIj",
+          "MUBnr",
+          "5od6m"
+        ],
+        "name": "Regression and Classification Metrics",
+        "timeCommitment": 1132000,
+        "id": "MPcdT",
+        "moduleId": "DalLb",
+        "slug": "regression-and-classification-metrics"
+      },
+      {
+        "itemIds": [
+          "ZvWzU",
+          "eHoKk",
+          "C4daQ",
+          "toC8x"
+        ],
+        "name": "Review",
+        "timeCommitment": 3482000,
+        "id": "tF3wU",
+        "moduleId": "DalLb",
+        "slug": "review"
+      },
+      {
+        "itemIds": [
+          "6bJDV",
+          "pO1Fj",
+          "RC90t",
+          "uqTSb"
+        ],
+        "name": "Linear Regression & Regularization",
+        "timeCommitment": 2900000,
+        "id": "ib8SS",
+        "moduleId": "5hMHy",
+        "slug": "linear-regression-regularization"
+      },
+      {
+        "itemIds": [
+          "mQXO2",
+          "zxKii"
+        ],
+        "name": "Logistic Regression",
+        "timeCommitment": 770000,
+        "id": "Glq4x",
+        "moduleId": "5hMHy",
+        "slug": "logistic-regression"
+      },
+      {
+        "itemIds": [
+          "ilgoi",
+          "ZrLvp"
+        ],
+        "name": "Review",
+        "timeCommitment": 1907000,
+        "id": "EmnUp",
+        "moduleId": "5hMHy",
+        "slug": "review"
+      },
+      {
+        "itemIds": [
+          "vkIBO",
+          "vme4j",
+          "x6Fgp",
+          "3LuhE",
+          "Dp19y"
+        ],
+        "name": "Tree and Ensemble Models",
+        "timeCommitment": 3299000,
+        "id": "2CXdq",
+        "moduleId": "4YA27",
+        "slug": "tree-and-ensemble-models"
+      },
+      {
+        "itemIds": [
+          "YrZDd",
+          "pNTVI"
+        ],
+        "name": "Clustering",
+        "timeCommitment": 685000,
+        "id": "c3JM3",
+        "moduleId": "4YA27",
+        "slug": "clustering"
+      },
+      {
+        "itemIds": [
+          "XindS",
+          "ioKhs"
+        ],
+        "name": "Review",
+        "timeCommitment": 2078000,
+        "id": "l22bl",
+        "moduleId": "4YA27",
+        "slug": "review"
+      },
+      {
+        "itemIds": [
+          "X1kaO",
+          "SNoGW",
+          "gHs5X",
+          "UKggk",
+          "h5G52",
+          "pEVHF"
+        ],
+        "name": "Neural Networks",
+        "timeCommitment": 4002000,
+        "id": "Z9sB5",
+        "moduleId": "5FAbo",
+        "slug": "neural-networks"
+      },
+      {
+        "itemIds": [
+          "tiPGM",
+          "Ygy6M"
+        ],
+        "name": "Applications of Deep Learning",
+        "timeCommitment": 1634000,
+        "id": "dPkCW",
+        "moduleId": "5FAbo",
+        "slug": "applications-of-deep-learning"
+      },
+      {
+        "itemIds": [
+          "NSGI9",
+          "FJhpe"
+        ],
+        "name": "Review",
+        "timeCommitment": 2208000,
+        "id": "ukWCf",
+        "moduleId": "5FAbo",
+        "slug": "review"
+      },
+      {
+        "itemIds": [
+          "1pO76",
+          "coY7B",
+          "dR8L3",
+          "U0ryB",
+          "5Zv2w",
+          "hZCqn"
+        ],
+        "name": "Course Wrap Up",
+        "timeCommitment": 18457000,
+        "id": "T7524",
+        "moduleId": "5FAbo",
+        "slug": "course-wrap-up"
+      }
+    ],
+    "onDemandCourseMaterialItems.v2": [
+      {
+        "name": "Specialization Overview",
+        "lessonId": "b9SSI",
+        "timeCommitment": 248000,
+        "id": "LU5gZ",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 248000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "specialization-overview"
+      },
+      {
+        "name": "Instructor Introduction",
+        "lessonId": "b9SSI",
+        "timeCommitment": 69000,
+        "id": "jO7Pz",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 69000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "instructor-introduction"
+      },
+      {
+        "name": "Course Overiew",
+        "lessonId": "b9SSI",
+        "timeCommitment": 292000,
+        "id": "fEsQM",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 292000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "course-overiew"
+      },
+      {
+        "name": "About the Course",
+        "lessonId": "b9SSI",
+        "timeCommitment": 300000,
+        "id": "O1gOL",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "supplement",
+          "definition": {
+            "assetTypeName": "cml",
+            "containsWidget": false
+          }
+        },
+        "slug": "about-the-course"
+      },
+      {
+        "name": "Report a problem with the course ",
+        "lessonId": "b9SSI",
+        "timeCommitment": 300000,
+        "id": "qDwBD",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "supplement",
+          "definition": {
+            "assetTypeName": "cml",
+            "containsWidget": false
+          }
+        },
+        "slug": "report-a-problem-with-the-course"
+      },
+      {
+        "name": "Important Reminder",
+        "lessonId": "b9SSI",
+        "timeCommitment": 600000,
+        "id": "Ra7aq",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "supplement",
+          "definition": {
+            "assetTypeName": "cml",
+            "containsWidget": false
+          }
+        },
+        "slug": "important-reminder"
+      },
+      {
+        "name": "Module 1 Slides",
+        "lessonId": "b9SSI",
+        "timeCommitment": 600000,
+        "id": "yesgR",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "supplement",
+          "definition": {
+            "assetTypeName": "cml",
+            "containsWidget": false
+          }
+        },
+        "slug": "module-1-slides"
+      },
+      {
+        "name": "Module 1 Introduction & Objectives",
+        "lessonId": "7pI7F",
+        "timeCommitment": 65000,
+        "id": "8qRIs",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 65000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "module-1-introduction-objectives"
+      },
+      {
+        "name": "Introduction to Machine Learning",
+        "lessonId": "7pI7F",
+        "timeCommitment": 563000,
+        "id": "9XRkO",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 563000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "introduction-to-machine-learning"
+      },
+      {
+        "name": "Data Terminology",
+        "lessonId": "7pI7F",
+        "timeCommitment": 482000,
+        "id": "azqhW",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 482000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "data-terminology"
+      },
+      {
+        "name": "What is a Model?",
+        "lessonId": "7pI7F",
+        "timeCommitment": 284000,
+        "id": "R4uc3",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 284000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "what-is-a-model"
+      },
+      {
+        "name": "Types of Machine Learning",
+        "lessonId": "7pI7F",
+        "timeCommitment": 291000,
+        "id": "N3F1W",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 291000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "types-of-machine-learning"
+      },
+      {
+        "name": "What ML Can and Cannot Do",
+        "lessonId": "7pI7F",
+        "timeCommitment": 413000,
+        "id": "rmTcV",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 413000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "what-ml-can-and-cannot-do"
+      },
+      {
+        "name": "Module Wrap-up",
+        "lessonId": "f4VsV",
+        "timeCommitment": 110000,
+        "id": "u6JJx",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 110000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "module-wrap-up"
+      },
+      {
+        "name": "Module 1 Quiz",
+        "lessonId": "f4VsV",
+        "timeCommitment": 1800000,
+        "id": "PpkTm",
+        "moduleId": "eEphX",
+        "contentSummary": {
+          "typeName": "staffGraded",
+          "definition": {
+            "assignmentFeatures": [
+              "SHOW_GRADE_ON_RELEASE",
+              "TAKE_HIGHEST_GRADE",
+              "LIMITED_SUBMISSIONS"
+            ],
+            "standardProctorConfigurationId": "STANDARD~4oto5vU6Ee-hgBLzZvVnrQ!~4oto5_U6Ee-hgBLzZvVnrQ@1",
+            "isTeamSubmissionEnabled": false,
+            "requiredMobileFeatures": []
+          }
+        },
+        "slug": "module-1-quiz"
+      },
+      {
+        "name": "Introduction and Objectives",
+        "lessonId": "W0L49",
+        "timeCommitment": 50000,
+        "id": "Bcjna",
+        "moduleId": "awp1I",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 50000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "introduction-and-objectives"
+      },
+      {
+        "name": "Download Module Slides",
+        "lessonId": "W0L49",
+        "timeCommitment": 1800000,
+        "id": "Al7pu",
+        "moduleId": "awp1I",
+        "contentSummary": {
+          "typeName": "supplement",
+          "definition": {
+            "assetTypeName": "cml",
+            "containsWidget": false
+          }
+        },
+        "slug": "download-module-slides"
+      },
+      {
+        "name": "Building a Model",
+        "lessonId": "W0L49",
+        "timeCommitment": 410000,
+        "id": "TmXPp",
+        "moduleId": "awp1I",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 410000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "building-a-model"
+      },
+      {
+        "name": "Feature Selection",
+        "lessonId": "W0L49",
+        "timeCommitment": 423000,
+        "id": "P5YOB",
+        "moduleId": "awp1I",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 423000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "feature-selection"
+      },
+      {
+        "name": "Algorithm Selection",
+        "lessonId": "W0L49",
+        "timeCommitment": 422000,
+        "id": "IBPL7",
+        "moduleId": "awp1I",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 422000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "algorithm-selection"
+      },
+      {
+        "name": "Bias-Variance Tradeoff",
+        "lessonId": "UWD0v",
+        "timeCommitment": 346000,
+        "id": "6l3ZI",
+        "moduleId": "awp1I",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 346000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "bias-variance-tradeoff"
+      },
+      {
+        "name": "Test and Validation Sets",
+        "lessonId": "UWD0v",
+        "timeCommitment": 321000,
+        "id": "zU4yg",
+        "moduleId": "awp1I",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 321000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "test-and-validation-sets"
+      },
+      {
+        "name": "Cross Validation",
+        "lessonId": "UWD0v",
+        "timeCommitment": 254000,
+        "id": "Nz9UX",
+        "moduleId": "awp1I",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 254000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "cross-validation"
+      },
+      {
+        "name": "Module Wrap-up",
+        "lessonId": "1Mdb9",
+        "timeCommitment": 160000,
+        "id": "x2Kp3",
+        "moduleId": "awp1I",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 160000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "module-wrap-up"
+      },
+      {
+        "name": "Module 2 Quiz",
+        "lessonId": "1Mdb9",
+        "timeCommitment": 1800000,
+        "id": "Dk8oL",
+        "moduleId": "awp1I",
+        "contentSummary": {
+          "typeName": "staffGraded",
+          "definition": {
+            "assignmentFeatures": [
+              "TAKE_HIGHEST_GRADE",
+              "SHOW_GRADE_ON_RELEASE",
+              "LIMITED_SUBMISSIONS"
+            ],
+            "isTeamSubmissionEnabled": false,
+            "standardProctorConfigurationId": "STANDARD~YfQEF_U4Ee-o0Ar_4Zd7nQ!~YfQEGPU4Ee-o0Ar_4Zd7nQ@1",
+            "requiredMobileFeatures": []
+          }
+        },
+        "slug": "module-2-quiz"
+      },
+      {
+        "name": "Introduction and Objectives",
+        "lessonId": "mGvTr",
+        "timeCommitment": 46000,
+        "id": "garx8",
+        "moduleId": "DalLb",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 46000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "introduction-and-objectives"
+      },
+      {
+        "name": "Download Module Slides",
+        "lessonId": "mGvTr",
+        "timeCommitment": 1800000,
+        "id": "Z6kz3",
+        "moduleId": "DalLb",
+        "contentSummary": {
+          "typeName": "supplement",
+          "definition": {
+            "assetTypeName": "cml",
+            "containsWidget": false
+          }
+        },
+        "slug": "download-module-slides"
+      },
+      {
+        "name": "Outcomes vs Outputs",
+        "lessonId": "mGvTr",
+        "timeCommitment": 286000,
+        "id": "peY2B",
+        "moduleId": "DalLb",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 286000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "outcomes-vs-outputs"
+      },
+      {
+        "name": "Model Output Metrics",
+        "lessonId": "mGvTr",
+        "timeCommitment": 68000,
+        "id": "unKfL",
+        "moduleId": "DalLb",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 68000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "model-output-metrics"
+      },
+      {
+        "name": "Regression Error Metrics",
+        "lessonId": "MPcdT",
+        "timeCommitment": 473000,
+        "id": "tyvIj",
+        "moduleId": "DalLb",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 473000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "regression-error-metrics"
+      },
+      {
+        "name": "Classification Error Metrics: Confusion Matrix",
+        "lessonId": "MPcdT",
+        "timeCommitment": 348000,
+        "id": "MUBnr",
+        "moduleId": "DalLb",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 348000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "classification-error-metrics-confusion-matrix"
+      },
+      {
+        "name": "Classification Error Metrics: ROC and PR Curves",
+        "lessonId": "MPcdT",
+        "timeCommitment": 311000,
+        "id": "5od6m",
+        "moduleId": "DalLb",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 311000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "classification-error-metrics-roc-and-pr-curves"
+      },
+      {
+        "name": "Outcomes & Output Metrics",
+        "lessonId": "tF3wU",
+        "timeCommitment": 1200000,
+        "id": "ZvWzU",
+        "moduleId": "DalLb",
+        "contentSummary": {
+          "typeName": "discussionPrompt",
+          "definition": {}
+        },
+        "slug": "outcomes-output-metrics"
+      },
+      {
+        "name": "Troubleshooting Model Performance",
+        "lessonId": "tF3wU",
+        "timeCommitment": 374000,
+        "id": "eHoKk",
+        "moduleId": "DalLb",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 374000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "troubleshooting-model-performance"
+      },
+      {
+        "name": "Module Wrap-up",
+        "lessonId": "tF3wU",
+        "timeCommitment": 108000,
+        "id": "C4daQ",
+        "moduleId": "DalLb",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 108000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "module-wrap-up"
+      },
+      {
+        "name": "Module 3 Quiz",
+        "lessonId": "tF3wU",
+        "timeCommitment": 1800000,
+        "id": "toC8x",
+        "moduleId": "DalLb",
+        "contentSummary": {
+          "typeName": "staffGraded",
+          "definition": {
+            "assignmentFeatures": [
+              "SHOW_GRADE_ON_RELEASE",
+              "TAKE_HIGHEST_GRADE",
+              "LIMITED_SUBMISSIONS"
+            ],
+            "standardProctorConfigurationId": "STANDARD~f-u-bPOUEe-SHw6ECIXg5w!~f-u-bfOUEe-SHw6ECIXg5w@1",
+            "isTeamSubmissionEnabled": false,
+            "requiredMobileFeatures": []
+          }
+        },
+        "slug": "module-3-quiz"
+      },
+      {
+        "name": "Introduction and Objectives",
+        "lessonId": "ib8SS",
+        "timeCommitment": 161000,
+        "id": "6bJDV",
+        "moduleId": "5hMHy",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 161000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "introduction-and-objectives"
+      },
+      {
+        "name": "Download Module Slides",
+        "lessonId": "ib8SS",
+        "timeCommitment": 1800000,
+        "id": "pO1Fj",
+        "moduleId": "5hMHy",
+        "contentSummary": {
+          "typeName": "supplement",
+          "definition": {
+            "assetTypeName": "cml",
+            "containsWidget": false
+          }
+        },
+        "slug": "download-module-slides"
+      },
+      {
+        "name": "Linear Regression",
+        "lessonId": "ib8SS",
+        "timeCommitment": 564000,
+        "id": "RC90t",
+        "moduleId": "5hMHy",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 564000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "linear-regression"
+      },
+      {
+        "name": "Regularization",
+        "lessonId": "ib8SS",
+        "timeCommitment": 375000,
+        "id": "uqTSb",
+        "moduleId": "5hMHy",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 375000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "regularization"
+      },
+      {
+        "name": "Logistic Regression",
+        "lessonId": "Glq4x",
+        "timeCommitment": 523000,
+        "id": "mQXO2",
+        "moduleId": "5hMHy",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 523000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "logistic-regression"
+      },
+      {
+        "name": "Softmax Regression",
+        "lessonId": "Glq4x",
+        "timeCommitment": 247000,
+        "id": "zxKii",
+        "moduleId": "5hMHy",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 247000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "softmax-regression"
+      },
+      {
+        "name": "Module Wrap-up",
+        "lessonId": "EmnUp",
+        "timeCommitment": 107000,
+        "id": "ilgoi",
+        "moduleId": "5hMHy",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 107000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "module-wrap-up"
+      },
+      {
+        "name": "Module 4 Quiz",
+        "lessonId": "EmnUp",
+        "timeCommitment": 1800000,
+        "id": "ZrLvp",
+        "moduleId": "5hMHy",
+        "contentSummary": {
+          "typeName": "staffGraded",
+          "definition": {
+            "assignmentFeatures": [
+              "SHOW_GRADE_ON_RELEASE",
+              "TAKE_HIGHEST_GRADE",
+              "LIMITED_SUBMISSIONS"
+            ],
+            "standardProctorConfigurationId": "STANDARD~u2uNJPOREe-21RLbxMQPDQ!~u2uNJfOREe-21RLbxMQPDQ@1",
+            "isTeamSubmissionEnabled": false,
+            "requiredMobileFeatures": []
+          }
+        },
+        "slug": "module-4-quiz"
+      },
+      {
+        "name": "Introduction and Objectives",
+        "lessonId": "2CXdq",
+        "timeCommitment": 78000,
+        "id": "vkIBO",
+        "moduleId": "4YA27",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 78000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "introduction-and-objectives"
+      },
+      {
+        "name": "Download Module Slides",
+        "lessonId": "2CXdq",
+        "timeCommitment": 1800000,
+        "id": "vme4j",
+        "moduleId": "4YA27",
+        "contentSummary": {
+          "typeName": "supplement",
+          "definition": {
+            "assetTypeName": "cml",
+            "containsWidget": false
+          }
+        },
+        "slug": "download-module-slides"
+      },
+      {
+        "name": "Tree Models",
+        "lessonId": "2CXdq",
+        "timeCommitment": 671000,
+        "id": "x6Fgp",
+        "moduleId": "4YA27",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 671000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "tree-models"
+      },
+      {
+        "name": "Ensemble Models",
+        "lessonId": "2CXdq",
+        "timeCommitment": 348000,
+        "id": "3LuhE",
+        "moduleId": "4YA27",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 348000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "ensemble-models"
+      },
+      {
+        "name": "Random Forest",
+        "lessonId": "2CXdq",
+        "timeCommitment": 402000,
+        "id": "Dp19y",
+        "moduleId": "4YA27",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 402000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "random-forest"
+      },
+      {
+        "name": "Clustering",
+        "lessonId": "c3JM3",
+        "timeCommitment": 332000,
+        "id": "YrZDd",
+        "moduleId": "4YA27",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 332000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "clustering"
+      },
+      {
+        "name": "K-Means Clustering",
+        "lessonId": "c3JM3",
+        "timeCommitment": 353000,
+        "id": "pNTVI",
+        "moduleId": "4YA27",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 353000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "k-means-clustering"
+      },
+      {
+        "name": "Module Wrap-up",
+        "lessonId": "l22bl",
+        "timeCommitment": 278000,
+        "id": "XindS",
+        "moduleId": "4YA27",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 278000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "module-wrap-up"
+      },
+      {
+        "name": "Module 5 Quiz",
+        "lessonId": "l22bl",
+        "timeCommitment": 1800000,
+        "id": "ioKhs",
+        "moduleId": "4YA27",
+        "contentSummary": {
+          "typeName": "staffGraded",
+          "definition": {
+            "assignmentFeatures": [
+              "SHOW_GRADE_ON_RELEASE",
+              "TAKE_HIGHEST_GRADE",
+              "LIMITED_SUBMISSIONS"
+            ],
+            "standardProctorConfigurationId": "STANDARD~B5x4v_ObEe-GNQr_0CD76Q!~B5x4wPObEe-GNQr_0CD76Q@1",
+            "isTeamSubmissionEnabled": false,
+            "requiredMobileFeatures": []
+          }
+        },
+        "slug": "module-5-quiz"
+      },
+      {
+        "name": "Introduction and Objectives",
+        "lessonId": "Z9sB5",
+        "timeCommitment": 68000,
+        "id": "X1kaO",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 68000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "introduction-and-objectives"
+      },
+      {
+        "name": "Download Module Slides",
+        "lessonId": "Z9sB5",
+        "timeCommitment": 1800000,
+        "id": "SNoGW",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "supplement",
+          "definition": {
+            "assetTypeName": "cml",
+            "containsWidget": false
+          }
+        },
+        "slug": "download-module-slides"
+      },
+      {
+        "name": "Introduction to Deep Learning",
+        "lessonId": "Z9sB5",
+        "timeCommitment": 640000,
+        "id": "gHs5X",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 640000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "introduction-to-deep-learning"
+      },
+      {
+        "name": "Artificial Neurons",
+        "lessonId": "Z9sB5",
+        "timeCommitment": 644000,
+        "id": "UKggk",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 644000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "artificial-neurons"
+      },
+      {
+        "name": "From Neurons to Neural Networks",
+        "lessonId": "Z9sB5",
+        "timeCommitment": 384000,
+        "id": "h5G52",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 384000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "from-neurons-to-neural-networks"
+      },
+      {
+        "name": "Training Neural Networks",
+        "lessonId": "Z9sB5",
+        "timeCommitment": 466000,
+        "id": "pEVHF",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 466000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "training-neural-networks"
+      },
+      {
+        "name": "Computer Vision",
+        "lessonId": "dPkCW",
+        "timeCommitment": 846000,
+        "id": "tiPGM",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 846000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "computer-vision"
+      },
+      {
+        "name": "Natural Language Processing",
+        "lessonId": "dPkCW",
+        "timeCommitment": 788000,
+        "id": "Ygy6M",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 788000,
+            "hasInVideoAssessment": true
+          }
+        },
+        "slug": "natural-language-processing"
+      },
+      {
+        "name": "Module Wrap-up",
+        "lessonId": "ukWCf",
+        "timeCommitment": 408000,
+        "id": "NSGI9",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 408000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "module-wrap-up"
+      },
+      {
+        "name": "Module 6 Quiz",
+        "lessonId": "ukWCf",
+        "timeCommitment": 1800000,
+        "id": "FJhpe",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "staffGraded",
+          "definition": {
+            "assignmentFeatures": [
+              "SHOW_GRADE_ON_RELEASE",
+              "TAKE_HIGHEST_GRADE",
+              "LIMITED_SUBMISSIONS"
+            ],
+            "standardProctorConfigurationId": "STANDARD~AS12xfOYEe-GNQr_0CD76Q!~AS12xvOYEe-GNQr_0CD76Q@1",
+            "isTeamSubmissionEnabled": false,
+            "requiredMobileFeatures": []
+          }
+        },
+        "slug": "module-6-quiz"
+      },
+      {
+        "name": "Course Project Modeling Options",
+        "lessonId": "T7524",
+        "timeCommitment": 900000,
+        "id": "1pO76",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "supplement",
+          "definition": {
+            "assetTypeName": "cml",
+            "containsWidget": false
+          }
+        },
+        "slug": "course-project-modeling-options"
+      },
+      {
+        "name": "About Dialogue",
+        "lessonId": "T7524",
+        "timeCommitment": 600000,
+        "id": "coY7B",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "supplement",
+          "definition": {
+            "assetTypeName": "cml",
+            "containsWidget": false
+          }
+        },
+        "slug": "about-dialogue"
+      },
+      {
+        "name": "Model your Project with Coach",
+        "lessonId": "T7524",
+        "timeCommitment": 1800000,
+        "id": "dR8L3",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "coach",
+          "definition": {}
+        },
+        "slug": "model-your-project-with-coach"
+      },
+      {
+        "name": "Course Project",
+        "lessonId": "T7524",
+        "timeCommitment": 14400000,
+        "id": "U0ryB",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "phasedPeer",
+          "definition": {
+            "reviewDeadlineOffset": 259200000,
+            "isMentorGraded": false,
+            "requiredReviewCount": 1
+          }
+        },
+        "slug": "course-project"
+      },
+      {
+        "name": "Share your learning experience ",
+        "lessonId": "T7524",
+        "timeCommitment": 600000,
+        "id": "5Zv2w",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "supplement",
+          "definition": {
+            "assetTypeName": "cml",
+            "containsWidget": false
+          }
+        },
+        "slug": "share-your-learning-experience"
+      },
+      {
+        "name": "Course Wrap-up",
+        "lessonId": "T7524",
+        "timeCommitment": 157000,
+        "id": "hZCqn",
+        "moduleId": "5FAbo",
+        "contentSummary": {
+          "typeName": "lecture",
+          "definition": {
+            "duration": 157000,
+            "hasInVideoAssessment": false
+          }
+        },
+        "slug": "course-wrap-up"
+      }
+    ],
+    "onDemandCourseMaterialModules.v1": [
+      {
+        "name": "What is Machine Learning",
+        "description": "In this module we will be introduced to what machine learning is and does.  We will build the necessary vocabulary for working with data and models and develop an understanding of the different types of machine learning.  We will conclude with a critical discussion of what machine learning can do well and cannot (or should not) do.",
+        "timeCommitment": 6417000,
+        "id": "eEphX",
+        "lessonIds": [
+          "b9SSI",
+          "7pI7F",
+          "f4VsV"
+        ],
+        "slug": "what-is-machine-learning"
+      },
+      {
+        "name": "The Modeling Process",
+        "description": "In this module we will discuss the key steps in the process of building machine learning models.  We will learn about the sources of model complexity and how complexity impacts a model's performance.  We will wrap up with a discussion of strategies for comparing different models to select the optimal model for production.",
+        "timeCommitment": 5986000,
+        "id": "awp1I",
+        "lessonIds": [
+          "W0L49",
+          "UWD0v",
+          "1Mdb9"
+        ],
+        "slug": "the-modeling-process"
+      },
+      {
+        "name": "Evaluating & Interpreting Models",
+        "description": "In this module we will learn how to define appropriate outcome and output metrics for AI projects.  We will then discuss key metrics for evaluating regression and classification models and how to select one for use.  We will wrap up with a discussion of common sources of error in machine learning projects and how to troubleshoot poor performance.",
+        "timeCommitment": 6814000,
+        "id": "DalLb",
+        "lessonIds": [
+          "mGvTr",
+          "MPcdT",
+          "tF3wU"
+        ],
+        "slug": "evaluating-interpreting-models"
+      },
+      {
+        "name": "Linear Models",
+        "description": "In this module we will explore the use of linear models for regression and classification.  We will begin with introducing linear regression and continue with a discussion on how to make linear regression work better through regularization.  We will then switch to classification and introduce the logistic regression model for both binary and multi-class classification problems.",
+        "timeCommitment": 5577000,
+        "id": "5hMHy",
+        "lessonIds": [
+          "ib8SS",
+          "Glq4x",
+          "EmnUp"
+        ],
+        "slug": "linear-models"
+      },
+      {
+        "name": "Trees, Ensemble Models and Clustering",
+        "description": "We will begin this model with a discussion of tree models and their value in modeling compex non-linear problems.  We will then introduce the method of creating ensemble models and their benefits.  We will wrap this module up by switching gears to unsupervised learning and discussing clustering and the popular K-Means clustering approach.",
+        "timeCommitment": 6062000,
+        "id": "4YA27",
+        "lessonIds": [
+          "2CXdq",
+          "c3JM3",
+          "l22bl"
+        ],
+        "slug": "trees-ensemble-models-and-clustering"
+      },
+      {
+        "name": "Deep Learning & Course Project",
+        "description": "Our final module in this course will focus on a hot area of machine learning called deep learning, or the use of multi-layer neural networks.  We will develop an understanding of the intuition and key mathematical principles behind how neural networks work.  We will then discuss common applications of deep learning in computer vision and natural language processing.  We will wrap up the course with our course project, where you will have an opportunity to apply the modeling process and best practices you have learned to create your own machine learning model.",
+        "timeCommitment": 26301000,
+        "id": "5FAbo",
+        "lessonIds": [
+          "Z9sB5",
+          "dPkCW",
+          "ukWCf",
+          "T7524"
+        ],
+        "slug": "deep-learning-course-project"
+      }
+    ]
+  }
+}
