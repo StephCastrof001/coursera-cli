@@ -1,212 +1,224 @@
-# SPEC — coursera-cli v1
+# SPEC — coursera-cli
 
-> Estado: implementado y verificado 2026-08-16. Ver §Verificación al final.
-> El backlog derivado de este spec vive como issues en
+> Status: v0.2.0 implemented and verified against the live API on 2026-08-17.
+> The backlog derived from this spec lives as issues in
 > [StephCastrof001/coursera-cli](https://github.com/StephCastrof001/coursera-cli/issues),
-> etiquetadas `ready-for-agent`. El spec queda en el repo como fuente de las decisiones;
-> las issues son las rebanadas ejecutables.
+> labelled `ready-for-agent`. This document holds the decisions; the issues are the
+> executable slices.
 
 ---
 
-## Problem Statement
+## Problem statement
 
-Tengo 215 cursos en Coursera y el contenido que me interesa —lo que dicen los videos y
-las lecturas— está encerrado en una SPA. Para estudiar, resumir o alimentar un sistema
-de notas necesito el texto, y hoy la única forma es abrir el navegador, ir clase por
-clase y copiar a mano.
+I have 215 Coursera courses, and the part I care about — what the videos say and what the
+readings contain — is locked inside a single-page app. To study, summarize, or feed a note
+system, I need the text, and today the only way is opening a browser and going class by
+class.
 
-Existe un repo de recon en Python (`coursera_recon`) que ya resolvió la parte difícil:
-descubrió la API interna, la cookie de sesión, los endpoints vivos y cómo desbloquear
-módulos que la web muestra con candado. Pero es un conjunto de scripts sueltos que hay
-que correr en orden, desde su carpeta, con el entorno de Python armado. No es una
-herramienta: es un experimento que funcionó.
+A Python recon repo (`coursera_recon`) already solved the hard part: it found the internal
+API, the session cookie, the live endpoints, and how to unlock modules the web shows with a
+padlock. But it is a pile of scripts you must run in order, from their folder, with a
+Python environment set up. It is not a tool: it is an experiment that worked.
 
-Además, nada de eso es accesible para un agente. Cuando quiero preguntarle a Claude
-"¿qué vi en el curso de pricing sobre elasticidad?", Claude no tiene forma de mirar.
+None of it is reachable by an agent either. When I want to ask Claude "what did the pricing
+course say about elasticity?", Claude has no way to look.
+
+And with 215 courses, a second problem sits on top of the first: I cannot see my own
+library. I do not know what I actually studied, what I left half-finished, or how much of
+it overlaps.
 
 ## Solution
 
-Un CLI instalable y un servidor MCP sobre la misma lógica:
+One installable CLI and one MCP server over the same logic:
 
-- **Desde la terminal:** `coursera courses --buscar "pricing"` encuentra el curso,
-  `coursera transcript <slug>` baja sus transcripts y lecturas a una carpeta.
-- **Desde Claude Code:** las mismas capacidades como tools MCP, para que el agente
-  busque cursos y lea contenido dentro de la conversación, sin que yo escriba comandos.
+- **From the terminal:** `coursera courses --search pricing` finds the course,
+  `coursera map` shows what the library is made of, `coursera transcript <slug>` pulls the
+  content to a folder.
+- **From Claude Code:** the same capabilities as MCP tools, so the agent can search, map and
+  read inside the conversation without me typing commands.
 
-El default es **transcripts, no video**: un curso pesa gigabytes en mp4 y ~130 KB en
-texto, y para estudiar o resumir el texto tiene toda la señal.
+Default output is **transcripts, not video**: a course is gigabytes as MP4 and ~130 KB as
+text, and the text carries the signal.
 
-## User Stories
+## User stories
 
-1. Como estudiante con 215 cursos, quiero buscar un curso por nombre, para no tener que recordar su slug ni buscarlo en la web.
-2. Como estudiante, quiero que la búsqueda mire mis 215 cursos y no sólo los primeros 100, para que no me oculte cursos en silencio.
-3. Como estudiante, quiero buscar sin escribir tildes, para que "analitica" encuentre "Analítica".
-4. Como estudiante, quiero ver el temario de un curso antes de bajarlo, para decidir si vale la pena.
-5. Como estudiante, quiero bajar los transcripts de un curso con un comando, para tener el contenido en texto.
-6. Como estudiante, quiero que también me baje las lecturas, no sólo los videos, porque parte del contenido no es audiovisual.
-7. Como estudiante en un curso con semanas bloqueadas, quiero que igual intente bajar los módulos con candado, porque la API los entrega aunque la web los esconda.
-8. Como estudiante, quiero elegir el idioma de los subtítulos, para leerlos en español cuando exista.
-9. Como estudiante, quiero que si mi idioma no está disponible baje otro en vez de saltear el video, porque un transcript en inglés es mejor que ninguno.
-10. Como estudiante, quiero que los archivos queden organizados por módulo y en orden, para poder leerlos como un libro.
-11. Como estudiante, quiero elegir dónde se guardan con `--out`, para llevarlos a mi repo de notas.
-12. Como estudiante, quiero un default sensato cuando no paso `--out`, para no tener que decidir cada vez.
-13. Como estudiante, quiero bajar sólo los primeros N items con `--limit`, para probar antes de comprometerme con un curso entero.
-14. Como estudiante, quiero saber si mi sesión sigue viva antes de empezar, para no descubrir a mitad de una descarga que venció.
-15. Como estudiante, quiero saber hace cuánto se capturó la sesión, para entender cuánto dura en la práctica.
-16. Como usuaria del repo de recon en Python, quiero que el CLI reuse la sesión que ya tengo capturada, para no volver a loguearme.
-17. Como usuaria en un servidor sin interfaz gráfica, quiero pasar la cookie por variable de entorno, para poder correrlo en EC2.
-18. Como agente (Claude), quiero listar los cursos del usuario como tool, para responder "¿qué cursos tengo sobre X?" sin pedirle que corra nada.
-19. Como agente, quiero obtener el temario de un curso, para saber qué items existen antes de leer.
-20. Como agente, quiero disparar la descarga de un curso, para trabajar sobre su contenido.
-21. Como agente, quiero que la descarga me devuelva un índice y no el texto completo, para no quemar el contexto de la conversación.
-22. Como agente, quiero leer un item puntual por id o por nombre, para citar exactamente lo que necesito.
-23. Como agente, quiero saber si la sesión está viva, para explicar por qué falla en vez de reintentar a ciegas.
-24. Como agente, quiero que los errores lleguen tipados (sesión vencida vs ruta muerta vs red), para decidir qué hacer sin parsear un mensaje.
-25. Como scripter, quiero `--output json` en todo comando, para pipear a `jq`.
-26. Como scripter, quiero que el CLI detecte solo si está en terminal o redirigido, para no pasar el flag siempre.
-27. Como mantenedora, quiero que las rutas de la API vivan en un archivo de datos, para que una deprecación se arregle sin tocar código.
-28. Como mantenedora, quiero tests contra respuestas reales de la API, para que un cambio de forma no pase desapercibido.
-29. Como mantenedora, quiero que una descarga larga no muera por un item que falla, para no perder el trabajo de los otros 60.
-30. Como usuaria, quiero un aviso de progreso durante la descarga, para saber que no se colgó.
-31. Como usuaria, quiero que los nombres de archivo sobrevivan en Windows, para que no se rompa por un `?` o un `:` en el título.
-32. Como usuaria preocupada por la privacidad, quiero que la cookie nunca se escriba en el repo, porque es una credencial viva.
+1. As a learner with 215 courses, I want to search a course by name, so that I do not have to remember its slug.
+2. As a learner, I want search to cover all 215 courses and not just the first 100, so that nothing is hidden from me silently.
+3. As a learner, I want to search without typing accents, so that "analitica" finds "Analítica".
+4. As a learner, I want multi-word searches without quotes, so that `--search machine learning` does what it looks like.
+5. As a learner, I want to filter by declared difficulty, so that I can find something at my level.
+6. As a learner, I want to filter by branch, so that I can look only at data science.
+7. As a learner, I want to filter by language, so that I can pick a course in Spanish.
+8. As a learner, I want to filter by estimated hours, so that I can find something I can finish this week.
+9. As a learner, I want to filter by university, so that I can see everything I took from one institution.
+10. As a learner, I want to see the syllabus before downloading, so that I can judge whether it is worth it.
+11. As a learner, I want to know who teaches a course and which institution backs it, so that I can weigh its authority.
+12. As a learner, I want a map of my library by branch, so that I can see what I actually studied rather than what I think I studied.
+13. As a learner, I want to see how far along each specialization is, so that I can finish one instead of starting another.
+14. As a learner, I want the map to tell me which institutions my library comes from, so that I know where my education actually came from.
+15. As a learner, I want estimated hours per branch, so that I can compare where my time went.
+16. As a learner, I want the tool to say when hours are unknown, so that I do not read an estimate as a fact.
+17. As a learner, I want to download a course's transcripts with one command, so that I have the content as text.
+18. As a learner, I want readings downloaded too, not just videos, because part of the content is not audiovisual.
+19. As a learner in a course with locked weeks, I want it to try the padlocked modules anyway, because the API serves them even when the web hides them.
+20. As a learner, I want to choose the subtitle language, so that I can read in Spanish where it exists.
+21. As a learner, I want a fallback language rather than a skipped video, because a transcript in English beats no transcript.
+22. As a learner, I want files organized by module and in order, so that I can read them like a book.
+23. As a learner, I want to choose where they are saved, so that I can put them in my notes repo.
+24. As a learner, I want a course downloaded to a custom folder to still be readable later, so that `--out` does not hide it from me.
+25. As a learner, I want to download only the first N items, so that I can try a course before committing to it.
+26. As a learner, I want to know whether my session is alive before I start, so that a download does not die halfway.
+27. As a learner, I want one command that diagnoses everything, so that a failure names its own cause.
+28. As a learner, I want to know how old my session is, so that I learn how long it really lasts.
+29. As a user of the Python recon repo, I want the CLI to reuse the session I already captured, so that I do not log in again.
+30. As a user on a headless server, I want to pass the cookie through an environment variable, so that it runs on EC2.
+31. As an agent, I want to list the user's courses as a tool, so that I can answer "what do I have on X?" without asking them to run anything.
+32. As an agent, I want the same filters the human has, so that I can narrow down without pulling 215 rows into context.
+33. As an agent, I want the library map as a tool, so that I can reason about what they studied.
+34. As an agent, I want a course outline, so that I know what exists before reading.
+35. As an agent, I want to trigger a download, so that I can work on the content.
+36. As an agent, I want the download to return an index rather than the text, so that I do not burn the context window.
+37. As an agent, I want to read one item by id or by name, so that I can quote exactly what I need.
+38. As an agent, I want typed errors with a code and a hint, so that I can decide what to do without parsing prose.
+39. As a scripter, I want `--json` on every command, so that I can pipe into `jq`.
+40. As a scripter, I want the CLI to detect a pipe on its own, so that I do not have to pass the flag every time.
+41. As a maintainer, I want API routes in a data file, so that a deprecation is fixed without touching code.
+42. As a maintainer, I want tests against real API responses, so that a shape change does not slip through.
+43. As a maintainer, I want a long download to survive one failing item, so that 60 others are not lost.
+44. As a maintainer, I want a changelog, so that the difference between versions is legible.
+45. As a user, I want progress feedback during a download, so that I know it has not hung.
+46. As a user, I want filenames that survive Windows, so that nothing breaks on a `?` or a `:` in a title.
+47. As a privacy-minded user, I want the cookie never written into the repo, because it is a live credential.
 
-## Implementation Decisions
+## Implementation decisions
 
-**Ubicación y runtime.** El repo vive en `klipso_reverse/Cli-propios/coursera-cli/`, dentro
-de la fábrica de CLIs, para heredar sus convenciones y ADRs. Runtime **Bun** (el CLI es
-API-heavy: fetch + JSON). El binario de Bun no está en el PATH del proceso de Claude Code
-—punto 2 del ADR-0001—, así que toda invocación programática usa la ruta absoluta del `.exe`.
+**Location and runtime.** The repo lives in `klipso_reverse/Cli-propios/coursera-cli/`,
+inside the CLI factory, to inherit its conventions and ADRs. Runtime is **Bun** (this CLI is
+API-heavy: fetch plus JSON). The Bun binary is not on the PATH of the process that launches
+MCP servers — point 2 of ADR-0001 — so every programmatic invocation uses the absolute path
+to the `.exe`.
 
-**Capas.** Cuatro, con una sola dirección de dependencia:
-`commands/` y `mcp/` → `services/` → `http.ts` → red. Los comandos no arman URLs y los
-servicios no imprimen. Esto es lo que permite que MCP y CLI compartan el 100% de la lógica.
+**Layers.** Four, with one direction of dependency: `commands/` and `mcp/` → `services/` →
+`http.ts` → network. Commands do not build URLs and services do not print. That is what lets
+MCP and CLI share 100% of the logic.
 
-**Rutas en datos, no en código.** `endpoints.json` mantiene las 6 rutas con placeholders;
-`services/endpoints.ts` las interpola. Cuando Coursera deprecie una `.v2`, el arreglo es
-una línea de datos. Ésa fue la deuda que mató a `coursera-dl`.
+**Framework blocks.** The presentation, error, path and health-check layers come from the
+cligentic registry (`json-mode`, `error-map`, `xdg-paths`, `global-flags`, `next-steps`,
+`doctor`, `audit-log`, `detect`) copied into `src/cli/`, rather than hand-rolled. The trust
+ladder and killswitch blocks are deliberately **not** installed: they gate mutating
+operations, and this CLI only reads. Coursera exposes no way to buy, enroll or delete
+through this API, so there is nothing to authorize.
 
-**Sesión con tres orígenes, en orden:** variable `COURSERA_CAUTH` → store propio del CLI →
-store del repo de recon en Python (`~/.config/coursera_recon/session.json`). El tercero
-existe porque la cookie dura días y obligar a re-loguearse sería gratuito para nadie.
-El store de Python se lee, nunca se escribe.
+**Routes as data.** `endpoints.json` holds every route with placeholders. When Coursera
+deprecates a version, the fix is one line of data — the debt that killed `coursera-dl`.
 
-**Errores tipados.** `CourseraError` con `kind`: `unauthorized | not_found | html_response |
-http | network`. La distinción crítica viene del recon: un **200 con HTML** significa ruta
-deprecada o request mal armado, **no** sesión vencida; sesión vencida es 401/403. Confundirlos
-manda a re-loguearse cuando el problema era la URL.
+**Session with three sources, in order:** `COURSERA_CAUTH` env var → this CLI's store → the
+Python recon repo's store. The third exists because the cookie lasts days and forcing a
+re-login would be free for nobody. The legacy store is read, never written.
 
-**Paginación real.** `memberships.v1` acepta `limit` y devuelve `paging.total` y
-`paging.next`. Con 215 memberships y `limit=100`, no seguir el cursor trunca el 54% sin
-avisar. `listCourses` recorre hasta agotar `next`, deduplicando por id.
+**Typed errors.** `AppError` carries `code` and `hint`. The critical distinction comes from
+the recon: a **200 with HTML** means the route is gone or the request was malformed, **not**
+that the session died; a dead session is 401/403.
 
-**Reconstrucción del árbol.** La API manda tres listas planas en `linked` (módulos,
-lecciones, items) más los ids que las cosen; el árbol se arma por ids. Dos trampas del
-recon quedan cubiertas: `typeName` vive en `contentSummary`, no en la raíz; y los items
-faltantes o sin nombre heredan el título de su lección padre.
+**Real pagination.** `memberships.v1` reports `paging.total` and `paging.next`. With 215
+memberships and `limit=100`, not walking the cursor drops 54% without warning.
 
-**Desbloqueo por sondeo polimórfico.** No se filtra por `typeName` al construir el plan:
-en cursos en preview el agregador censura ese campo, y filtrar temprano descarta módulos
-enteros creyéndolos vacíos. Para cada item se sondea `onDemandLectureVideos.v1` y, si no
-responde, `onDemandSupplements.v1`. Lo que devuelva 200 gana; si ninguno responde, el item
-se registra como salteado y la corrida sigue. Un `unknown` **nunca** se filtra, ni siquiera
-cuando el usuario pide sólo `lecture`.
+**Tree reconstruction.** The API sends three flat lists in `linked` plus the ids that stitch
+them. Two recon traps are covered: `typeName` lives under `contentSummary`, and missing or
+nameless items inherit their parent lesson's title.
 
-**Descarga en una sola pasada.** Las URLs de media van firmadas con expiry (hmac / CloudFront
-Signature), así que no se puede planificar hoy y bajar mañana. Se pide y se baja en la misma
-pasada, con 500 ms entre items.
+**Unlock by polymorphic probing.** The plan is never filtered by `typeName`: preview courses
+have that field censored, and filtering early discards whole modules as if they were empty.
+Each item is probed against `onDemandLectureVideos.v1` and then `onDemandSupplements.v1`.
+Whatever answers 200 wins; anything else is recorded as skipped and the run continues. An
+`unknown` is **never** filtered, not even when the caller asks for `lecture` only.
 
-**Manifiesto.** Cada carpeta de curso lleva un `manifest.json` con item id, nombre, tipo,
-idioma, ruta y tamaño. Es lo que permite que `read_transcript` lea un item después sin
-volver a la API (donde las URLs firmadas ya habrían expirado).
+**Single-pass download.** Media URLs are signed with an expiry, so planning today and
+downloading tomorrow is impossible. Ask and fetch in the same pass, 500 ms apart.
 
-**Superficie MCP: 5 tools granulares**, no un tool con subcomando —el patrón que
-`_knowledge/cli-vs-mcp.md` marca como mejor para agentes:
+**Manifest plus location index.** Each course folder carries a `manifest.json`; a separate
+index records where each course was last downloaded. Together they let `read_transcript`
+find an item later without returning to the API, and let `--out` work without hiding a
+course from the reader.
 
-| Tool | Devuelve |
+**Metadata beyond the syllabus.** `courses.v1` accepts a `fields=` selection that includes
+`level`, `certificates`, `partnerIds` and `instructorIds`, and the same selection works
+inside `memberships.v1` — so the whole library's metadata costs 3 requests, not 215.
+Institutions and instructors do not ride along and are resolved in batched lookups against
+`partners.v1` and `instructors.v1`.
+
+**Declared, never inferred.** `level` is reported exactly as Coursera declares it, and
+"undeclared" is its own bucket. Estimated hours are labelled as estimates, and the count of
+courses whose workload cannot be read is printed alongside them.
+
+**MCP surface: six granular tools**, not one tool with a subcommand — the pattern
+`_knowledge/cli-vs-mcp.md` marks as better for agents:
+
+| Tool | Returns |
 |---|---|
-| `session_status` | origen, antigüedad, si está viva, total de cursos |
-| `list_courses` | `{total, matches, courses:[{slug,name}]}` |
-| `get_course_outline` | árbol completo + `itemCount` |
-| `fetch_transcripts` | **índice** de lo bajado: rutas y tamaños, nunca el texto |
-| `read_transcript` | el texto de **un** item, por id o por parte del nombre |
+| `session_status` | source, age, alive, total courses |
+| `list_courses` | filtered courses with level and estimated hours |
+| `get_library_map` | branches, levels, institutions, specialization progress |
+| `get_course_outline` | full tree plus institution, instructors and level |
+| `fetch_transcripts` | **index** of what was downloaded: paths and sizes, never text |
+| `read_transcript` | the text of **one** item, by id or by part of its name |
 
-La separación entre las dos últimas es deliberada: un curso son ~130 KB (≈35k tokens).
-Devolverlo entero reventaría la conversación en dos llamadas.
+The split between the last two is deliberate: a course is ~130 KB (≈35k tokens). Returning
+it whole would blow up a conversation in two calls.
 
-**Salida agent-first.** Todo comando acepta `--output json|table|auto`; `auto` decide por
-`process.stdout.isTTY`. Sin `--output json` el CLI no es usable por un agente.
+**Agent-first output.** Every command supports `--json`, and piped stdout switches to JSON
+on its own through the `json-mode` block. Without machine-readable output a CLI is not
+usable by an agent.
 
-## Testing Decisions
+## Testing decisions
 
-**Qué hace bueno a un test acá:** que verifique comportamiento observable con datos reales
-de la API. Los fixtures (`test/fixtures/`) son respuestas **capturadas en vivo** el
-2026-08-16, con los querystrings firmados redactados. Un test que pasa contra JSON inventado
-no prueba nada sobre Coursera.
+**What makes a good test here:** it verifies observable behavior against real API data.
+Fixtures in `test/fixtures/` are responses **captured live**, with signed query strings
+redacted. A test that passes against invented JSON proves nothing about Coursera.
 
-**Seam único:** las funciones puras de `src/services/`, que transforman el envelope crudo en
-objetos del dominio. HTTP se inyecta como interfaz `Client`, así que los tests no tocan red
-ni necesitan sesión. Todo lo demás (comandos, MCP) es cableado delgado sobre ese seam.
+**Single seam:** the pure functions in `src/services/`, which turn the raw envelope into
+domain objects. HTTP is injected as a `Client` interface, so tests touch neither network nor
+session. Everything else — commands, MCP — is thin wiring over that seam.
 
-**Cubierto (31 tests):**
-- `memberships`: extracción desde `linked`, total real vs página, cursor, entradas rotas,
-  búsqueda con y sin acentos, orden de relevancia, consulta vacía.
-- `courses`: reconstrucción del árbol, `typeName` anidado, orden de `moduleIds`, conteo de
-  items, item censurado → `unknown` heredando nombre de la lección, filtrado por tipo,
-  y la regla de que `unknown` nunca se filtra.
-- `transcripts`: preferencia de idioma, fallback a cualquier idioma, ruta relativa
-  preservada, limpieza de `.vtt` (cues, timestamps, tags, líneas repetidas), CML → markdown,
-  nombres seguros en Windows.
+**Covered (76 tests):**
+- `memberships`: extraction from `linked`, real total vs page, cursor, broken entries,
+  accent-insensitive search, relevance ordering, and every filter including their AND
+  composition and the rule that an unreadable workload excludes a course from `--hours`.
+- `courses`: tree reconstruction, nested `typeName`, `moduleIds` ordering, item count,
+  censored item → `unknown` inheriting its lesson name, type filtering, and the rule that
+  `unknown` is never filtered.
+- `library`: the workload grammar (nine shapes, both languages, and the ambiguous cases that
+  must return null), level tally with its undeclared bucket, branch grouping including
+  double-counting rules, and specialization progress.
+- `partners`: institution and instructor parsing, id collection and deduplication, ranking,
+  unresolved ids labelled rather than dropped, and name lookup.
+- `flags`: multi-word values, boolean flags that must not swallow the next token,
+  positional arguments.
 
-**Prior art:** el patrón de tests con `bun:test` sobre fixtures viene de `cligentic`
-(ver `reference_cligentic_tests_pattern`).
+**Deliberately not unit tested:** the download loop and the MCP transport. Both are verified
+by real runs against the API, which is where they actually break.
 
-**Deliberadamente sin test unitario:** el loop de descarga y el transporte MCP. Se verifican
-con corridas reales contra la API (ver §Verificación), que es donde se rompen de verdad.
+## Out of scope
 
-## Out of Scope
+- **MP4 video.** The pipeline is there (`sources.byResolution`); v1 does not expose it.
+- **Obsidian vault and knowledge graph.** The Python repo generates them; that is knowledge
+  modelling, a different layer.
+- **Browser login.** The CLI reuses an existing session. When it expires you still need
+  `capture_session.py` from the recon repo. Issue #3.
+- **Course progress and certificates.** No known endpoint returns them, though two answer
+  405 and are therefore worth a spike.
+- **Catalog search and recommendations.** Public search moved to a GraphQL gateway;
+  reverse-engineering it is a separate project.
+- **Ratings and popularity.** Not exposed by this API at all — verified by field enumeration.
+- **Quizzes, grades and forums.** Videos and readings only.
+- **Resumable downloads.** Each run is complete. Issue #4.
 
-- **Video mp4.** El pipeline está (`sources.byResolution`), pero v1 no lo expone. `--videos` es v2.
-- **Vault de Obsidian y grafo de conocimiento.** El repo de Python los genera
-  (`cases/duke_ml_foundations/`); es modelado de conocimiento, otra capa. v2.
-- **Login con browser.** v1 reusa la sesión existente. Cuando expire hace falta
-  `capture_session.py` del repo de recon. `coursera login` con Playwright es v1.1, y ahí sí
-  aplica el runtime híbrido del ADR-0001.
-- **Estado del curso** (activo / completado / abandonado). Ningún endpoint conocido lo
-  expone, y con el flujo de "un curso a la vez" no aporta. Descartado, no pospuesto.
-- **Quizzes, notas y foros.** Sólo videos y lecturas.
-- **Reanudar descargas.** Cada corrida es completa.
-- **Bloques de cligentic.** El framework los pide (`json-mode`, `xdg-paths`, `error-map`).
-  v1 implementa equivalentes mínimos locales (`output.ts`, `constants.ts`, `CourseraError`)
-  para no depender de la red en el scaffold. Migrar a los bloques es deuda declarada.
+## Verification
 
-## Further Notes
-
-**Hallazgos de recon nuevos, verificados en vivo el 2026-08-16** (no estaban en `RESEARCH.md`):
-
-1. **TTL de la cookie ≥ 104 horas.** Estaba documentado como "sin medir". Una sesión
-   capturada el 12/08 seguía sirviendo el 16/08. Cambia el diseño: el login no es el paso 1.
-2. **`paging.total` = 215 con `limit=100`.** El truncamiento silencioso es real y era el
-   bug más caro de v1.
-3. **`memberships.v1` no trae estado.** Los `elements` son `{role, id, userId, courseId}` y
-   nada más. `onDemandCourseGrades.v1` da 404; `courseProgress.v1`, `onDemandEnrollments.v1`
-   y `learnerCourseSummary.v1` devuelven 200+HTML (muertos).
-4. **El curso de control tiene 6 tipos de item**, no dos: `lecture` (48), `supplement` (12),
-   `staffGraded` (6), `discussionPrompt`, `coach`, `phasedPeer`. Un filtro binario
-   video/lectura pierde 8 items.
-5. **29 idiomas de subtítulos** en el curso de Duke, incluido español.
-
-**Pista abierta:** [davidfurlong/Coursera-new-tab-extension](https://github.com/davidfurlong/Coursera-new-tab-extension)
-dice hacer reverse engineering del progreso de curso. Si algún día hace falta el estado,
-empezar ahí.
-
-## Verificación
-
-| DoD | Resultado |
+| Criterion | Result |
 |---|---|
-| `courses --output json` devuelve todos los cursos | **215/215**. `fundamentals-machine-learning-in-finance` sale en la fila 131: con el truncamiento en 100 era invisible |
-| `transcript <slug>` baja archivos no vacíos | **8 de 8 items, 0 salteados, 0 archivos vacíos**, 15.9 KB. Mezcla real: 4 `lecture` en español + 4 `supplement` |
-| MCP responde en conversación | **5 tools listadas y respondiendo** contra un cliente MCP real: `session_status` (viva, 104.5 h), `list_courses("pricing")` → 3 de 215, `get_course_outline` → 6 módulos / 69 items |
-
-Falta el último tramo del tercer punto: que Claude Code lo tenga cargado en una conversación
-real. Eso requiere registrar el `.mcp.json` y reiniciar Claude Code — acción del usuario.
+| Full pagination | **215/215 courses**. `fundamentals-machine-learning-in-finance` sits at row 131: invisible under the 100-row truncation |
+| Real download | **8 of 8 items, 0 skipped, 0 empty files**, 15.9 KB. Mixed: 4 Spanish lectures + 4 readings |
+| MCP end to end | **6 tools listed and answering** against a real MCP client: `list_courses(level=ADVANCED)` → 7 of 215, `get_library_map` → 9 branches, 57 institutions, 15 specializations |
+| Diagnosis | `doctor` → 5/5 checks passed, session 108.2 h old and alive |
+| Tests | 76 passing, typecheck clean |

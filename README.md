@@ -1,148 +1,180 @@
 # coursera-cli
 
-Tus cursos de Coursera desde la terminal — y desde Claude Code, vía MCP.
+Your own Coursera courses, from the terminal — and from Claude Code, over MCP.
 
-Baja los **transcripts** y las **lecturas** de los cursos en los que estás inscrito, usando
-la API interna de Coursera. Sin scrapear HTML, sin bajar gigabytes de video.
+Downloads the **transcripts** and **readings** of courses you are enrolled in, through
+Coursera's internal API. No HTML scraping, no gigabytes of video.
 
 ```
-coursera courses --buscar "pricing"     → encontrá el curso
-coursera course <slug>                  → mirá el temario
-coursera transcript <slug>              → bajá el contenido en texto
+coursera courses --search pricing     find the course
+coursera map                          see what you actually studied
+coursera transcript <slug>            pull the content as text
 ```
 
 ---
 
-## Instalación
+## Install
 
-Requiere [Bun](https://bun.sh).
+Requires [Bun](https://bun.sh).
 
 ```bash
 cd klipso_reverse/Cli-propios/coursera-cli
 bun install
 ```
 
-## Sesión
+## Session
 
-El CLI necesita la cookie `CAUTH` de tu cuenta. La busca en tres lugares, en orden:
+The CLI needs your account's `CAUTH` cookie. It looks in three places, in order:
 
-1. La variable de entorno `COURSERA_CAUTH`
-2. Su propio store, en `~/.config/coursera-cli/session.json`
-3. El store del repo de recon en Python, en `~/.config/coursera_recon/session.json`
+1. The `COURSERA_CAUTH` environment variable
+2. Its own store, under the platform config directory
+3. The store written by the Python recon repo (`~/.config/coursera_recon/session.json`)
 
-Si no tenés ninguna, capturala con `capture_session.py` del repo `coursera_recon`: abre un
-Chromium visible, te logueás a mano y guarda la cookie. **El login no se automatiza**:
-tipear las credenciales por script dispara el CAPTCHA.
-
-Para ver si la que tenés sigue viva:
+If you have none, capture one with `capture_session.py` from the `coursera_recon` repo: it
+opens a visible Chromium, you log in by hand, and it saves the cookie. **Logging in is not
+automated** — typing credentials from a script is what triggers the CAPTCHA.
 
 ```bash
-coursera session
-```
-```
-origen      store heredado de coursera_recon (Python)
-capturada   2026-08-12T10:24:51-0500
-antigüedad  104.5 h
-estado      VIVA
-cursos      215
+coursera session   # is it alive, where did it come from, how old is it
+coursera doctor    # session + routes + paths, all at once
 ```
 
-## Comandos
+```
+[OK]   version: coursera-cli 0.2.0 on win32, bun 1.3.11
+[OK]   session-present: found via legacy, 108.2 h old
+[OK]   session-alive: 215 courses visible
+[OK]   endpoints: 10 routes declared, domains.v1 alive
+[OK]   paths: state C:\Users\you\AppData\Local\coursera-cli
 
-| Comando | Qué hace |
+5/5 checks passed
+```
+
+## Commands
+
+| Command | What it does |
 |---|---|
-| `coursera session` | Estado de la sesión: origen, antigüedad, si está viva |
-| `coursera courses [--buscar <texto>]` | Tus cursos. Sin `--buscar` los lista todos |
-| `coursera map [--detalle]` | En qué ramas te formaste y qué especializaciones dejaste a medias |
-| `coursera course <slug>` | Temario: módulos, lecciones e items con su tipo |
-| `coursera transcript <slug>` | Baja transcripts y lecturas |
+| `coursera session` | Session state: source, age, alive or dead |
+| `coursera doctor` | Diagnoses session, live routes and writable paths |
+| `coursera courses [filters]` | Your courses |
+| `coursera map [--detail]` | Branches, levels, institutions, unfinished specializations |
+| `coursera course <slug>` | Syllabus, institution, instructors, declared level |
+| `coursera transcript <slug>` | Downloads transcripts and readings |
 
-Flags globales:
+### Filters
 
-| Flag | Default | Para qué |
-|---|---|---|
-| `--output json\|table\|auto` | `auto` | `auto` = tabla en terminal, JSON si redirigís |
-| `--out <dir>` | `~/.local/share/coursera-cli/<slug>/` | Dónde escribir |
-| `--limit <n>` | todos | Cortar después de N items |
-| `--lang es,en` | `es,es-LA,en` | Orden de preferencia de subtítulos |
-
-Ejemplos:
+Filters compose with AND, and multi-word values need no quotes:
 
 ```bash
-coursera courses --buscar "machine learning" --output json | jq -r '.courses[].slug'
-coursera transcript machine-learning-foundations-for-product-managers --limit 5
-coursera transcript uva-darden-bcg-pricing-strategy-practice --out ./notas/pricing --lang en
+coursera courses --search machine learning
+coursera courses --level intermediate --domain data-science
+coursera courses --lang es --hours 5          # short courses in Spanish
+coursera courses --university duke
 ```
 
-## MCP para Claude Code
+| Flag | Example |
+|---|---|
+| `--search <text>` | name or slug |
+| `--level` | `beginner`, `intermediate`, `advanced` |
+| `--domain <id>` | branch or sub-branch, e.g. `data-science`, `machine-learning` |
+| `--lang <code>` | primary language, e.g. `es` |
+| `--hours <n>` | at most n estimated hours |
+| `--university <name>` | e.g. `duke` |
 
-Registrá el servidor con la **ruta absoluta del binario de Bun** — el proceso que lanza el
-MCP no hereda tu PATH, así que `"command": "bun"` falla con "Failed to connect":
+### Global flags
+
+| Flag | Default | Purpose |
+|---|---|---|
+| `--json` | off | Structured output. Implied when stdout is piped |
+| `--out <dir>` | platform data dir | Where to write |
+| `--limit <n>` | all | Stop after n items |
+| `--lang es,en` | `es,es-LA,en` | Subtitle preference order |
+| `--quiet` | off | No progress output |
+
+## Library map
+
+`coursera map` cross-references your library against Coursera's own taxonomy:
+
+```
+215 courses in your library
+levels: beginner 99   intermediate 66   advanced 7   undeclared 43
+business                         158  ████████████████████████ 1366 h
+data-science                      90  ██████████████            735 h
+computer-science                  35  █████                     255 h
+
+SPECIALIZATIONS (15)
+  ✓ AI Product Management                            3/3  complete
+  ○ Digital Product Management                       3/5  2 missing
+```
+
+Two caveats it prints itself, because both are real: a course filed under two branches
+counts in both, and hours come from Coursera's free-text workload field, which 78 of 215
+courses do not state readably.
+
+## MCP for Claude Code
+
+Register the server with the **absolute path to the Bun binary** — the process that
+launches MCP servers does not inherit your PATH, so `"command": "bun"` fails with
+"Failed to connect":
 
 ```json
 {
   "mcpServers": {
     "coursera": {
-      "command": "C:/Users/<vos>/.bun/bin/bun.exe",
-      "args": [
-        "run",
-        "C:/Users/<vos>/klipso_reverse/Cli-propios/coursera-cli/src/mcp/index.ts"
-      ]
+      "command": "C:/Users/you/.bun/bin/bun.exe",
+      "args": ["C:/Users/you/klipso_reverse/Cli-propios/coursera-cli/src/mcp/index.ts"]
     }
   }
 }
 ```
 
-Tools que expone:
-
-| Tool | Devuelve |
+| Tool | Returns |
 |---|---|
-| `session_status` | Si la sesión está viva, de dónde salió, cuántos cursos ve |
-| `list_courses` | Tus cursos, filtrables por texto |
-| `get_library_map` | Ramas, horas y avance en tus especializaciones |
-| `get_course_outline` | El árbol del curso |
-| `fetch_transcripts` | Baja el curso y devuelve el **índice** de lo bajado |
-| `read_transcript` | El texto de **un** item |
+| `session_status` | Whether the session is alive, where it came from, how many courses it sees |
+| `list_courses` | Your courses, with the same filters as the CLI |
+| `get_library_map` | Branches, levels, institutions, specialization progress |
+| `get_course_outline` | The course tree plus institution and instructors |
+| `fetch_transcripts` | Downloads a course, returns the **index** of what landed |
+| `read_transcript` | The text of **one** item |
 
-`fetch_transcripts` devuelve rutas, no texto: un curso son ~130 KB (≈35k tokens) y
-mandarlo entero a la conversación la reventaría. Para leer, `read_transcript`.
+`fetch_transcripts` returns paths, not text: a course is ~130 KB (≈35k tokens) and sending
+it whole would blow up the conversation. To read, use `read_transcript`.
 
-## Qué baja, y qué no
+## What it downloads
 
-Por defecto baja **texto**: `.txt` con el transcript de cada video y `.reading.md` con las
-lecturas. No baja video — un curso son gigabytes en mp4 contra ~130 KB en texto, y para
-estudiar o resumir el texto tiene la misma señal.
+Text, by default: a `.txt` transcript per video and a `.reading.md` per reading. No video —
+a course is gigabytes as MP4 against ~130 KB as text, and for studying or summarizing the
+text carries the same signal.
 
-Los archivos quedan organizados por módulo, numerados en orden, más un `manifest.json` con
-el índice.
+Files are organized per module, numbered in order, with a `manifest.json` index.
 
-## Módulos con candado
+## Locked modules
 
-Cuando un curso está en preview o tiene semanas bloqueadas, la API principal **censura el
-tipo** de esos items: los devuelve vacíos, y los extractores que filtran por tipo se saltan
-el 75% del temario creyéndolo vacío.
+When a course is in preview or has locked weeks, the aggregating API **censors the item
+type**: it returns them empty, and extractors that filter by type skip 75% of the syllabus
+believing it is empty.
 
-Este CLI no filtra: le pregunta directo a los microservicios de video y de lecturas por cada
-item, y se queda con lo que responda. Ver `ARCHITECTURE` en el repo de recon original.
+This CLI does not filter. It asks the video and reading microservices about every item
+directly and keeps whatever answers.
 
-## Documentación
+## Docs
 
-| Archivo | Qué tiene |
+| File | Contents |
 |---|---|
-| `SPEC.md` | El spec de v1: problema, decisiones, alcance, verificación |
-| `CONTEXT.md` | Glosario del dominio |
-| `RESEARCH.md` | El recon del portal: endpoints, gotchas, qué está vivo |
-| `endpoints.json` | Las rutas. Si Coursera deprecia una versión, se arregla acá |
+| `SPEC.md` | The spec: problem, decisions, scope, verification |
+| `CONTEXT.md` | Domain glossary |
+| `RESEARCH.md` | Portal recon: endpoints, gotchas, what is alive |
+| `CHANGELOG.md` | What changed in each version |
+| `endpoints.json` | The routes. A deprecation is fixed here, not in the code |
 
 ## Tests
 
 ```bash
-bun test          # 31 tests contra respuestas reales capturadas de la API
+bun test          # 76 tests against responses captured live from the API
 bun run typecheck
 ```
 
 ## Legal
 
-Accede sólo a **tu propia cuenta** con **tu propia sesión**, a los cursos en los que ya
-estás inscrito. El material descargado tiene copyright de Coursera y de sus universidades:
-es para tu estudio personal. No lo redistribuyas.
+Reaches **your own account** with **your own session**, for courses you are already
+enrolled in. Downloaded material is copyrighted by Coursera and its universities: it is for
+your personal study. Do not redistribute it.

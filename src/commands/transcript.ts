@@ -1,36 +1,34 @@
-import { emit, fail, type Flags } from "../output.ts";
+import { fail } from "../errors.ts";
+import { emit, isHuman, type Flags } from "../output.ts";
 import { downloadCourse } from "../services/download.ts";
 import { requireSession } from "../session.ts";
 
 export async function run(flags: Flags): Promise<void> {
   const slug = flags.positional[0];
-  if (!slug) fail("falta el slug del curso", 'probá: coursera courses --buscar "machine learning"');
+  if (!slug) fail("MISSING_ARGUMENT", "expected a course slug");
 
   const { client } = requireSession();
-  const verbose = process.stdout.isTTY && flags.output !== "json";
+  const showProgress = isHuman(flags) && !flags.quiet;
 
   const manifest = await downloadCourse(client, slug, {
     outDir: flags.values.out,
     langs: flags.values.lang?.split(","),
     limit: flags.values.limit ? Number(flags.values.limit) : undefined,
-    onProgress: verbose
+    onProgress: showProgress
       ? (done, total, item) => {
           process.stderr.write(`\r[${done}/${total}] ${item.name.slice(0, 60).padEnd(60)}`);
         }
       : undefined,
   });
-  if (verbose) process.stderr.write("\n");
+  if (showProgress) process.stderr.write("\n");
 
   const bytes = manifest.items.reduce((sum, item) => sum + item.bytes, 0);
-  emit(
-    flags.output,
-    { ...manifest, totalBytes: bytes },
-    () =>
-      [
-        `curso     ${manifest.slug}`,
-        `carpeta   ${manifest.dir}`,
-        `bajados   ${manifest.items.length} items (${(bytes / 1024).toFixed(1)} KB)`,
-        `salteados ${manifest.skipped.length}`,
-      ].join("\n"),
+  emit(flags, { ...manifest, totalBytes: bytes }, () =>
+    [
+      `course     ${manifest.slug}`,
+      `folder     ${manifest.dir}`,
+      `downloaded ${manifest.items.length} items (${(bytes / 1024).toFixed(1)} KB)`,
+      `skipped    ${manifest.skipped.length}`,
+    ].join("\n"),
   );
 }

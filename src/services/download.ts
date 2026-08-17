@@ -1,12 +1,14 @@
 /**
- * Orquestador de descarga: árbol → plan → sondeo → disco → manifiesto.
+ * Download orchestrator: tree → plan → probe → disk → manifest.
  *
- * El manifiesto es lo que hace que el MCP pueda leer un item suelto después
- * sin volver a pegarle a la API (las URLs firmadas ya habrían expirado).
+ * The manifest is what lets a later read find one item without going back to
+ * the API, where the signed URLs would already have expired. A separate
+ * locations index remembers WHERE each course was downloaded, so `--out` does
+ * not hide a course from the reader.
  */
 import fs from "node:fs";
 import path from "node:path";
-import { DATA_DIR, DEFAULT_SUBTITLE_LANGS, RATE_LIMIT_MS } from "../constants.ts";
+import { DATA_DIR, DEFAULT_SUBTITLE_LANGS, LOCATIONS_FILE, RATE_LIMIT_MS } from "../constants.ts";
 import type { Client } from "../http.ts";
 import type { Outline, PlannedItem } from "../types.ts";
 import { fetchOutline, planItems } from "./courses.ts";
@@ -33,7 +35,7 @@ export interface Manifest {
 export interface DownloadOptions {
   outDir?: string;
   langs?: string[];
-  /** Corta después de N items. Para probar sin bajar el curso entero. */
+  /** Stop after N items. For trying a course without pulling all of it. */
   limit?: number;
   onProgress?: (done: number, total: number, item: PlannedItem) => void;
 }
@@ -46,10 +48,40 @@ function manifestPath(dir: string): string {
   return path.join(dir, "manifest.json");
 }
 
+type Locations = Record<string, string>;
+
+function readLocations(): Locations {
+  if (!fs.existsSync(LOCATIONS_FILE)) return {};
+  try {
+    return JSON.parse(fs.readFileSync(LOCATIONS_FILE, "utf8")) as Locations;
+  } catch {
+    return {};
+  }
+}
+
+function rememberLocation(slug: string, dir: string): void {
+  fs.mkdirSync(path.dirname(LOCATIONS_FILE), { recursive: true });
+  fs.writeFileSync(
+    LOCATIONS_FILE,
+    JSON.stringify({ ...readLocations(), [slug]: dir }, null, 2),
+    "utf8",
+  );
+}
+
+/**
+ * Finds a downloaded course. An explicit `outDir` always wins; otherwise the
+ * last known location is used, falling back to the default directory.
+ */
 export function readManifest(slug: string, outDir?: string): Manifest | null {
-  const file = manifestPath(courseDir(slug, outDir));
-  if (!fs.existsSync(file)) return null;
-  return JSON.parse(fs.readFileSync(file, "utf8")) as Manifest;
+  const candidates = outDir
+    ? [courseDir(slug, outDir)]
+    : [readLocations()[slug], courseDir(slug)].filter((dir): dir is string => Boolean(dir));
+
+  for (const dir of candidates) {
+    const file = manifestPath(dir);
+    if (fs.existsSync(file)) return JSON.parse(fs.readFileSync(file, "utf8")) as Manifest;
+  }
+  return null;
 }
 
 const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
@@ -94,6 +126,7 @@ export async function downloadCourse(
     skipped,
   };
   fs.writeFileSync(manifestPath(dir), JSON.stringify(manifest, null, 2), "utf8");
+  rememberLocation(slug, dir);
   return manifest;
 }
 

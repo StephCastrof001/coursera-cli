@@ -1,77 +1,106 @@
-# CONTEXT — lenguaje del dominio
+# CONTEXT — domain language
 
-Glosario del proyecto. Sin detalles de implementación: si algo describe *cómo* está hecho,
-va en `SPEC.md` o `RESEARCH.md`, no acá.
+The project's glossary. No implementation details: if something describes *how* it is
+built, it belongs in `SPEC.md` or `RESEARCH.md`.
 
 ---
 
 ## Membership
 
-El vínculo entre una cuenta y un curso. **No es el curso.** Un `element` de
-`memberships.v1` es una membership: dice que esta cuenta está asociada a este curso, con
-un `role` (`LEARNER`). No dice nada sobre el contenido ni sobre el avance.
+The link between an account and a course. **It is not the course.** An element of
+`memberships.v1` is a membership: it says this account is attached to this course with a
+`role` (`LEARNER`). It says nothing about content or progress.
 
-La cuenta de referencia tiene **215 memberships**.
+The reference account holds **215 memberships**.
 
-## Curso
+## Course
 
-El contenido: nombre, temario, materiales. Vive en `linked` bajo `courses.v1`, no en
-`elements`. Cuando el usuario dice "mis cursos" se refiere a los cursos alcanzados por sus
-memberships.
+The content: name, syllabus, materials. It arrives under `linked` as `courses.v1`, not in
+`elements`. When the user says "my courses" they mean the courses their memberships reach.
 
 ## Slug
 
-El identificador legible que aparece en la URL: `machine-learning-foundations-for-product-managers`.
-Es lo que escribe una persona y lo que aceptan todos los comandos.
+The readable identifier in the URL: `machine-learning-foundations-for-product-managers`.
+It is what a person types and what every command accepts.
 
 ## courseId
 
-El identificador interno, un hash: `Bob8HYsxEeuqDwqw9ez0Fw`. Es lo que exige la API para
-pedir contenido. El usuario nunca lo escribe: `courses --buscar` traduce de slug a id.
+The internal identifier, a hash: `Bob8HYsxEeuqDwqw9ez0Fw`. It is what the API demands. The
+user never types it: `courses --search` translates slug to id.
 
-## Módulo → Lección → Item
+## Branch and sub-branch
 
-La jerarquía del temario. **Item** es la unidad mínima —un video, una lectura, un quiz— y su
-`itemId` es la llave de todo lo demás: sin él no se puede pedir ni un subtítulo ni un
-suplemento.
+Coursera's own taxonomy: 11 branches (`business`, `data-science`, `computer-science`…),
+each with sub-branches (`machine-learning`, `finance`, `design-and-product`…). A course can
+belong to several. **A branch is not a category of ours** — it is Coursera's, and it is
+reported as given.
 
-## Tipo de item
+## Level
 
-Qué clase de contenido es: `lecture`, `supplement`, `staffGraded`, `discussionPrompt`,
-`coach`, `phasedPeer`. Y un séptimo valor que no viene de Coursera:
+Declared difficulty: `BEGINNER`, `INTERMEDIATE` or `ADVANCED`. Many courses declare none,
+and that absence is its own value — never inferred from anything else.
+
+## Workload
+
+Effort as free text, written by each course team: "4 weeks of study, 2-3 hours/week",
+"2 hours", "4 semanas de estudio, 2-4 horas/semana". It is prose, not a number. Turning it
+into hours is an estimate, and where the text is ambiguous the estimate is refused.
+
+## Specialization
+
+An ordered sequence of courses leading to a joint certificate. It is where real progression
+lives: since Coursera does not rank difficulty reliably, the order of courses inside a
+specialization is the closest thing to a learning path.
+
+The reference account belongs to **15 specializations**.
+
+## Institution and instructor
+
+The university or company behind a course (`partners.v1`) and who teaches it
+(`instructors.v1`). Neither rides along with a course listing: both are separate lookups.
+
+## Module → Lesson → Item
+
+The syllabus hierarchy. **Item** is the smallest unit — a video, a reading, a quiz — and its
+`itemId` unlocks everything else: without it you cannot request a subtitle or a supplement.
+
+## Item type
+
+What kind of content it is: `lecture`, `supplement`, `staffGraded`, `discussionPrompt`,
+`coach`, `phasedPeer`. Plus a seventh value that does not come from Coursera:
 
 ## unknown
 
-Un item cuyo tipo el agregador **censuró** —lo devuelve vacío— porque el curso está en
-preview o esa semana está bloqueada. `unknown` significa "no sé qué es", nunca "está vacío".
-Tratarlo como descartable es el error que hace que un extractor se salte el 75% de un curso.
+An item whose type the aggregator **censored** — returned empty — because the course is in
+preview or that week is locked. `unknown` means "I don't know what this is", never "this is
+empty". Treating it as discardable is the mistake that makes an extractor skip 75% of a
+course.
 
 ## Transcript
 
-El texto de un video, derivado de sus subtítulos `.vtt`. Es el producto principal: un curso
-pesa gigabytes en video y ~130 KB en transcripts, y para estudiar o resumir el texto tiene
-toda la señal. Un transcript **no** es el archivo `.vtt` crudo: es el texto ya limpio, sin
-timestamps ni marcas de cue.
+The text of a video, derived from its `.vtt` subtitles. It is the main product: a course is
+gigabytes as video and ~130 KB as transcripts, and for studying or summarizing the text
+carries all the signal. A transcript is **not** the raw `.vtt`: it is the cleaned text,
+without timestamps or cue marks.
 
-## Lectura
+## Reading
 
-El contenido no audiovisual de un item `supplement`. Llega como CML (el formato de markup
-propio de Coursera) y se guarda como markdown.
+The non-video content of a `supplement` item. It arrives as CML (Coursera's own markup) and
+is stored as markdown.
 
-## Sesión
+## Session
 
-La cookie `CAUTH` que autentica todas las llamadas. Una sesión puede estar **capturada**
-(existe en disco) y aun así **muerta** — capturar no es funcionar, por eso se verifica
-contra un endpoint real antes de darla por buena. Dura días, no horas.
+The `CAUTH` cookie that authenticates every call. A session can be **captured** (present on
+disk) and still be **dead** — capturing is not working, which is why it is verified against
+a real endpoint before being trusted. It lasts days, not hours.
 
-## Sondeo
+## Probe
 
-Preguntarle directo a un microservicio por un item, en vez de confiar en lo que dijo el
-agregador. Es la forma de averiguar qué es un item `unknown`: si el servicio de videos
-responde, era un video.
+Asking a microservice about one item directly instead of trusting what the aggregator said.
+It is how an `unknown` item gets identified: if the video service answers, it was a video.
 
-## Manifiesto
+## Manifest
 
-El índice de lo que quedó bajado en una carpeta de curso. Existe porque las URLs de media
-expiran: sin manifiesto no habría forma de volver a encontrar un item ya descargado sin
-pedirle todo de nuevo a la API.
+The index of what a course folder holds. It exists because media URLs expire: without it
+there would be no way to find an already-downloaded item again without asking the API for
+everything anew.

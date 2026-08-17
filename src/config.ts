@@ -1,21 +1,22 @@
 /**
- * Carga de la sesión. La cookie CAUTH puede venir de tres lugares, en orden:
- *   1. env COURSERA_CAUTH        — para CI / EC2 sin GUI
- *   2. store propio del CLI      — lo que escribe `coursera login`
- *   3. store del repo de recon    — la sesión que ya tenías capturada en Python
+ * Session loading. The CAUTH cookie can come from three places, in order:
+ *   1. COURSERA_CAUTH env var   — CI, servers, anything headless
+ *   2. this CLI's own store
+ *   3. the Python recon repo's store
  *
- * El paso 3 existe para no obligar a re-loguearse: el token dura días.
+ * Step 3 exists so an existing capture keeps working: the cookie lasts days.
  */
 import fs from "node:fs";
-import { CONFIG_DIR, RECON_SESSION_FILE, SESSION_FILE } from "./constants.ts";
+import path from "node:path";
+import { LEGACY_SESSION_FILE, SESSION_FILE } from "./constants.ts";
 
-export type SessionSource = "env" | "cli" | "recon";
+export type SessionSource = "env" | "cli" | "legacy";
 
 export interface Session {
   cauth: string;
   source: SessionSource;
   capturedAt?: string;
-  /** Antigüedad en horas al momento de leer. Indefinido si el store no la trae. */
+  /** Age in hours at read time. Undefined when the store does not record it. */
   ageHours?: number;
 }
 
@@ -47,7 +48,7 @@ export function loadSession(): Session | null {
 
   for (const [file, source] of [
     [SESSION_FILE, "cli"],
-    [RECON_SESSION_FILE, "recon"],
+    [LEGACY_SESSION_FILE, "legacy"],
   ] as const) {
     const store = readStore(file);
     if (!store?.cauth) continue;
@@ -58,7 +59,7 @@ export function loadSession(): Session | null {
 }
 
 export function saveSession(cauth: string): string {
-  fs.mkdirSync(CONFIG_DIR, { recursive: true });
+  fs.mkdirSync(path.dirname(SESSION_FILE), { recursive: true });
   const body = { cauth, capturedAt: new Date().toISOString() };
   fs.writeFileSync(SESSION_FILE, JSON.stringify(body, null, 2), "utf8");
   return SESSION_FILE;

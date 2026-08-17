@@ -2,22 +2,22 @@ import { emit, type Flags } from "../output.ts";
 import { checkSession } from "../session.ts";
 
 const ORIGIN: Record<string, string> = {
-  env: "variable de entorno COURSERA_CAUTH",
-  cli: "store propio del CLI",
-  recon: "store heredado de coursera_recon (Python)",
+  env: "COURSERA_CAUTH environment variable",
+  cli: "this CLI's own store",
+  legacy: "inherited store from coursera_recon (Python)",
 };
 
 export async function run(flags: Flags): Promise<void> {
   const status = await checkSession();
-  emit(flags.output, status, () => {
+  emit(flags, status, () => {
     const lines = [
-      `origen      ${ORIGIN[status.source] ?? status.source}`,
-      `capturada   ${status.capturedAt ?? "(desconocida)"}`,
-      `antigüedad  ${status.ageHours !== undefined ? `${status.ageHours} h` : "(desconocida)"}`,
-      `estado      ${status.alive ? "VIVA" : "MUERTA"}`,
+      `source     ${ORIGIN[status.source] ?? status.source}`,
+      `captured   ${status.capturedAt ?? "(unknown)"}`,
+      `age        ${status.ageHours !== undefined ? `${status.ageHours} h` : "(unknown)"}`,
+      `state      ${status.alive ? "ALIVE" : "DEAD"}`,
     ];
-    if (status.alive) lines.push(`cursos      ${status.totalCourses}`);
-    else lines.push(`detalle     ${status.detail ?? ""}`);
+    if (status.alive) lines.push(`courses    ${status.totalCourses}`);
+    else lines.push(`detail     ${status.detail ?? ""}`);
     return lines.join("\n");
   });
   if (!status.alive) process.exitCode = 1;

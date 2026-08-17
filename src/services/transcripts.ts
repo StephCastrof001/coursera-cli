@@ -1,18 +1,19 @@
 /**
- * Extracción de transcripts por sondeo polimórfico.
+ * Transcript extraction by polymorphic probing.
  *
- * El agregador censura el tipo de los items en cursos en preview, así que no
- * se puede saber de antemano qué es cada item. La estrategia es preguntarle
- * directo a los microservicios atómicos:
- *   Sonda A → onDemandLectureVideos.v1  (video: subtítulos .vtt)
- *   Sonda B → onDemandSupplements.v1    (lectura: CML → markdown)
- * Lo que responda 200 gana. Si ninguna responde, el item se salta.
+ * The aggregator censors item types on preview courses, so there is no way to
+ * know upfront what an item is. The strategy is to ask the atomic
+ * microservices directly:
+ *   Probe A → onDemandLectureVideos.v1  (video: .vtt subtitles)
+ *   Probe B → onDemandSupplements.v1    (reading: CML → markdown)
+ * Whichever answers 200 wins. If neither does, the item is skipped.
  *
- * Gotcha 7: las URLs de media van firmadas y expiran. No se puede guardar el
- * plan hoy y bajar mañana — hay que pedir y bajar en la misma pasada.
+ * Recon gotcha #7: media URLs are signed and expire. You cannot save the plan
+ * today and download tomorrow — ask and fetch in the same pass.
  */
+import { AppError } from "../cli/foundation/error-map.ts";
 import { DEFAULT_SUBTITLE_LANGS } from "../constants.ts";
-import { CourseraError, type Client } from "../http.ts";
+import type { Client } from "../http.ts";
 import type { Envelope } from "../types.ts";
 import { endpoint } from "./endpoints.ts";
 
@@ -35,14 +36,14 @@ interface SupplementPayload extends Envelope {
 
 export interface SubtitleChoice {
   lang: string;
-  /** Ruta RELATIVA tal como la manda la API. El cliente le antepone el host. */
+  /** RELATIVE path exactly as the API returns it. The client prepends the host. */
   path: string;
 }
 
 /**
- * Elige idioma de subtítulos. Prueba las preferencias en orden; si ninguna
- * existe, cae al primero disponible antes que devolver nada — un transcript
- * en otro idioma es más útil que ningún transcript.
+ * Picks the subtitle language. Tries the preferences in order; if none exist it
+ * falls back to whatever is available rather than returning nothing — a
+ * transcript in another language beats no transcript.
  */
 export function pickSubtitle(
   payload: VideoPayload,
@@ -60,7 +61,7 @@ export function pickSubtitle(
 
 const TIMESTAMP = /^\d{2}:\d{2}:\d{2}[.,]\d{3}\s+-->/;
 
-/** Convierte .vtt a texto corrido: sin cues, sin timestamps, sin líneas repetidas. */
+/** Turns .vtt into running text: no cues, no timestamps, no repeated lines. */
 export function vttToText(vtt: string): string {
   const lines: string[] = [];
   for (const rawLine of vtt.split(/\r?\n/)) {
@@ -74,10 +75,10 @@ export function vttToText(vtt: string): string {
   return lines.join(" ").replace(/\s{2,}/g, " ").trim();
 }
 
-/** CML renderizado → markdown pobre pero legible. No es un conversor general. */
+/** Rendered CML → poor but readable markdown. Not a general-purpose converter. */
 export function supplementToMarkdown(payload: SupplementPayload): string | null {
-  const html = payload.linked?.["openCourseAssets.v1"]?.[0]?.definition
-    ?.renderableHtmlWithMetadata?.renderableHtml;
+  const html = payload.linked?.["openCourseAssets.v1"]?.[0]?.definition?.renderableHtmlWithMetadata
+    ?.renderableHtml;
   if (!html) return null;
   return html
     .replace(/<h([1-6])[^>]*>/g, (_, level: string) => `\n\n${"#".repeat(Number(level))} `)
@@ -96,10 +97,10 @@ export function supplementToMarkdown(payload: SupplementPayload): string | null 
     .trim();
 }
 
-/** Nombre de archivo seguro en Windows: sin < > : " / \ | ? * ni puntos finales. */
+/** Windows-safe file name: no < > : " / \ | ? * or control chars, no trailing dots. */
 export function safeName(name: string, maxLength = 80): string {
   return name
-    .replace(/[<>:"/\\|?*\x00-\x1f]/g, "")
+    .replace(/[<>:"/\\|?*]|\p{Cc}/gu, "")
     .replace(/\s+/g, " ")
     .trim()
     .replace(/\.+$/, "")
@@ -112,7 +113,7 @@ export type ProbeResult =
   | { kind: "supplement"; markdown: string }
   | { kind: "empty" };
 
-/** Sondeo dual de un item. Ninguna sonda que falle debe abortar la corrida. */
+/** Dual probe for one item. A failing probe must never abort the whole run. */
 export async function probeItem(
   client: Client,
   courseId: string,
@@ -129,7 +130,7 @@ export async function probeItem(
       return { kind: "lecture", lang: choice.lang, text: vttToText(vtt) };
     }
   } catch (error) {
-    if (error instanceof CourseraError && error.kind === "unauthorized") throw error;
+    if (error instanceof AppError && error.code === "SESSION_EXPIRED") throw error;
   }
 
   try {
@@ -139,7 +140,7 @@ export async function probeItem(
     const markdown = supplementToMarkdown(supplement);
     if (markdown) return { kind: "supplement", markdown };
   } catch (error) {
-    if (error instanceof CourseraError && error.kind === "unauthorized") throw error;
+    if (error instanceof AppError && error.code === "SESSION_EXPIRED") throw error;
   }
 
   return { kind: "empty" };

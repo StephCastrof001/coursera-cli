@@ -1,13 +1,13 @@
 /**
- * Mapa de la biblioteca: en qué ramas te formaste y qué especializaciones
- * dejaste a medias.
+ * Library map: which branches you actually studied, how hard the material was,
+ * and which specializations you left half-finished.
  *
- * Coursera no expone un campo de dificultad. Lo que sí manda es `domainTypes`
- * (rama + subrama) y `workload` en prosa. La progresión real no está en un
- * número de nivel: está en el orden de los cursos dentro de una especialización.
+ * Coursera does expose a `level` (BEGINNER / INTERMEDIATE / ADVANCED) but many
+ * courses leave it empty, so it is reported as declared — never inferred. The
+ * real progression is the order of courses inside a specialization.
  */
 import type { Client } from "../http.ts";
-import type { Course, Envelope } from "../types.ts";
+import type { Course, CourseLevel, Envelope } from "../types.ts";
 import { endpoint } from "./endpoints.ts";
 
 export interface Specialization {
@@ -18,9 +18,9 @@ export interface Specialization {
 }
 
 export interface SpecializationProgress extends Specialization {
-  /** Cuántos de sus cursos están en tu biblioteca. */
+  /** How many of its courses are in your library. */
   enrolled: number;
-  /** Cuántos le faltan para estar completa. */
+  /** How many are missing to complete it. */
   missing: number;
 }
 
@@ -33,10 +33,12 @@ export interface DomainGroup {
   domainId: string;
   courses: number;
   hours: number;
-  /** Cuántos de esos cursos no traen workload parseable. */
+  /** Courses in this branch with no readable workload. */
   unknownWorkload: number;
   subdomains: Subdomain[];
 }
+
+export type LevelTally = Record<CourseLevel | "UNDECLARED", number>;
 
 const HOUR = "(?:hours?|horas?)";
 const HOURS_TOTAL = new RegExp(`(\\d+(?:\\.\\d+)?)\\s*${HOUR}\\s*(?:total|to complete|en total)`, "i");
@@ -58,17 +60,16 @@ const midpoint = (low: string, high?: string): number =>
 const round1 = (value: number): number => Math.round(value * 10) / 10;
 
 /**
- * Convierte el workload en prosa a horas estimadas.
+ * Turns the prose workload into estimated hours.
  *
- * Coursera no tiene un formato: lo escriben los equipos de cada curso, en
- * inglés y en español, con totales, rangos por semana, o por módulo. Se
- * reconocen las formas medidas en la biblioteca real; cuando el texto es
- * ambiguo ("2", "4-6 hours/week" sin decir cuántas semanas) devuelve null en
- * vez de inventar un número.
+ * There is no format: each course team writes it their own way, in English and
+ * Spanish, as totals, weekly ranges, or per module. The shapes recognized here
+ * were measured against a real 215-course library. When the text is genuinely
+ * ambiguous ("2", or hours per week without saying how many weeks) this returns
+ * null rather than inventing a number.
  *
- * Ante un rango se toma el punto medio, y si el texto describe varios cursos
- * se toma el primero. Es una estimación: sirve para comparar ramas entre sí,
- * no para planificar una agenda.
+ * Ranges collapse to their midpoint, and text describing several courses uses
+ * the first. It is an estimate: good for comparing branches, not for planning.
  */
 export function parseWorkloadHours(workload: string | undefined): number | null {
   if (!workload) return null;
@@ -82,14 +83,10 @@ export function parseWorkloadHours(workload: string | undefined): number | null 
 
   const weeks = WEEKS.exec(text);
   const perWeek = PER_WEEK.exec(text);
-  if (weeks?.[1] && perWeek?.[1]) {
-    return round1(Number(weeks[1]) * midpoint(perWeek[1], perWeek[2]));
-  }
+  if (weeks?.[1] && perWeek?.[1]) return round1(Number(weeks[1]) * midpoint(perWeek[1], perWeek[2]));
 
   const modules = MODULES.exec(text);
-  if (modules?.[1] && modules[2]) {
-    return round1(Number(modules[1]) * midpoint(modules[2], modules[3]));
-  }
+  if (modules?.[1] && modules[2]) return round1(Number(modules[1]) * midpoint(modules[2], modules[3]));
 
   const plain = PLAIN_HOURS.exec(text);
   if (plain?.[1]) return Number(plain[1]);
@@ -98,12 +95,15 @@ export function parseWorkloadHours(workload: string | undefined): number | null 
 }
 
 /**
- * Agrupa por rama. Un curso con dos dominios cuenta en los dos: describe un
- * área de formación, no reparte una torta. Los totales por rama suman más que
- * el total de cursos, y está bien que así sea.
+ * Groups by branch. A course with two domains counts in both: this describes
+ * areas of study, it does not split a pie. Branch totals add up to more than
+ * the course count, and that is correct.
  */
 export function groupByDomain(courses: Course[]): DomainGroup[] {
-  const groups = new Map<string, { courses: Set<string>; hours: number; unknown: number; subs: Map<string, Set<string>> }>();
+  const groups = new Map<
+    string,
+    { courses: Set<string>; hours: number; unknown: number; subs: Map<string, Set<string>> }
+  >();
 
   for (const course of courses) {
     const hours = parseWorkloadHours(course.workload);
@@ -144,6 +144,17 @@ export function groupByDomain(courses: Course[]): DomainGroup[] {
     .sort((a, b) => b.courses - a.courses);
 }
 
+/** Counts declared difficulty. Undeclared is its own bucket, never guessed. */
+export function tallyLevels(courses: Course[]): LevelTally {
+  const tally: LevelTally = { BEGINNER: 0, INTERMEDIATE: 0, ADVANCED: 0, UNDECLARED: 0 };
+  for (const course of courses) {
+    const level = course.level;
+    if (level === "BEGINNER" || level === "INTERMEDIATE" || level === "ADVANCED") tally[level]++;
+    else tally.UNDECLARED++;
+  }
+  return tally;
+}
+
 export function parseSpecializations(payload: Envelope): Specialization[] {
   const rows = (payload.linked?.["onDemandSpecializations.v1"] ?? []) as Array<Partial<Specialization>>;
   return rows
@@ -156,7 +167,7 @@ export function parseSpecializations(payload: Envelope): Specialization[] {
     }));
 }
 
-/** Cruza tus especializaciones contra tu biblioteca: qué te falta para cerrarlas. */
+/** Crosses your specializations against your library: what is left to finish one. */
 export function specializationProgress(
   specs: Specialization[],
   courses: Course[],
@@ -171,6 +182,8 @@ export function specializationProgress(
 }
 
 export async function fetchSpecializations(client: Client): Promise<Specialization[]> {
-  const payload = await client.getJson<Envelope>(endpoint("specialization_memberships", { limit: "50" }));
+  const payload = await client.getJson<Envelope>(
+    endpoint("specialization_memberships", { limit: "50" }),
+  );
   return parseSpecializations(payload);
 }

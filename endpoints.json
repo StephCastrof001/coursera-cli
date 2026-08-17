@@ -1,9 +1,13 @@
 {
-  "_comment": "Rutas verificadas 2026-08-16 contra cuenta propia. Cuando Coursera deprecie una version, el fix es aca, no en el codigo. Ver RESEARCH.md.",
+  "_comment": "Routes verified 2026-08-16 against a real account. When Coursera deprecates a version, the fix belongs here, not in the code. See RESEARCH.md.",
   "base": "https://www.coursera.org",
   "course_by_slug": "/api/onDemandCourses.v1/?q=slug&slug={slug}",
-  "memberships": "/api/memberships.v1?q=me&includes=courseId,course&fields=courseId,courses.v1(name,slug,courseType,domainTypes,workload,primaryLanguages,partnerIds)&limit={limit}&start={start}",
+  "course_metadata": "/api/courses.v1?q=slug&slug={slug}&fields=level,certificates,description,photoUrl,instructorIds,partnerIds",
+  "memberships": "/api/memberships.v1?q=me&includes=courseId,course&fields=courseId,courses.v1(name,slug,courseType,level,certificates,domainTypes,workload,primaryLanguages,partnerIds,instructorIds)&limit={limit}&start={start}",
   "specialization_memberships": "/api/onDemandSpecializationMemberships.v1?q=me&includes=s12nId&fields=s12nId,onDemandSpecializations.v1(name,slug,courseIds)&limit={limit}",
+  "partners": "/api/partners.v1?ids={ids}&fields=name,shortName,location",
+  "instructors": "/api/instructors.v1?ids={ids}&fields=fullName,title,department",
+  "domains": "/api/domains.v1?limit=50",
   "materials": "/api/onDemandCourseMaterials.v2/?q=slug&slug={slug}&includes=modules,lessons,items&fields=moduleIds,onDemandCourseMaterialModules.v1(name,slug,lessonIds),onDemandCourseMaterialLessons.v1(name,slug,itemIds),onDemandCourseMaterialItems.v2(name,slug,contentSummary)",
   "lecture_video": "/api/onDemandLectureVideos.v1/{course_id}~{item_id}?includes=video&fields=onDemandVideos.v1(sources,subtitles,subtitlesVtt)",
   "supplement": "/api/onDemandSupplements.v1/{course_id}~{item_id}?includes=asset&fields=content"

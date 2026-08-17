@@ -1,58 +1,75 @@
 #!/usr/bin/env bun
 /**
- * Dispatcher. Un archivo por comando en src/commands/.
+ * Dispatcher. One file per command under src/commands/.
  *
- * No usa Bun.spawn para rutear (patrón del framework para runtime híbrido):
- * v1 no toca Playwright, así que todo corre en el mismo proceso. Si más
- * adelante entra `login` con browser, ese comando sí se rutea a Node+tsx
- * según ADR-0001.
+ * Commands run in-process: v1 never touches Playwright. If a browser-based
+ * `login` lands later, that one command routes to Node+tsx per ADR-0001 of the
+ * klipso_reverse framework.
  */
-import { CourseraError } from "./src/http.ts";
+import { AppError } from "./src/cli/foundation/error-map.ts";
+import { VERSION } from "./src/constants.ts";
 import { parseFlags } from "./src/output.ts";
 
-const COMMANDS: Record<string, () => Promise<{ run: (flags: ReturnType<typeof parseFlags>) => Promise<void> }>> = {
+type CommandModule = { run: (flags: ReturnType<typeof parseFlags>) => Promise<void> };
+
+const COMMANDS: Record<string, () => Promise<CommandModule>> = {
   session: () => import("./src/commands/session.ts"),
+  doctor: () => import("./src/commands/doctor.ts"),
   courses: () => import("./src/commands/courses.ts"),
   map: () => import("./src/commands/map.ts"),
   course: () => import("./src/commands/course.ts"),
   transcript: () => import("./src/commands/transcript.ts"),
 };
 
-const HELP = `coursera — tus cursos de Coursera desde la terminal
+const HELP = `coursera ${VERSION} — your Coursera courses from the terminal
 
-  coursera session                          estado de la sesión (viva/muerta, antigüedad)
-  coursera courses [--buscar <texto>]       tus cursos; con --buscar filtra por nombre o slug
-  coursera map [--detalle]                  en qué ramas te formaste y qué especializaciones dejaste a medias
-  coursera course <slug>                    árbol de módulos, lecciones e items
-  coursera transcript <slug> [--out <dir>]  baja transcripts y lecturas
+  coursera session                          session state: alive or dead, and how old
+  coursera doctor                           diagnose session, routes and paths
+  coursera courses [filters]                your courses
+  coursera map [--detail]                   branches you studied and half-finished specializations
+  coursera course <slug>                    syllabus, institution and instructors
+  coursera transcript <slug> [--out <dir>]  download transcripts and readings
 
-Flags globales:
-  --output json|table|auto   default auto (tabla en terminal, json si redirigís)
-  --limit <n>                corta después de n items (transcript)
-  --lang es,en               orden de preferencia de subtítulos
+Filters for \`courses\`:
+  --search <text>          name or slug; several words need no quotes
+  --level beginner|intermediate|advanced
+  --domain <id>            branch or sub-branch, e.g. data-science
+  --lang es                primary language
+  --hours <n>              at most n estimated hours
+  --university <name>      e.g. duke
+
+Global flags:
+  --json                   structured output for agents (implied when piped)
+  --quiet                  suppress progress
+  --limit <n>              stop after n items (transcript)
+  --lang es,en             subtitle preference order (transcript)
+  --version, --help
 `;
 
 async function main(): Promise<void> {
   const [, , command, ...rest] = process.argv;
-  if (!command || command === "--help" || command === "-h") {
+
+  if (!command || command === "--help" || command === "-h" || command === "help") {
     process.stdout.write(HELP);
     return;
   }
+  if (command === "--version" || command === "-V" || command === "version") {
+    process.stdout.write(`${VERSION}\n`);
+    return;
+  }
+
   const load = COMMANDS[command];
   if (!load) {
-    process.stderr.write(`comando desconocido: ${command}\n\n${HELP}`);
+    process.stderr.write(`unknown command: ${command}\n\n${HELP}`);
     process.exit(1);
   }
-  const module = await load();
-  await module.run(parseFlags(rest));
+  await (await load()).run(parseFlags(rest));
 }
 
 main().catch((error: unknown) => {
-  if (error instanceof CourseraError) {
-    process.stderr.write(`ERROR [${error.kind}] ${error.message}\n  ruta: ${error.path}\n`);
-    if (error.kind === "unauthorized") {
-      process.stderr.write("  → la sesión venció. Recapturá la cookie CAUTH.\n");
-    }
+  if (error instanceof AppError) {
+    process.stderr.write(`ERROR [${error.code}] ${error.human}\n`);
+    if (error.hint) process.stderr.write(`  → ${error.hint}\n`);
   } else {
     process.stderr.write(`ERROR: ${error instanceof Error ? error.message : String(error)}\n`);
   }

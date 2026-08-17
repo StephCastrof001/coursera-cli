@@ -1,6 +1,6 @@
 /**
- * Las rutas viven en endpoints.json, nunca hardcodeadas: cuando Coursera
- * deprecia una versión el fix es una línea de datos. Esa deuda mató a coursera-dl.
+ * Routes live in endpoints.json, never hardcoded: when Coursera deprecates a
+ * version the fix is one line of data. That debt is what killed coursera-dl.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -15,18 +15,24 @@ let cache: EndpointMap | null = null;
 
 function load(): EndpointMap {
   if (cache) return cache;
-  const raw = JSON.parse(fs.readFileSync(ENDPOINTS_FILE, "utf8")) as EndpointMap;
-  cache = raw;
-  return raw;
+  cache = JSON.parse(fs.readFileSync(ENDPOINTS_FILE, "utf8")) as EndpointMap;
+  return cache;
 }
 
-/** Interpola {placeholders} de una ruta declarada en endpoints.json. */
+/** Comma-separated id lists must survive interpolation unescaped. */
+const RAW_PARAMS = new Set(["ids"]);
+
+/** Interpolates the {placeholders} of a route declared in endpoints.json. */
 export function endpoint(name: string, params: Record<string, string> = {}): string {
   const template = load()[name];
-  if (!template) throw new Error(`endpoint desconocido: ${name} (revisá endpoints.json)`);
+  if (!template) throw new Error(`unknown endpoint: ${name} (check endpoints.json)`);
   return template.replace(/\{(\w+)\}/g, (_, key: string) => {
     const value = params[key];
-    if (value === undefined) throw new Error(`falta el parámetro {${key}} para el endpoint ${name}`);
-    return encodeURIComponent(value);
+    if (value === undefined) throw new Error(`missing parameter {${key}} for endpoint ${name}`);
+    return RAW_PARAMS.has(key) ? value : encodeURIComponent(value);
   });
+}
+
+export function endpointNames(): string[] {
+  return Object.keys(load()).filter((key) => !key.startsWith("_") && key !== "base");
 }

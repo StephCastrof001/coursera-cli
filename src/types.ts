@@ -1,30 +1,52 @@
-/** Vocabulario del dominio. Ver CONTEXT.md para las definiciones canónicas. */
+/** Domain vocabulary. Canonical definitions live in CONTEXT.md. */
 
-/** Rama y subrama a la que Coursera asigna un curso. Un curso puede tener varias. */
+/** Branch and sub-branch Coursera files a course under. A course can have several. */
 export interface DomainRef {
   domainId: string;
   subdomainId?: string;
 }
 
-/** Un curso del catálogo. `slug` es lo que escribe el humano; `id` lo que pide la API. */
+/** Difficulty as Coursera declares it. Many courses simply don't declare one. */
+export type CourseLevel = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+
+/** A catalog course. `slug` is what a human types; `id` is what the API wants. */
 export interface Course {
   id: string;
   slug: string;
   name: string;
   courseType?: string;
+  level?: CourseLevel;
+  /** e.g. ["VerifiedCert", "Specialization"] — what the course offers, not what you earned. */
+  certificates?: string[];
   domainTypes?: DomainRef[];
-  /** Esfuerzo en prosa: "4 weeks of study, 2-3 hours/week". No es un número. */
+  /** Effort as prose: "4 weeks of study, 2-3 hours/week". Not a number. */
   workload?: string;
   primaryLanguages?: string[];
   partnerIds?: string[];
+  instructorIds?: string[];
 }
 
-/** Unidad mínima de contenido: video, lectura, quiz. Su id es la llave de todo. */
+/** The university or company behind a course. */
+export interface Partner {
+  id: string;
+  name: string;
+  shortName?: string;
+  location?: { country?: string; city?: string; name?: string };
+}
+
+export interface Instructor {
+  id: string;
+  fullName: string;
+  title?: string;
+  department?: string;
+}
+
+/** Smallest unit of content: a video, a reading, a quiz. Its id unlocks everything. */
 export interface Item {
   id: string;
   name: string;
   slug?: string;
-  /** "" o "unknown" cuando el agregador censura el tipo (curso en preview). */
+  /** "" or "unknown" when the aggregator censors the type (preview courses). */
   type: string;
 }
 
@@ -40,14 +62,14 @@ export interface Module {
   lessons: Lesson[];
 }
 
-/** El árbol del curso reconstruido desde las listas planas de `linked`. */
+/** The course tree, rebuilt from the flat lists in `linked`. */
 export interface Outline {
   courseId: string;
   slug: string;
   modules: Module[];
 }
 
-/** Una descarga planificada: item + su ubicación en el árbol, para nombrar archivos. */
+/** A planned download: the item plus where it sits in the tree, for file naming. */
 export interface PlannedItem {
   itemId: string;
   name: string;
@@ -58,7 +80,7 @@ export interface PlannedItem {
   itemIndex: number;
 }
 
-/** Envelope común de la API interna de Coursera ("Naptime"). */
+/** Envelope shared by every response of Coursera's internal API ("Naptime"). */
 export interface Envelope<E = unknown> {
   elements?: E[];
   paging?: { next?: string; total?: number };

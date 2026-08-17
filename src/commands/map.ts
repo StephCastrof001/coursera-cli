@@ -4,10 +4,13 @@ import {
   groupByDomain,
   parseWorkloadHours,
   specializationProgress,
+  tallyLevels,
   type DomainGroup,
+  type LevelTally,
   type SpecializationProgress,
 } from "../services/library.ts";
 import { listCourses } from "../services/memberships.ts";
+import { collectPartnerIds, fetchPartners, tallyPartners } from "../services/partners.ts";
 import { requireSession } from "../session.ts";
 
 const BAR_WIDTH = 24;
@@ -33,10 +36,16 @@ function renderDomains(domains: DomainGroup[], detail: boolean): string[] {
   return lines;
 }
 
+function renderLevels(levels: LevelTally): string {
+  return (["BEGINNER", "INTERMEDIATE", "ADVANCED", "UNDECLARED"] as const)
+    .map((level) => `${level.toLowerCase()} ${levels[level]}`)
+    .join("   ");
+}
+
 function renderSpecs(specs: SpecializationProgress[]): string[] {
   return specs.map((spec) => {
     const mark = spec.missing === 0 ? "✓" : "○";
-    const gap = spec.missing === 0 ? "completa" : `falta${spec.missing > 1 ? "n" : ""} ${spec.missing}`;
+    const gap = spec.missing === 0 ? "complete" : `${spec.missing} missing`;
     return `  ${mark} ${spec.name.slice(0, 46).padEnd(48)} ${spec.enrolled}/${spec.courseIds.length}  ${gap}`;
   });
 }
@@ -45,33 +54,49 @@ export async function run(flags: Flags): Promise<void> {
   const { client } = requireSession();
   const courses = await listCourses(client);
   const specs = await fetchSpecializations(client);
+  const partners = await fetchPartners(client, collectPartnerIds(courses));
 
   const domains = groupByDomain(courses);
+  const levels = tallyLevels(courses);
   const progress = specializationProgress(specs, courses);
-  const withoutDomain = courses.filter((course) => (course.domainTypes ?? []).length === 0).length;
-  // Se cuenta por curso, no sumando los grupos: un curso con dos ramas
-  // aparece en ambos y sumarlos lo contaría dos veces.
+  const institutions = tallyPartners(courses, partners);
+  // Counted per course, not by summing groups: a course in two branches would
+  // otherwise be counted twice.
   const unknownWorkload = courses.filter(
     (course) => parseWorkloadHours(course.workload) === null,
   ).length;
 
   emit(
-    flags.output,
-    { totalCourses: courses.length, withoutDomain, domains, specializations: progress },
+    flags,
+    {
+      totalCourses: courses.length,
+      levels,
+      domains,
+      specializations: progress,
+      institutions: institutions.map((entry) => ({
+        name: entry.partner.name,
+        courses: entry.courses,
+      })),
+    },
     () =>
       [
-        `${courses.length} cursos en tu biblioteca`,
+        `${courses.length} courses in your library`,
+        `levels: ${renderLevels(levels)}`,
         "",
-        ...renderDomains(domains, flags.booleans.has("detalle")),
+        ...renderDomains(domains, flags.booleans.has("detail")),
         "",
-        `ESPECIALIZACIONES (${progress.length})`,
+        `SPECIALIZATIONS (${progress.length})`,
         ...renderSpecs(progress),
         "",
-        "Un curso con dos ramas cuenta en las dos: los totales por rama suman más que el total de cursos.",
+        "TOP INSTITUTIONS",
+        ...institutions
+          .slice(0, 8)
+          .map((entry) => `  ${entry.partner.name.slice(0, 44).padEnd(46)} ${entry.courses}`),
+        "",
+        "A course with two branches counts in both: branch totals exceed the course count.",
         unknownWorkload > 0
-          ? `Horas estimadas del texto de Coursera; ${unknownWorkload} de ${courses.length} cursos no lo declaran de forma legible.`
+          ? `Hours estimated from Coursera's own text; ${unknownWorkload} of ${courses.length} courses do not state it readably.`
           : "",
-        withoutDomain > 0 ? `${withoutDomain} cursos sin rama asignada.` : "",
       ]
         .filter(Boolean)
         .join("\n"),

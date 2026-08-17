@@ -1,13 +1,13 @@
 /**
- * Memberships = el vínculo cuenta↔curso. NO es el curso.
+ * A membership is the link between an account and a course. It is NOT the course.
  *
- * El endpoint tiene un `limit` máximo y devuelve `paging.total` con el real.
- * Sin recorrer el cursor, un `limit=100` sobre 215 memberships trunca en
- * silencio: el buscador no vería más de la mitad de la biblioteca.
+ * The endpoint caps at `limit` and reports the real count in `paging.total`.
+ * Without walking the cursor, `limit=100` over 215 memberships truncates
+ * silently: search would never see more than half the library.
  */
 import { MAX_PAGES, PAGE_SIZE } from "../constants.ts";
 import type { Client } from "../http.ts";
-import type { Course, Envelope } from "../types.ts";
+import type { Course, CourseLevel, Envelope } from "../types.ts";
 import { endpoint } from "./endpoints.ts";
 
 export interface MembershipsPage {
@@ -16,7 +16,7 @@ export interface MembershipsPage {
   total: number;
 }
 
-/** Extrae los cursos de una página. Vienen en `linked`, no en `elements`. */
+/** Courses arrive under `linked`, not `elements`. */
 export function parseMembershipsPage(payload: Envelope): MembershipsPage {
   const linked = (payload.linked?.["courses.v1"] ?? []) as Array<Partial<Course>>;
   const courses = linked
@@ -26,10 +26,13 @@ export function parseMembershipsPage(payload: Envelope): MembershipsPage {
       slug: c.slug,
       name: c.name,
       courseType: c.courseType,
+      level: c.level,
+      certificates: c.certificates,
       domainTypes: c.domainTypes,
       workload: c.workload,
       primaryLanguages: c.primaryLanguages,
       partnerIds: c.partnerIds,
+      instructorIds: c.instructorIds,
     }));
   return {
     courses,
@@ -38,7 +41,7 @@ export function parseMembershipsPage(payload: Envelope): MembershipsPage {
   };
 }
 
-/** Recorre el cursor hasta agotar `paging.next`. Deduplica por id. */
+/** Walks the cursor until `paging.next` runs out. Deduplicates by id. */
 export async function listCourses(client: Client): Promise<Course[]> {
   const seen = new Map<string, Course>();
   let start = "0";
@@ -55,7 +58,7 @@ export async function listCourses(client: Client): Promise<Course[]> {
   return [...seen.values()];
 }
 
-/** Normaliza para comparar: sin acentos, minúsculas. "Análisis" matchea "analisis". */
+/** Normalizes for comparison: no accents, lowercase. "Análisis" matches "analisis". */
 function fold(text: string): string {
   return text
     .normalize("NFD")
@@ -63,23 +66,76 @@ function fold(text: string): string {
     .toLowerCase();
 }
 
+export interface CourseFilters {
+  /** Free text over name and slug. */
+  search?: string;
+  level?: CourseLevel;
+  /** Domain or subdomain id, e.g. "data-science" or "machine-learning". */
+  domain?: string;
+  /** Primary language code, e.g. "es". */
+  language?: string;
+  /** Upper bound on estimated hours. Courses with no readable workload are excluded. */
+  maxHours?: number;
+  /** Partner id. Resolve a university name to its id with the partners service. */
+  partnerId?: string;
+}
+
 /**
- * Busca por nombre o slug. Devuelve los matches ordenados: primero los que
- * empiezan con la consulta, después los que la contienen.
+ * Applies every filter given; they compose with AND. Text search ranks matches
+ * that start with the query above matches that merely contain it.
  */
+export function filterCourses(
+  courses: Course[],
+  filters: CourseFilters,
+  hoursOf?: (course: Course) => number | null,
+): Course[] {
+  let result = courses;
+
+  if (filters.level) result = result.filter((c) => c.level === filters.level);
+
+  if (filters.domain) {
+    const needle = filters.domain;
+    result = result.filter((c) =>
+      (c.domainTypes ?? []).some((d) => d.domainId === needle || d.subdomainId === needle),
+    );
+  }
+
+  if (filters.language) {
+    const needle = filters.language.toLowerCase();
+    result = result.filter((c) =>
+      (c.primaryLanguages ?? []).some((lang) => lang.toLowerCase().startsWith(needle)),
+    );
+  }
+
+  if (filters.partnerId) {
+    result = result.filter((c) => (c.partnerIds ?? []).includes(filters.partnerId as string));
+  }
+
+  if (filters.maxHours !== undefined && hoursOf) {
+    result = result.filter((c) => {
+      const hours = hoursOf(c);
+      return hours !== null && hours <= (filters.maxHours as number);
+    });
+  }
+
+  if (filters.search?.trim()) {
+    const needle = fold(filters.search.trim());
+    const scored = result
+      .map((course) => {
+        const haystack = `${fold(course.name)} ${fold(course.slug)}`;
+        if (!haystack.includes(needle)) return null;
+        const starts = fold(course.name).startsWith(needle) || fold(course.slug).startsWith(needle);
+        return { course, score: starts ? 0 : 1 };
+      })
+      .filter((entry): entry is { course: Course; score: number } => entry !== null);
+    scored.sort((a, b) => a.score - b.score || a.course.name.localeCompare(b.course.name));
+    result = scored.map((entry) => entry.course);
+  }
+
+  return result;
+}
+
+/** Kept as a thin alias: text search is the common case. */
 export function searchCourses(courses: Course[], query: string): Course[] {
-  const needle = fold(query.trim());
-  if (!needle) return courses;
-
-  const scored = courses
-    .map((course) => {
-      const haystack = `${fold(course.name)} ${fold(course.slug)}`;
-      if (!haystack.includes(needle)) return null;
-      const starts = fold(course.name).startsWith(needle) || fold(course.slug).startsWith(needle);
-      return { course, score: starts ? 0 : 1 };
-    })
-    .filter((entry): entry is { course: Course; score: number } => entry !== null);
-
-  scored.sort((a, b) => a.score - b.score || a.course.name.localeCompare(b.course.name));
-  return scored.map((entry) => entry.course);
+  return filterCourses(courses, { search: query });
 }

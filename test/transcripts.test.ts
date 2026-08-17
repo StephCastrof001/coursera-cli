@@ -12,81 +12,81 @@ type VideoFixture = Parameters<typeof pickSubtitle>[0];
 type SupplementFixture = Parameters<typeof supplementToMarkdown>[0];
 
 describe("pickSubtitle", () => {
-  test("respeta el orden de preferencia", () => {
+  test("honours the preference order", () => {
     expect(pickSubtitle(video as VideoFixture, ["es", "en"])?.lang).toBe("es");
     expect(pickSubtitle(video as VideoFixture, ["en", "es"])?.lang).toBe("en");
   });
 
-  test("devuelve la ruta relativa tal cual la manda la API", () => {
+  test("returns the relative path exactly as the API sends it", () => {
     const choice = pickSubtitle(video as VideoFixture, ["en"]);
-    // Gotcha 5: es relativa. El cliente HTTP le antepone el host.
+    // Recon gotcha #5: it is relative. The HTTP client prepends the host.
     expect(choice?.path.startsWith("/api/subtitleAssetProxy.v1/")).toBe(true);
   });
 
-  test("cae a cualquier idioma antes que devolver nada", () => {
-    const soloRuso = { linked: { "onDemandVideos.v1": [{ subtitlesVtt: { ru: "/api/x" } }] } };
-    expect(pickSubtitle(soloRuso, ["es", "en"])?.lang).toBe("ru");
+  test("falls back to any language rather than returning nothing", () => {
+    const russianOnly = { linked: { "onDemandVideos.v1": [{ subtitlesVtt: { ru: "/api/x" } }] } };
+    expect(pickSubtitle(russianOnly, ["es", "en"])?.lang).toBe("ru");
   });
 
-  test("sin subtítulos devuelve null", () => {
+  test("returns null when there are no subtitles at all", () => {
     expect(pickSubtitle({ linked: { "onDemandVideos.v1": [{}] } }, ["es"])).toBeNull();
   });
 });
 
 describe("vttToText", () => {
-  test("saca cabecera, numeración y timestamps", () => {
+  test("strips the header, cue numbers and timestamps", () => {
     const vtt = [
       "WEBVTT",
       "",
       "1",
       "00:00:01.000 --> 00:00:04.000",
-      "Hola, bienvenidos al curso",
+      "Welcome to the course",
       "",
       "2",
       "00:00:04.000 --> 00:00:07.500",
-      "hoy vamos a hablar de modelos",
+      "today we will talk about models",
     ].join("\n");
-    expect(vttToText(vtt)).toBe("Hola, bienvenidos al curso hoy vamos a hablar de modelos");
+    expect(vttToText(vtt)).toBe("Welcome to the course today we will talk about models");
   });
 
-  test("colapsa líneas repetidas consecutivas (roll-up captions)", () => {
-    const vtt = "WEBVTT\n\n00:00:01.000 --> 00:00:02.000\nmismo\n\n00:00:02.000 --> 00:00:03.000\nmismo";
-    expect(vttToText(vtt)).toBe("mismo");
+  test("collapses consecutive duplicate lines (roll-up captions)", () => {
+    const vtt = "WEBVTT\n\n00:00:01.000 --> 00:00:02.000\nsame\n\n00:00:02.000 --> 00:00:03.000\nsame";
+    expect(vttToText(vtt)).toBe("same");
   });
 
-  test("quita tags de posicionamiento", () => {
-    const vtt = "WEBVTT\n\n00:00:01.000 --> 00:00:02.000\n<v Sara>hola</v>";
-    expect(vttToText(vtt)).toBe("hola");
+  test("removes positioning tags", () => {
+    const vtt = "WEBVTT\n\n00:00:01.000 --> 00:00:02.000\n<v Sara>hello</v>";
+    expect(vttToText(vtt)).toBe("hello");
   });
 
-  test("un vtt vacío da string vacío, no rompe", () => {
+  test("an empty vtt yields an empty string instead of throwing", () => {
     expect(vttToText("WEBVTT\n\n")).toBe("");
   });
 });
 
 describe("supplementToMarkdown", () => {
-  test("convierte el CML renderizado a markdown legible", () => {
+  test("turns rendered CML into readable markdown", () => {
     const markdown = supplementToMarkdown(supplement as SupplementFixture);
     expect(markdown).toContain("## Course overview");
     expect(markdown).not.toContain("<div");
     expect(markdown).not.toContain("&nbsp;");
   });
 
-  test("sin contenido devuelve null", () => {
+  test("returns null when there is no content", () => {
     expect(supplementToMarkdown({ linked: {} })).toBeNull();
   });
 });
 
 describe("safeName", () => {
-  test("saca los caracteres ilegales en Windows", () => {
-    expect(safeName('Módulo 1: ¿qué es "ML"? / intro')).toBe("Módulo 1 ¿qué es ML intro");
+  test("strips characters Windows rejects but keeps the words", () => {
+    expect(safeName('Module 1: what is "ML"? / intro')).toBe("Module 1 what is ML intro");
   });
 
-  test("no deja punto final (Windows lo borra en silencio)", () => {
+  test("leaves no trailing dot (Windows drops it silently)", () => {
     expect(safeName("Wrap-up...")).toBe("Wrap-up");
   });
 
-  test("trunca nombres largos", () => {
+  test("truncates long names", () => {
     expect(safeName("a".repeat(200)).length).toBe(80);
   });
 });

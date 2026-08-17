@@ -1,16 +1,33 @@
 /**
- * Agent-first IO: todo comando soporta --output json.
- * El default es `auto` — tabla si hay TTY, json si el output está redirigido.
+ * Argv parsing and table rendering.
+ *
+ * Structured output is delegated to the cligentic `json-mode` block: stdout is
+ * data, stderr is logs, and piped stdout switches to JSON on its own.
  */
-export type OutputMode = "json" | "table" | "auto";
+import { emit as emitBlock } from "./cli/agent/json-mode.ts";
+import { parseGlobalFlags, type GlobalFlags } from "./cli/foundation/global-flags.ts";
 
-export interface Flags {
-  output: OutputMode;
+export interface Flags extends GlobalFlags {
   values: Record<string, string>;
   booleans: Set<string>;
   positional: string[];
 }
 
+const KNOWN_BOOLEANS = new Set([
+  "json",
+  "quiet",
+  "verbose",
+  "dry-run",
+  "no-input",
+  "detail",
+  "force",
+  "help",
+]);
+
+/**
+ * Minimal POSIX-ish parser. A flag takes every token up to the next `--`, so
+ * `--search machine learning` works without quotes.
+ */
 export function parseFlags(argv: string[]): Flags {
   const values: Record<string, string> = {};
   const booleans = new Set<string>();
@@ -23,36 +40,44 @@ export function parseFlags(argv: string[]): Flags {
       continue;
     }
     const key = arg.slice(2);
-    const next = argv[i + 1];
-    if (next && !next.startsWith("--")) {
-      values[key] = next;
-      i++;
-    } else {
+    if (KNOWN_BOOLEANS.has(key)) {
       booleans.add(key);
+      continue;
     }
+    const words: string[] = [];
+    while (i + 1 < argv.length && !(argv[i + 1] as string).startsWith("--")) {
+      words.push(argv[++i] as string);
+    }
+    if (words.length === 0) booleans.add(key);
+    else values[key] = words.join(" ");
   }
 
-  const requested = values.output as OutputMode | undefined;
-  const output: OutputMode = requested ?? (booleans.has("json") ? "json" : "auto");
-  return { output, values, booleans, positional };
+  const global = parseGlobalFlags({
+    json: booleans.has("json") || values.output === "json",
+    quiet: booleans.has("quiet"),
+    verbose: booleans.has("verbose"),
+    "dry-run": booleans.has("dry-run"),
+    "no-input": booleans.has("no-input"),
+  });
+
+  return { ...global, values, booleans, positional };
 }
 
-export function resolveMode(mode: OutputMode): "json" | "table" {
-  if (mode !== "auto") return mode;
-  return process.stdout.isTTY ? "table" : "json";
+/** Human mode when attached to a TTY and `--json` was not requested. */
+export function isHuman(flags: Flags): boolean {
+  if (flags.json) return false;
+  if (flags.values.output === "table") return true;
+  return Boolean(process.stdout.isTTY);
 }
 
-export function emit(mode: OutputMode, data: unknown, renderTable: () => string): void {
-  if (resolveMode(mode) === "json") {
-    process.stdout.write(`${JSON.stringify(data, null, 2)}\n`);
-  } else {
-    process.stdout.write(`${renderTable()}\n`);
-  }
+export function emit(flags: Flags, data: unknown, renderHuman: () => string): void {
+  if (isHuman(flags)) process.stdout.write(`${renderHuman()}\n`);
+  else emitBlock(data, { json: true });
 }
 
-/** Tabla mínima de ancho fijo. Sin dependencias: es una CLI, no un dashboard. */
+/** Fixed-width table. No dependencies: this is a CLI, not a dashboard. */
 export function table(rows: Array<Record<string, string>>, columns: string[]): string {
-  if (rows.length === 0) return "(sin resultados)";
+  if (rows.length === 0) return "(no results)";
   const widths = columns.map((col) =>
     Math.min(60, Math.max(col.length, ...rows.map((row) => (row[col] ?? "").length))),
   );
@@ -63,10 +88,4 @@ export function table(rows: Array<Record<string, string>>, columns: string[]): s
     line(widths.map((w) => "-".repeat(w))),
     ...rows.map((row) => line(columns.map((col) => row[col] ?? ""))),
   ].join("\n");
-}
-
-export function fail(message: string, hint?: string): never {
-  process.stderr.write(`ERROR: ${message}\n`);
-  if (hint) process.stderr.write(`  → ${hint}\n`);
-  process.exit(1);
 }
