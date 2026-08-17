@@ -92,8 +92,10 @@ text, and the text carries the signal.
 
 ## Implementation decisions
 
-**Location and runtime.** The repo lives in `klipso_reverse/Cli-propios/coursera-cli/`,
-inside the CLI factory, to inherit its conventions and ADRs. Runtime is **Bun** (this CLI is
+**Location and runtime.** The repo is standalone and lives at the top level, not nested
+inside the `klipso_reverse` factory. It still follows the factory's conventions and ADRs,
+but it has its own git remote, so nesting it under a `.gitignore`d directory of another
+repo bought nothing and cost three levels of path on every invocation. Runtime is **Bun** (this CLI is
 API-heavy: fetch plus JSON). The Bun binary is not on the PATH of the process that launches
 MCP servers — point 2 of ADR-0001 — so every programmatic invocation uses the absolute path
 to the `.exe`.

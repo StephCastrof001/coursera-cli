@@ -1,7 +1,7 @@
 {
   "name": "coursera-cli",
   "version": "0.2.0",
-  "description": "Your own Coursera courses from the terminal - CLI + MCP server",
+  "description": "Your Coursera courses from the terminal: CLI + MCP server that pulls transcripts and readings from the courses you are enrolled in",
   "license": "MIT",
   "type": "module",
   "bin": {

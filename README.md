@@ -18,9 +18,32 @@ coursera transcript <slug>            pull the content as text
 Requires [Bun](https://bun.sh).
 
 ```bash
-cd klipso_reverse/Cli-propios/coursera-cli
+git clone https://github.com/StephCastrof001/coursera-cli.git
+cd coursera-cli
 bun install
 ```
+
+### The `coursera` command
+
+Every example below assumes `coursera` runs from anywhere. Bun does not always put
+itself on PATH, so the launcher calls it by absolute path.
+
+**Windows** — drop `coursera.cmd` in a directory already on your PATH
+(`%USERPROFILE%\.local\bin` works):
+
+```bat
+@echo off
+"%USERPROFILE%\.bun\bin\bun.exe" run "%USERPROFILE%\coursera-cli\index.ts" %*
+```
+
+**macOS, Linux, Git Bash** — same idea, as `coursera` (then `chmod +x`):
+
+```sh
+#!/bin/sh
+exec "$HOME/.bun/bin/bun" run "$HOME/coursera-cli/index.ts" "$@"
+```
+
+Without a launcher, replace `coursera` with `bun run index.ts` from the repo root.
 
 ## Session
 
@@ -121,7 +144,7 @@ launches MCP servers does not inherit your PATH, so `"command": "bun"` fails wit
   "mcpServers": {
     "coursera": {
       "command": "C:/Users/you/.bun/bin/bun.exe",
-      "args": ["C:/Users/you/klipso_reverse/Cli-propios/coursera-cli/src/mcp/index.ts"]
+      "args": ["C:/Users/you/coursera-cli/src/mcp/index.ts"]
     }
   }
 }
