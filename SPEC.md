@@ -1,8 +1,10 @@
 # SPEC — coursera-cli v1
 
 > Estado: implementado y verificado 2026-08-16. Ver §Verificación al final.
-> No hay issue tracker configurado en este entorno, así que el spec vive en el repo
-> en vez de publicarse como issue con label `ready-for-agent`.
+> El backlog derivado de este spec vive como issues en
+> [StephCastrof001/coursera-cli](https://github.com/StephCastrof001/coursera-cli/issues),
+> etiquetadas `ready-for-agent`. El spec queda en el repo como fuente de las decisiones;
+> las issues son las rebanadas ejecutables.
 
 ---
 
