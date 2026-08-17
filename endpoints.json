@@ -2,7 +2,8 @@
   "_comment": "Rutas verificadas 2026-08-16 contra cuenta propia. Cuando Coursera deprecie una version, el fix es aca, no en el codigo. Ver RESEARCH.md.",
   "base": "https://www.coursera.org",
   "course_by_slug": "/api/onDemandCourses.v1/?q=slug&slug={slug}",
-  "memberships": "/api/memberships.v1?q=me&includes=courseId,course&fields=courseId,course.v1(name,slug,courseType)&limit={limit}&start={start}",
+  "memberships": "/api/memberships.v1?q=me&includes=courseId,course&fields=courseId,courses.v1(name,slug,courseType,domainTypes,workload,primaryLanguages,partnerIds)&limit={limit}&start={start}",
+  "specialization_memberships": "/api/onDemandSpecializationMemberships.v1?q=me&includes=s12nId&fields=s12nId,onDemandSpecializations.v1(name,slug,courseIds)&limit={limit}",
   "materials": "/api/onDemandCourseMaterials.v2/?q=slug&slug={slug}&includes=modules,lessons,items&fields=moduleIds,onDemandCourseMaterialModules.v1(name,slug,lessonIds),onDemandCourseMaterialLessons.v1(name,slug,itemIds),onDemandCourseMaterialItems.v2(name,slug,contentSummary)",
   "lecture_video": "/api/onDemandLectureVideos.v1/{course_id}~{item_id}?includes=video&fields=onDemandVideos.v1(sources,subtitles,subtitlesVtt)",
   "supplement": "/api/onDemandSupplements.v1/{course_id}~{item_id}?includes=asset&fields=content"

@@ -14,6 +14,11 @@ import {
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import { countItems, fetchOutline } from "../services/courses.ts";
+import {
+  fetchSpecializations,
+  groupByDomain,
+  specializationProgress,
+} from "../services/library.ts";
 import { downloadCourse, readManifest } from "../services/download.ts";
 import { listCourses, searchCourses } from "../services/memberships.ts";
 import { checkSession, requireSession } from "../session.ts";
@@ -34,6 +39,14 @@ const TOOLS = [
       type: "object",
       properties: { query: { type: "string", description: "texto a buscar (opcional)" } },
     },
+  },
+  {
+    name: "get_library_map",
+    description:
+      "Mapa de la biblioteca del usuario: cuántos cursos y horas tiene por rama y subrama, " +
+      "más el avance en cada una de sus especializaciones (cuántos cursos tiene de cada una y cuántos le faltan). " +
+      "Sirve para responder en qué se formó de verdad y qué dejó a medias.",
+    inputSchema: { type: "object", properties: {} },
   },
   {
     name: "get_course_outline",
@@ -92,6 +105,24 @@ async function handle(name: string, args: Args): Promise<unknown> {
         total: all.length,
         matches: matches.length,
         courses: matches.map((course) => ({ slug: course.slug, name: course.name })),
+      };
+    }
+
+    case "get_library_map": {
+      const { client } = requireSession();
+      const courses = await listCourses(client);
+      const specs = await fetchSpecializations(client);
+      return {
+        totalCourses: courses.length,
+        domains: groupByDomain(courses),
+        specializations: specializationProgress(specs, courses).map((spec) => ({
+          name: spec.name,
+          slug: spec.slug,
+          enrolled: spec.enrolled,
+          total: spec.courseIds.length,
+          missing: spec.missing,
+        })),
+        nota: "Un curso con dos ramas cuenta en las dos. Las horas son estimadas del texto de Coursera.",
       };
     }
 

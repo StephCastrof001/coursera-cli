@@ -53,6 +53,7 @@ cursos      215
 |---|---|
 | `coursera session` | Estado de la sesión: origen, antigüedad, si está viva |
 | `coursera courses [--buscar <texto>]` | Tus cursos. Sin `--buscar` los lista todos |
+| `coursera map [--detalle]` | En qué ramas te formaste y qué especializaciones dejaste a medias |
 | `coursera course <slug>` | Temario: módulos, lecciones e items con su tipo |
 | `coursera transcript <slug>` | Baja transcripts y lecturas |
 
@@ -98,6 +99,7 @@ Tools que expone:
 |---|---|
 | `session_status` | Si la sesión está viva, de dónde salió, cuántos cursos ve |
 | `list_courses` | Tus cursos, filtrables por texto |
+| `get_library_map` | Ramas, horas y avance en tus especializaciones |
 | `get_course_outline` | El árbol del curso |
 | `fetch_transcripts` | Baja el curso y devuelve el **índice** de lo bajado |
 | `read_transcript` | El texto de **un** item |

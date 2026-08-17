@@ -1,11 +1,22 @@
 /** Vocabulario del dominio. Ver CONTEXT.md para las definiciones canónicas. */
 
+/** Rama y subrama a la que Coursera asigna un curso. Un curso puede tener varias. */
+export interface DomainRef {
+  domainId: string;
+  subdomainId?: string;
+}
+
 /** Un curso del catálogo. `slug` es lo que escribe el humano; `id` lo que pide la API. */
 export interface Course {
   id: string;
   slug: string;
   name: string;
   courseType?: string;
+  domainTypes?: DomainRef[];
+  /** Esfuerzo en prosa: "4 weeks of study, 2-3 hours/week". No es un número. */
+  workload?: string;
+  primaryLanguages?: string[];
+  partnerIds?: string[];
 }
 
 /** Unidad mínima de contenido: video, lectura, quiz. Su id es la llave de todo. */

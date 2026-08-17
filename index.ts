@@ -13,6 +13,7 @@ import { parseFlags } from "./src/output.ts";
 const COMMANDS: Record<string, () => Promise<{ run: (flags: ReturnType<typeof parseFlags>) => Promise<void> }>> = {
   session: () => import("./src/commands/session.ts"),
   courses: () => import("./src/commands/courses.ts"),
+  map: () => import("./src/commands/map.ts"),
   course: () => import("./src/commands/course.ts"),
   transcript: () => import("./src/commands/transcript.ts"),
 };
@@ -21,6 +22,7 @@ const HELP = `coursera — tus cursos de Coursera desde la terminal
 
   coursera session                          estado de la sesión (viva/muerta, antigüedad)
   coursera courses [--buscar <texto>]       tus cursos; con --buscar filtra por nombre o slug
+  coursera map [--detalle]                  en qué ramas te formaste y qué especializaciones dejaste a medias
   coursera course <slug>                    árbol de módulos, lecciones e items
   coursera transcript <slug> [--out <dir>]  baja transcripts y lecturas
 

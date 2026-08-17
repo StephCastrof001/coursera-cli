@@ -184,6 +184,60 @@ Curso `machine-learning-foundations-for-product-managers` — courseId `Bob8HYsx
 Un filtro binario video/lectura se come 9 items. Y `staffGraded` / `phasedPeer` no aparecían
 en el recon del curso anterior: la lista de tipos no es cerrada, no hardcodearla.
 
+### Ramas, esfuerzo y especializaciones — 2026-08-16
+
+**Corrección de método:** en la ronda 2 di por muertos varios endpoints leyendo mal la
+respuesta. Las tres son distintas y hay que separarlas:
+
+| Respuesta | Significa |
+|---|---|
+| 200 + HTML de la SPA (len 778) | La ruta **no existe** |
+| `405 {"msg":"Routing error: 'get-all' not implemented"}` | El recurso **existe**, falta el finder `q=` correcto |
+| `404 {"message":"","statusCode":404}` | El recurso existe, ese id no |
+
+Con ese criterio, `onDemandCourseGrades.v1` y `onDemandLearnerMaterialItems.v1` **existen**
+(dan 405) — falta descubrir sus finders. Ahí probablemente viva el progreso del curso.
+
+#### Vivos y útiles
+
+| Endpoint | Devuelve |
+|---|---|
+| `domains.v1` | ✅ 11 ramas con `subdomainIds`, `keywords`, `description` |
+| `courses.v1` (≠ `onDemandCourses.v1`) | ✅ acepta `fields=domainTypes,workload,primaryLanguages,partnerIds` |
+| `memberships.v1` con `courses.v1(...)` | ✅ trae rama y workload de los 215 cursos en **3 requests**, no 215 |
+| `onDemandSpecializationMemberships.v1` | ✅ 15 especializaciones; con `includes=s12nId` + `onDemandSpecializations.v1(name,slug,courseIds)` trae sus cursos |
+
+`fields=` **ignora en silencio los campos que no existen** — no devuelve error. Por eso
+`difficultyLevel` no está: se pidió y no vino, sin queja. No hay dificultad en esta API.
+
+#### Muertos confirmados (200 + HTML)
+
+`onDemandCourseCertificates.v1`, `onDemandSpecializationCertificates.v1`,
+`onDemandAccomplishments.v1`, `certificates.v1`, `catalogResults.v1/v2`, `search.v1`,
+`onDemandUserRecommendations.v1`, `onDemandCourseDerivatives.v1`, `courseProgress.v1`.
+
+No hay forma conocida de leer certificados ni de buscar en el catálogo por esta API. La
+búsqueda pública migró a un gateway GraphQL (`/graphql-gateway`), que responde 400 a una
+query inventada: reversearlo es un proyecto aparte.
+
+#### El campo `workload` no tiene formato
+
+Medido sobre los 215 cursos: **174 lo traen, 41 no**. De los 174, la primera versión del
+parser sólo entendía 67. Los equipos de cada curso lo escriben como quieren, en dos idiomas:
+
+```
+"5 weeks of study, approximately 15 hours total"
+"4 weeks of study, 2-3 hours/week"     "4 weeks of study, 3-4 hours a week"
+"2 hours"     "1.5 hours"     "4-6 hours/week"     "2"
+"4 semanas de estudio, 2-4 horas/semana"
+"De 4 a 8 horas de videos, lecturas y exámenes"
+"The course consists of 5 modules, each of which should take 3-5 hours of study time."
+```
+
+Lección: **muestrear 8 registros no alcanza para inferir una gramática.** La segunda versión
+llega a 137 de 174 (79%); el resto es genuinamente ambiguo (`"2"`, o horas por semana sin
+decir cuántas semanas) y devuelve `null` antes que inventar.
+
 ### Subtítulos disponibles
 
 29 idiomas en el curso de Duke (incluye `es`, `en`, `pt-BR`, `zh-CN`, `ja`, `ar`). El mismo

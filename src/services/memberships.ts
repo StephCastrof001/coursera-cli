@@ -21,7 +21,16 @@ export function parseMembershipsPage(payload: Envelope): MembershipsPage {
   const linked = (payload.linked?.["courses.v1"] ?? []) as Array<Partial<Course>>;
   const courses = linked
     .filter((c): c is Course => Boolean(c.id && c.slug && c.name))
-    .map((c) => ({ id: c.id, slug: c.slug, name: c.name, courseType: c.courseType }));
+    .map((c) => ({
+      id: c.id,
+      slug: c.slug,
+      name: c.name,
+      courseType: c.courseType,
+      domainTypes: c.domainTypes,
+      workload: c.workload,
+      primaryLanguages: c.primaryLanguages,
+      partnerIds: c.partnerIds,
+    }));
   return {
     courses,
     next: payload.paging?.next,

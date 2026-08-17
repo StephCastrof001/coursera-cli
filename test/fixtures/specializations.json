@@ -1,0 +1,331 @@
+{
+  "elements": [
+    {
+      "createdAt": 1786690402352,
+      "role": "LEARNER",
+      "lastModified": 1786690402352,
+      "id": "64494534~braWpVNFEeqwHhLUcpYjUw",
+      "userId": 64494534,
+      "s12nId": "braWpVNFEeqwHhLUcpYjUw"
+    },
+    {
+      "createdAt": 1786631455916,
+      "role": "LEARNER",
+      "lastModified": 1786631455916,
+      "id": "64494534~7sEVYtoREeeJmhI8jrj0HA",
+      "userId": 64494534,
+      "s12nId": "7sEVYtoREeeJmhI8jrj0HA"
+    },
+    {
+      "createdAt": 1786552416530,
+      "role": "LEARNER",
+      "lastModified": 1786552416530,
+      "id": "64494534~s79dbwp_EeyflRJvOlqpKQ",
+      "userId": 64494534,
+      "s12nId": "s79dbwp_EeyflRJvOlqpKQ"
+    },
+    {
+      "createdAt": 1786550472339,
+      "role": "LEARNER",
+      "lastModified": 1786550472339,
+      "id": "64494534~eYqXuO_qTqegYWvF84wE0g",
+      "userId": 64494534,
+      "s12nId": "eYqXuO_qTqegYWvF84wE0g"
+    },
+    {
+      "createdAt": 1778680902149,
+      "role": "LEARNER",
+      "lastModified": 1778680902149,
+      "id": "64494534~hEw_Qs0YEeqVlQ7wcdKxgQ",
+      "userId": 64494534,
+      "s12nId": "hEw_Qs0YEeqVlQ7wcdKxgQ"
+    },
+    {
+      "createdAt": 1604186512882,
+      "role": "LEARNER",
+      "lastModified": 1775154352194,
+      "id": "64494534~child!~YjE9TmhFTmW6J94UybykZA",
+      "userId": 64494534,
+      "s12nId": "child~YjE9TmhFTmW6J94UybykZA"
+    },
+    {
+      "createdAt": 1691551888585,
+      "role": "LEARNER",
+      "lastModified": 1691551888585,
+      "id": "64494534~5C7VEXyjEeuJvRIq2L0SHw",
+      "userId": 64494534,
+      "s12nId": "5C7VEXyjEeuJvRIq2L0SHw"
+    },
+    {
+      "createdAt": 1644728288838,
+      "role": "NOT_ENROLLED",
+      "lastModified": 1645499450459,
+      "id": "64494534~UsgD8wqFEeu28RK1gAaLUQ",
+      "userId": 64494534,
+      "s12nId": "UsgD8wqFEeu28RK1gAaLUQ"
+    },
+    {
+      "createdAt": 1629423191313,
+      "role": "NOT_ENROLLED",
+      "lastModified": 1630234023833,
+      "id": "64494534~GL_GEZHtEeuCmhJP_QjiKw",
+      "userId": 64494534,
+      "s12nId": "GL_GEZHtEeuCmhJP_QjiKw"
+    },
+    {
+      "createdAt": 1610497280971,
+      "role": "NOT_ENROLLED",
+      "lastModified": 1614567909282,
+      "id": "64494534~3X44B3eyEeeSLBIUSGvCBg",
+      "userId": 64494534,
+      "s12nId": "3X44B3eyEeeSLBIUSGvCBg"
+    },
+    {
+      "createdAt": 1607241086637,
+      "role": "LEARNER",
+      "lastModified": 1607241086637,
+      "id": "64494534~Ky5lwrSxEeWMqw61s4RUTw",
+      "userId": 64494534,
+      "s12nId": "Ky5lwrSxEeWMqw61s4RUTw"
+    },
+    {
+      "createdAt": 1607241071262,
+      "role": "LEARNER",
+      "lastModified": 1607241071262,
+      "id": "64494534~IzHbvT-xEea3lBIuTszunQ",
+      "userId": 64494534,
+      "s12nId": "IzHbvT-xEea3lBIuTszunQ"
+    },
+    {
+      "createdAt": 1604187344621,
+      "role": "LEARNER",
+      "lastModified": 1604187344621,
+      "id": "64494534~yEVwdp0mEeW7xQ6l-xJMQQ",
+      "userId": 64494534,
+      "s12nId": "yEVwdp0mEeW7xQ6l-xJMQQ"
+    },
+    {
+      "createdAt": 1604187017525,
+      "role": "LEARNER",
+      "lastModified": 1604187017525,
+      "id": "64494534~zgK_5Q8CEeu-sxLx_g1Pbw",
+      "userId": 64494534,
+      "s12nId": "zgK_5Q8CEeu-sxLx_g1Pbw"
+    },
+    {
+      "createdAt": 1602859329338,
+      "role": "LEARNER",
+      "lastModified": 1602859329338,
+      "id": "64494534~CRdvSkeYEeWK-RJJsrCNzw",
+      "userId": 64494534,
+      "s12nId": "CRdvSkeYEeWK-RJJsrCNzw"
+    }
+  ],
+  "paging": {
+    "total": 15
+  },
+  "linked": {
+    "onDemandSpecializations.v1": [
+      {
+        "courseIds": [
+          "KFP4ExRSEe-d6hIj26omoQ",
+          "Ruqe_0XQEe--LxKeIkG8pQ",
+          "aSMeNDPeEe-H2BLw-oHycQ"
+        ],
+        "description": "In an era where Artificial Intelligence (AI) is rapidly transforming high-risk domains like healthcare, finance, and criminal justice, the ability to develop AI systems that are not only accurate but also transparent and trustworthy is critical. The Explainable AI (XAI) Specialization is designed to empower AI professionals, data scientists, machine learning engineers, and product managers with the knowledge and skills needed to create AI solutions that meet the highest standards of ethical and responsible AI.\n\nTaught by Dr. Brinnae Bent, an expert in bridging the gap between research and industry in machine learning, this course series leverages her extensive experience leading projects and developing impactful algorithms for some of the largest companies in the world. Dr. Bent's work, ranging from helping people walk to noninvasively monitoring glucose, underscores the meaningful applications of AI in real-world scenarios.\n\nThroughout this series, learners will explore key topics including Explainable AI (XAI) concepts, interpretable machine learning, and advanced explainability techniques for large language models (LLMs) and generative computer vision models. Hands-on programming labs, using Python to implement local and global explainability techniques, and case studies offer practical learning. This series is ideal for professionals with a basic to intermediate understanding of machine learning concepts like supervised learning and neural networks.",
+        "name": "Explainable AI (XAI)",
+        "tagline": "Build Ethical and Transparent AI Systems",
+        "id": "eYqXuO_qTqegYWvF84wE0g",
+        "slug": "explainable-artificial-intelligence-xai"
+      },
+      {
+        "courseIds": [
+          "O3t8LFdfEeufpw6SmrNCpQ",
+          "w84p-1dfEeufpw6SmrNCpQ",
+          "jxNTsldfEeu3_xIeBrtbdw"
+        ],
+        "description": "This specialization is intended for novice business professionals seeking to develop management, leadership, finance, and digital marketing skills with the ultimate goal of preparing learners to operate or participate in the operation of a business. Throughout the three courses, learners will cover people management, the key features of leadership, strategic planning, search engine strategies, reputation management, content creation, common financial statements, cash flow, and expense management.",
+        "name": "Introduction to Business",
+        "tagline": "Jumpstart Your Business Management Career!",
+        "id": "UsgD8wqFEeu28RK1gAaLUQ",
+        "slug": "business-introduction"
+      },
+      {
+        "courseIds": [
+          "Bob8HYsxEeuqDwqw9ez0Fw",
+          "6iy1LplKEeuvEgrjM8m9sw",
+          "LOkOWZlLEeuG-w7Ew7bzMQ"
+        ],
+        "description": "Organizations in every industry are accelerating their use of artificial intelligence and machine learning to create innovative new products and systems. This requires professionals across a range of functions, not just strictly within the data science and data engineering teams, to understand when and how AI can be applied, to speak the language of data and analytics, and to be capable of working in cross-functional teams on machine learning projects.\n\nThis Specialization provides a foundational understanding of how machine learning works and when and how it can be applied to solve problems. Learners will build skills in applying the data science process and industry best practices to lead machine learning projects, and develop competency in designing human-centered AI products which ensure privacy and ethical standards. The courses in this Specialization focus on the intuition behind these technologies, with no programming required, and merge theory with practical information including best practices from industry. Professionals and aspiring professionals from a diverse range of industries and functions, including product managers and product owners, engineering team leaders, executives, analysts and others will find this program valuable.",
+        "name": "AI Product Management",
+        "tagline": "Manage the Design & Development of ML Products",
+        "id": "s79dbwp_EeyflRJvOlqpKQ",
+        "slug": "ai-product-management-duke"
+      },
+      {
+        "courseIds": [
+          "XupniISSEeWcSw7mZ7gPOw",
+          "jlxKwZz9EeWIXgpWJNgyEw",
+          "yEfdpZz9EeWlGQ5Xb9b0kw",
+          "7dtPpZz9EeWoKRLkmmHLTQ",
+          "OJkRmJz-EeW6bw4ogk2HGQ",
+          "X9ax9pz-EeWlGQ5Xb9b0kw",
+          "jq3NGKJ7EeWM5RIHOLu8Dw"
+        ],
+        "description": "Through this 6-course Specialization in Strategic Leadership and Management, you will learn the fundamentals of effectively leading people, teams, and organizations and develop tools to analyze business situations. In addition to building a conceptual framework for leadership, learners will develop and practice strategies for immediate impact. The Specialization covers the strategic, human resource, and organizational foundations for creating and capturing value for sustainable competitive advantage both within a single business and across a portfolio of businesses.\n\nThe specialization culminates in a capstone: a leadership and management plan where you’ll apply what you’ve learned to a business situation. With participation by one or more focal companies, the experiential and hands-on deliverable will provide valuable practice and create value from the perspective of potential employers.\n\nThis Specialization is part of Gies College of Business’ suite of online programs, including the iMBA and iMSM. Learn more about admissions into the program and explore how your Coursera work can be leveraged if accepted into the program here.",
+        "name": "Strategic Leadership and Management",
+        "tagline": "Leadership and Business Skill for Immediate Impact",
+        "id": "yEVwdp0mEeW7xQ6l-xJMQQ",
+        "slug": "strategic-leadership"
+      },
+      {
+        "courseIds": [
+          "41f7CjlXEeWYbg7p2_3OHQ",
+          "we5nljlYEeWO-Qq6rEZAow",
+          "myQGkjlZEeWJaxK5AT4frw",
+          "QUoNRDlaEeWXuQopUhAqaw",
+          "B07TSjljEeWYbg7p2_3OHQ"
+        ],
+        "description": "In this specialization, you will learn essential leadership skills, including how to inspire and motivate individuals, manage talent, influence without authority, and lead teams. In this specialization, you will not only learn from Michigan faculty. You will also learn directly from exceptional leaders including Jeff Brodsky, Global Head of HR for Morgan Stanley, and John Beilein, previous Head Coach of the University of Michigan Men’s Basketball Team. We will share with you our research on how to lead people and teams effectively, and work with you to apply these insights to your own teams and leadership. In every course, you will have an opportunity to apply new leadership skills by working through a series of practical leadership assignments. In addition, the capstone will enable you to work on live leadership challenges.",
+        "name": "Leading People and Teams",
+        "tagline": "Leading Effectively",
+        "id": "CRdvSkeYEeWK-RJJsrCNzw",
+        "slug": "leading-teams"
+      },
+      {
+        "courseIds": [
+          "Fk0RyfhqEeaQswpW71qb2A",
+          "5g_hAYo4EeWTzg6WBWinhQ",
+          "kzmY_qA-EeWHXAr1OpR7HQ",
+          "oCmtxNsLEemZywrLYJ0jVg",
+          "94jQ-3EnEeWhZxJhllGpHQ"
+        ],
+        "description": "This Specialization is intended for both current and new product managers working in digital who want to apply a portfolio of modern practices to developing their products and teams. Through five courses, you will cover applications of product design, hypothesis-driven development and agile, all at the heart of modern product management.",
+        "name": "Digital Product Management",
+        "tagline": "Implement a modern approach to product management",
+        "id": "braWpVNFEeqwHhLUcpYjUw",
+        "slug": "uva-darden-digital-product-management"
+      },
+      {
+        "courseIds": [
+          "_pGL7RGSEeqq7xJBSPxMaQ",
+          "5JUR33yjEeu3uhKhdnv_7w",
+          "GnpGZ7hEEeuTjg6-_zYGCQ"
+        ],
+        "description": "The current state of the world makes business forecasting even more fundamental to the operation of institutions. In this Specialization we focus on Excel Skills for Business Forecasting in three courses — Time Series Models, Regression Models, and Judgmental Forecasting.\n\nIn the first course on Time Series Models, we will be looking at how your business can utilise time series data sets to understand the different components underlying this data, and then apply the relevant model depending on these components to forecast for your business' needs.\n\nWe then continue in our second course in this specialisation which looks at Regression Models, building causal models for both time series data as well as cross-sectional data. Causal models allow us to develop further business insights and strategy by controlling the inputs to generate the output we desire.\n\nIn the third and final course, we explore the role of Judgmental Forecasting, when more quantitative forecasting methods have limitations, and we need to generate further business insights. We will be exploring some structured methodologies to create judgmental business forecasts and explore how Excel can assist us in these judgments. We will bring all these forecasting methods together in a final case study, giving you the opportunity to generate forecasts, which are the inputs to any organisation's planning.",
+        "name": "Excel Skills for Business Forecasting",
+        "tagline": "Generate Insights with Business Forecasting",
+        "id": "5C7VEXyjEeuJvRIq2L0SHw",
+        "slug": "excel-skills-for-business-forecasting"
+      },
+      {
+        "courseIds": [
+          "eBEnnYkqEeWGBwqGAoUFww",
+          "6AL8FY7BEeW5gxKDBxYMJw",
+          "9zXfqf2IEeSnBSIACi-PoQ",
+          "rIGo9_vxEeq9cw7rg7LOfw"
+        ],
+        "description": "The Think like a CFO Specialization will help you learn the language of finance. You will gain a firm understanding in Accountability, Operational Finance and Corporate Finance.\n\nBy the end of the specialization, you’ll know what questions to ask and how to fit the different pieces together in order to develop a diagnosis and action plan to resolve a company’s financing dilemmas. You will have gain the necessary skills to understand basic concepts and feel comfortable reading, interpreting and discussing financial statements for decision making and you will understand the hey financial issues related to companies, investors, and the interaction between them in the capital markets.\n\nWhen you complete the Specialization, you’ll be able to better understand both business financial problems to make better decisions and your own personal financial decisions",
+        "name": "Think like a CFO",
+        "tagline": "",
+        "id": "zgK_5Q8CEeu-sxLx_g1Pbw",
+        "slug": "thinklikeacfo"
+      },
+      {
+        "courseIds": [
+          "6K8l2CwFEeaU1xK12iolBQ",
+          "KinX8iwGEeaA3A6P4rV07Q",
+          "4RYxEUkuEeahWA4Td3Kvcw",
+          "gni-lkeREeaNmhKFnqHOVQ",
+          "BvEMlUkvEeahWA4Td3Kvcw",
+          "oEsthEeREealuAr4icIOdw"
+        ],
+        "description": "This Specialization covers the fundamentals of strategic financial management, including financial accounting, investments, and corporate finance. You will learn to evaluate major strategic corporate and investment decisions and to understand capital markets and institutions from a financial perspective, and you will develop an integrated framework for value-based financial management and individual financial decision-making.\n\nThe Financial Management Specialization is part of the University of Illinois iMBA Program. Each course in this Specialization also fulfills a portion of the requirements for a University of Illinois course that can earn you college credit.",
+        "name": "Financial Management",
+        "tagline": "Become a Strategic Financial Manager ",
+        "id": "child~YjE9TmhFTmW6J94UybykZA",
+        "slug": "financial-management"
+      },
+      {
+        "courseIds": [
+          "ZgR25LCMEeqKPgqXNrVe4Q",
+          "qtja5LfqEeqSfRIG7Ssz0Q",
+          "KQ-uieofEemEvw7GHLhSDg",
+          "-hMowbBgEeqXiBLxo7TyjQ"
+        ],
+        "description": "Learn product management using the same curriculum as Amazon and Google PMs! Gain insights to impress on your first (or next) product manager (PM) role.\n\nLead instructor Nancy Wang, Director and General Manager of Data Protection Services at Amazon Web Services, and former Rubrik and Google PM leader shares the key business, technical, design, and leadership skills necessary for success at PM roles at the world’s top technology companies. These skills will serve you throughout your career.\n\nLearn the most desired product management skills from 20 product leaders at Amazon, Google/Alphabet, Facebook/Instagram, and Silicon Valley startups. View the full list of our industry leading teaching talent in our course descriptions below!\n\nReady to interview? We dedicate 30% of this Specialization to teaching how to impress during your next interview and role. Learn how to systematically attack each type of product management interview question. Watch two live PM interviews (one Google, one Amazon) with real-time feedback and practice your interview skills with hundreds of real PM interview questions asked by Amazon, Google, Meta, and Microsoft! This Specialization is ACE® approved—when you complete it, you can earn up to 6 college credits.",
+        "name": "Real-World Product Management",
+        "tagline": "Sponsored by AWS",
+        "id": "hEw_Qs0YEeqVlQ7wcdKxgQ",
+        "slug": "real-world-product-management"
+      },
+      {
+        "courseIds": [
+          "kv9x8mYWEeuW-BJwyZjLPQ",
+          "B-J4TSgCEeuZPQ5Q01j8Ow",
+          "QxOgNnNmEeuBTg7vUdMe9w"
+        ],
+        "description": "This Specialization is part of HSE University Master of Finance degree program. Learn more about the admission into the program here and how your Coursera work can be leveraged if accepted into the program.\n\nThe Quantitative Finance Specialization provides fundamentals for quantitative analysis of financial data. Starting from the basic concepts of time value of money and descriptive statistics, you will dive into theory and practice of econometric models on real data. To make it more beneficial for your CV, you will complete the specialization by developing your own financial model.",
+        "name": "Quantitative Finance",
+        "tagline": "Quantitative Finance Specialization",
+        "id": "GL_GEZHtEeuCmhJP_QjiKw",
+        "slug": "quantitative-finance"
+      },
+      {
+        "courseIds": [
+          "7vsRodoREeetQAqJ6u44Wg",
+          "MMNHvdoSEeeCCwo4zlIXRA",
+          "RHsxQtoSEeeHwhJGCo5gVg",
+          "WFanvtoSEeedbRLwgi9a7A"
+        ],
+        "description": "Objective\n\nThis Specialization is intended for finance professional who are seeking to develop skills and understanding of FinTech. Through these four courses, you will cover FinTech foundations and overview, FinTech security and regulation (RegTech), FinTech risk management and FinTech disruptive innovation: implications to society, which will prepare you to become more confident and persuasive in your ability to analyze and make decisions regarding how to react to these changes.\n\nKey Benefits\n\nYou will earn a FinTech specialization certificate offered by the HKUST and Coursera after completing all four courses. You can add to your resume and Linkedin profile which can benefit to your career in finance industry. Also you will gain knowledge and insights in FinTech for your current and future career development in Finance industry.\n\nWho is this Specialization for?\n\nEveryone who is interested in FinTech and wants to learn more is welcome and will benefit from this course, and is useful for finance executives, government officers, entrepreneurs, consumers and investors of FinTech.\n\nTo know more...\n\nFind out more and watch the FinTech specialization promotional video on Youtube.\n\nhttps://youtu.be/MmqNLp4iuZE",
+        "name": "FinTech: Finance Industry Transformation and Regulation",
+        "tagline": "Develop your knowledge and skills in FinTech",
+        "id": "7sEVYtoREeeJmhI8jrj0HA",
+        "slug": "fintech"
+      },
+      {
+        "courseIds": [
+          "8cqMUG6eEea2_hI5YizWBw",
+          "piGPuD-wEeaYxQofsrK9hw",
+          "nPMwDW6eEea2_hI5YizWBw",
+          "cIycAG6eEeaFDg6PrI5UaQ",
+          "S6zpym6eEea2_hI5YizWBw"
+        ],
+        "description": "This Specialization equips individual investors and money managers with the skills required to develop their own trading strategies and test them. When you complete the Specialization, you’ll be ready to apply eight ready-made trading strategies, based on rigorous academic research, that have been shown to be. You’ll also be able to design your own trading strategy, back test it, and measure its performance.",
+        "name": "Trading Strategies in Emerging Markets",
+        "tagline": "Design your own Trading Strategy",
+        "id": "IzHbvT-xEea3lBIuTszunQ",
+        "slug": "trading-strategy"
+      },
+      {
+        "courseIds": [
+          "xQd3R7SxEeWTSA5aXSz6uQ",
+          "SGiLw7UgEeWbLRJn4j8c4Q",
+          "R9bQ2bU2EeWhzw6RmNsYkQ",
+          "bPG4LLU2EeWABgp2r5zOmw",
+          "Um0Rnb2eEeWuCAqiwoZfSw"
+        ],
+        "description": "The Investment Management Specialization teaches professional asset management of securities using portfolio management and behavioral aspects of finance. Specific topics include: an introduction to the basics of finance, how to evaluate risk and expected return, the behavioral aspect of investment strategy, and current trends.",
+        "name": "Financial Markets and Investment Strategy",
+        "tagline": "Manage your Investments Professionally",
+        "id": "Ky5lwrSxEeWMqw61s4RUTw",
+        "slug": "investment-strategy"
+      },
+      {
+        "courseIds": [
+          "2zesAZFiEeaDSw63XnFBtQ",
+          "nUlyPJI_Eea27BJAJAr7dQ",
+          "bKp6XUogEee4pw7hxA2o1A",
+          "tMo47kogEeeMtBKozo_2UA",
+          "4dnapUocEeeMtBKozo_2UA"
+        ],
+        "description": "The Financial Reporting Specialization focuses on the role of financial accounting principles and processes in creating and reporting an organization’s financial statements. Learners who complete this specialization will be able to (1) use financial accounting principles to create and/or process an organization’s financial statements and (2) analyze financial statements to assess an organization’s financial position.",
+        "name": "Financial Reporting",
+        "tagline": "Financial Reporting & Financial Statement Analysis",
+        "id": "3X44B3eyEeeSLBIUSGvCBg",
+        "slug": "financial-reporting"
+      }
+    ]
+  }
+}
