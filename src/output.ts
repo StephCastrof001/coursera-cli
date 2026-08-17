@@ -6,6 +6,7 @@
  */
 import { emit as emitBlock } from "./cli/agent/json-mode.ts";
 import { parseGlobalFlags, type GlobalFlags } from "./cli/foundation/global-flags.ts";
+import { symbols, theme } from "./ui/theme.ts";
 
 export interface Flags extends GlobalFlags {
   values: Record<string, string>;
@@ -75,17 +76,39 @@ export function emit(flags: Flags, data: unknown, renderHuman: () => string): vo
   else emitBlock(data, { json: true });
 }
 
-/** Fixed-width table. No dependencies: this is a CLI, not a dashboard. */
-export function table(rows: Array<Record<string, string>>, columns: string[]): string {
-  if (rows.length === 0) return "(no results)";
+/** Paints one cell's text. Applied after padding — see `table`. */
+export type Colorizer = (value: string) => string;
+
+/**
+ * Fixed-width table. No dependencies: this is a CLI, not a dashboard.
+ *
+ * Colour is applied *after* padding and truncation, never before. ANSI escapes
+ * are characters as far as `padEnd` and `slice` are concerned, so colouring
+ * first silently shreds every column boundary. picocolors already no-ops when
+ * stdout is not a TTY, so piped output stays plain without a flag.
+ */
+export function table(
+  rows: Array<Record<string, string>>,
+  columns: string[],
+  colors: Record<string, Colorizer> = {},
+): string {
+  if (rows.length === 0) return theme.dim("(no results)");
   const widths = columns.map((col) =>
     Math.min(60, Math.max(col.length, ...rows.map((row) => (row[col] ?? "").length))),
   );
-  const line = (cells: string[]): string =>
-    cells.map((cell, i) => cell.padEnd(widths[i] as number).slice(0, widths[i])).join("  ");
-  return [
-    line(columns),
-    line(widths.map((w) => "-".repeat(w))),
-    ...rows.map((row) => line(columns.map((col) => row[col] ?? ""))),
-  ].join("\n");
+  const fit = (cell: string, i: number): string =>
+    cell.padEnd(widths[i] as number).slice(0, widths[i]);
+
+  const header = columns.map((col, i) => theme.heading(fit(col, i))).join("  ");
+  const rule = theme.dim(widths.map((w) => symbols.rule.repeat(w)).join("  "));
+  const body = rows.map((row) =>
+    columns
+      .map((col, i) => {
+        const padded = fit(row[col] ?? "", i);
+        const paint = colors[col];
+        return paint ? paint(padded) : padded;
+      })
+      .join("  "),
+  );
+  return [header, rule, ...body].join("\n");
 }

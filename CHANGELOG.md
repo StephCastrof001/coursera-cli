@@ -3,6 +3,31 @@
 All notable changes to this project. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/);
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- A visual layer, in `src/ui/`. Bare `coursera` in a terminal now opens with the wordmark
+  and a dashboard — session state and age, courses enrolled, courses cached locally —
+  before the command list.
+- Colour throughout human output: course slugs in brand blue, levels colour-coded by
+  difficulty, dimmed table rules, highlighted commands in `--help`, red errors.
+
+### Changed
+- The repo moved out of `klipso_reverse/Cli-propios/` to the top level. It has its own git
+  remote, and the directory it sat in is `.gitignore`d by the parent repo, so the nesting
+  bought nothing and cost three levels of path on every invocation. The README now
+  documents a `coursera` launcher so the path is never typed at all.
+- Brand colour is `#0056D2`, read off coursera.org rather than guessed: its `theme-color`
+  meta tag, its primary button, and the `fill` of the header logo SVG all agree. The
+  wordmark's fade derives its light end from that value, so no invented hex is in the
+  palette. The brand's `#002457` secondary is recorded but unused — on a dark terminal it
+  sits near 1.5:1 contrast and disappears.
+
+### Notes
+- Colour never reaches `--json`: structured output goes through the cligentic `json-mode`
+  block, and picocolors already no-ops when stdout is not a TTY or `NO_COLOR` is set. Both
+  paths are covered by the smoke checks.
+
 ## [0.2.0] — 2026-08-17
 
 ### Added

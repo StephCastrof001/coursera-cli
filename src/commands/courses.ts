@@ -3,6 +3,7 @@ import { parseWorkloadHours } from "../services/library.ts";
 import { filterCourses, listCourses, type CourseFilters } from "../services/memberships.ts";
 import { collectPartnerIds, fetchPartners, findPartner } from "../services/partners.ts";
 import { requireSession } from "../session.ts";
+import { theme } from "../ui/theme.ts";
 import type { Client, } from "../http.ts";
 import type { Course, CourseLevel } from "../types.ts";
 
@@ -49,11 +50,12 @@ export async function run(flags: Flags): Promise<void> {
           name: course.name,
         })),
         ["slug", "level", "hours", "name"],
+        { slug: theme.brand, level: theme.level, hours: theme.dim },
       ),
       "",
       active.length > 0
-        ? `${matches.length} of ${all.length} courses match ${active.map(([k, v]) => `${k}=${v}`).join(" ")}`
-        : `${all.length} courses`,
+        ? `${theme.accent(String(matches.length))} of ${all.length} courses match ${theme.dim(active.map(([k, v]) => `${k}=${v}`).join(" "))}`
+        : `${theme.accent(String(all.length))} courses`,
     ].join("\n"),
   );
 }
