@@ -42,6 +42,7 @@ const HELP = [
   `${theme.heading("coursera")} ${theme.dim(VERSION)} ${theme.dim("—")} your Coursera courses from the terminal`,
   "",
   usage("session", "session state: alive or dead, and how old"),
+  usage("session set <cauth>", "store a CAUTH cookie so it survives the shell"),
   usage("doctor", "diagnose session, routes and paths"),
   usage("courses [filters]", "your courses"),
   usage("map [--detail]", "branches you studied and half-finished specializations"),

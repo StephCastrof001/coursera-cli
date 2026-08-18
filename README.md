@@ -144,7 +144,8 @@ coursera courses --university duke
 ## Library map
 
 `coursera map` cross-references your library against Coursera's own taxonomy. The output
-below is an illustration — the figures are made up, not anyone's real library:
+below is an illustration built from real Coursera specializations, with invented
+enrolment figures — it is not anyone's actual library:
 
 ```
 42 courses in your library
@@ -154,8 +155,8 @@ computer-science                  14  ██████████████
 business                           9  ██████████                 95 h
 
 SPECIALIZATIONS (4)
-  ✓ Foundations of Data Science                      4/4  complete
-  ○ Cloud Architecture                               2/5  3 missing
+  ✓ Machine Learning (DeepLearning.AI, Stanford)     3/3  complete
+  ○ Deep Learning (DeepLearning.AI)                  2/5  3 missing
 ```
 
 Two caveats it prints itself, because both are real: a course filed under two branches
