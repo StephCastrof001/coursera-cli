@@ -8,6 +8,7 @@
  ██████  █████   █████  ██   ██ ███████ ███████ ██   ██ ██   ██
 ```
 
+[![npm](https://img.shields.io/npm/v/coursera-cli?color=0056D2&logo=npm&logoColor=white)](https://www.npmjs.com/package/coursera-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-0056D2.svg)](LICENSE)
 [![Bun](https://img.shields.io/badge/Bun-1.3-0056D2.svg?logo=bun&logoColor=white)](https://bun.sh)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-0056D2.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -29,35 +30,27 @@ coursera transcript <slug>            pull the content as text
 
 ## Install
 
-Requires [Bun](https://bun.sh).
+Requires [Bun](https://bun.sh) — the CLI is TypeScript and Bun runs it directly, with no
+build step.
+
+```bash
+bun add -g coursera-cli     # or: npm install -g coursera-cli
+```
+
+That puts a `coursera` command on your PATH. It works even when Bun itself is not on
+PATH: the installed command is a small Node launcher that goes looking for Bun, and says
+so plainly if it cannot find it.
+
+### From source
 
 ```bash
 git clone https://github.com/StephCastrof001/coursera-cli.git
 cd coursera-cli
 bun install
+bun link                    # optional: same global `coursera` command
 ```
 
-### The `coursera` command
-
-Every example below assumes `coursera` runs from anywhere. Bun does not always put
-itself on PATH, so the launcher calls it by absolute path.
-
-**Windows** — drop `coursera.cmd` in a directory already on your PATH
-(`%USERPROFILE%\.local\bin` works):
-
-```bat
-@echo off
-"%USERPROFILE%\.bun\bin\bun.exe" run "%USERPROFILE%\coursera-cli\index.ts" %*
-```
-
-**macOS, Linux, Git Bash** — same idea, as `coursera` (then `chmod +x`):
-
-```sh
-#!/bin/sh
-exec "$HOME/.bun/bin/bun" run "$HOME/coursera-cli/index.ts" "$@"
-```
-
-Without a launcher, replace `coursera` with `bun run index.ts` from the repo root.
+Without `bun link`, run it as `bun run index.ts <command>` from the repo root.
 
 ## Session
 
@@ -97,7 +90,7 @@ coursera doctor    # session + routes + paths, all at once
 ```
 
 ```
-[OK]   version: coursera-cli 0.2.0 on win32, bun 1.3.11
+[OK]   version: coursera-cli 0.3.1 on win32, bun 1.3.11
 [OK]   session-present: found via legacy, 108.2 h old
 [OK]   session-alive: 215 courses visible
 [OK]   endpoints: 10 routes declared, domains.v1 alive
