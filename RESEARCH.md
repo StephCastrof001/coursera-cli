@@ -2,8 +2,8 @@
 
 Live recon: 2026-08-12, extended 2026-08-16 and 2026-08-17.
 Verified against a real account with active enrollments. Control course:
-`machine-learning-foundations-for-product-managers` (Duke), courseId
-`Bob8HYsxEeuqDwqw9ez0Fw`.
+a course the test account is enrolled in, kept out of this public record.
+The recon was run against a real account with active enrollments.
 
 ---
 

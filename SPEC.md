@@ -219,7 +219,7 @@ by real runs against the API, which is where they actually break.
 
 | Criterion | Result |
 |---|---|
-| Full pagination | **215/215 courses**. `fundamentals-machine-learning-in-finance` sits at row 131: invisible under the 100-row truncation |
+| Full pagination | **215/215 courses**. A course at row 131 is invisible under the 100-row truncation, and comes back with full pagination |
 | Real download | **8 of 8 items, 0 skipped, 0 empty files**, 15.9 KB. Mixed: 4 Spanish lectures + 4 readings |
 | MCP end to end | **6 tools listed and answering** against a real MCP client: `list_courses(level=ADVANCED)` → 7 of 215, `get_library_map` → 9 branches, 57 institutions, 15 specializations |
 | Diagnosis | `doctor` → 5/5 checks passed, session 108.2 h old and alive |

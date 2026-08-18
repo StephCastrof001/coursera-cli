@@ -20,12 +20,12 @@ The content: name, syllabus, materials. It arrives under `linked` as `courses.v1
 
 ## Slug
 
-The readable identifier in the URL: `machine-learning-foundations-for-product-managers`.
-It is what a person types and what every command accepts.
+The readable identifier in the URL, e.g. `data-structures-algorithms`. It is what a person
+types and what every command accepts.
 
 ## courseId
 
-The internal identifier, a hash: `Bob8HYsxEeuqDwqw9ez0Fw`. It is what the API demands. The
+The internal identifier, an opaque hash like `AbCd12EfGhIj...`. It is what the API demands. The
 user never types it: `courses --search` translates slug to id.
 
 ## Branch and sub-branch
@@ -52,7 +52,7 @@ An ordered sequence of courses leading to a joint certificate. It is where real 
 lives: since Coursera does not rank difficulty reliably, the order of courses inside a
 specialization is the closest thing to a learning path.
 
-The reference account belongs to **15 specializations**.
+The reference account is enrolled in several specializations.
 
 ## Institution and instructor
 
