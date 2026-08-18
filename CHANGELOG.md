@@ -3,6 +3,17 @@
 All notable changes to this project. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/);
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] — 2026-08-18
+
+### Fixed
+- `coursera` installed from npm died with `exec: bun: not found` on any machine
+  where Bun is not on PATH — a message naming neither Bun nor this package. `bin` now
+  points at a small Node launcher: everyone installing from npm has Node by definition,
+  so it always runs, finds Bun in the places installers use even when PATH does not
+  advertise it, and prints install instructions when Bun is genuinely absent.
+- `coursera --version` reported 0.2.0 while npm served 0.3.0. The version was hardcoded
+  in `constants.ts`; it is now read from `package.json`, so the two cannot drift.
+
 ## [0.3.0] — 2026-08-18
 
 ### Added

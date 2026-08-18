@@ -1,6 +1,6 @@
 {
   "name": "coursera-cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Your Coursera courses from the terminal: CLI + MCP server that pulls transcripts and readings from the courses you are enrolled in",
   "license": "MIT",
   "author": "Stephanie Castro (https://github.com/StephCastrof001)",
@@ -14,9 +14,10 @@
   },
   "type": "module",
   "bin": {
-    "coursera": "index.ts"
+    "coursera": "bin/coursera.mjs"
   },
   "files": [
+    "bin",
     "index.ts",
     "src",
     "endpoints.json",

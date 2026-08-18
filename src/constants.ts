@@ -1,8 +1,10 @@
 import os from "node:os";
 import path from "node:path";
+import pkg from "../package.json" with { type: "json" };
 import { getAppPaths } from "./cli/foundation/xdg-paths.ts";
 
-export const VERSION = "0.2.0";
+/** Read from package.json so `--version` can never drift from what npm serves. */
+export const VERSION: string = pkg.version;
 export const APP_NAME = "coursera-cli";
 
 export const BASE_URL = "https://www.coursera.org";
