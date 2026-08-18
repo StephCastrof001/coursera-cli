@@ -1,5 +1,19 @@
 # coursera-cli
 
+```
+ ██████  █████  ██   ██ ██████  ███████ ███████ ██████   █████
+██      ██   ██ ██   ██ ██   ██ ██      ██      ██   ██ ██   ██
+██      ██   ██ ██   ██ ██████  ███████ █████   ██████  ███████
+██      ██   ██ ██   ██ ██   ██      ██ ██      ██   ██ ██   ██
+ ██████  █████   █████  ██   ██ ███████ ███████ ██   ██ ██   ██
+```
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-0056D2.svg)](LICENSE)
+[![Bun](https://img.shields.io/badge/Bun-1.3-0056D2.svg?logo=bun&logoColor=white)](https://bun.sh)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-0056D2.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tests](https://img.shields.io/badge/tests-87%20passing-0056D2.svg)](#tests)
+[![MCP](https://img.shields.io/badge/MCP-6%20tools-0056D2.svg)](https://modelcontextprotocol.io/)
+
 Your own Coursera courses, from the terminal — and from Claude Code, over MCP.
 
 Downloads the **transcripts** and **readings** of courses you are enrolled in, through
@@ -112,6 +126,7 @@ coursera courses --university duke
 | `--limit <n>` | all | Stop after n items |
 | `--lang es,en` | `es,es-LA,en` | Subtitle preference order |
 | `--quiet` | off | No progress output |
+| `--color` / `--no-color` | auto | Force colour on or off. Auto-detects TTY, and honours `NO_COLOR` and `FORCE_COLOR` |
 
 ## Library map
 
@@ -133,11 +148,15 @@ Two caveats it prints itself, because both are real: a course filed under two br
 counts in both, and hours come from Coursera's free-text workload field, which 78 of 215
 courses do not state readably.
 
-## MCP for Claude Code
+## MCP for Claude
 
 Register the server with the **absolute path to the Bun binary** — the process that
 launches MCP servers does not inherit your PATH, so `"command": "bun"` fails with
-"Failed to connect":
+"Failed to connect". Find yours with `which bun` (`where.exe bun` on Windows).
+
+### Claude Code
+
+In `.mcp.json` at your project root, or in `~/.claude.json` to have it everywhere:
 
 ```json
 {
@@ -149,6 +168,24 @@ launches MCP servers does not inherit your PATH, so `"command": "bun"` fails wit
   }
 }
 ```
+
+### Claude Desktop
+
+Same shape, in the app's own config file — `%APPDATA%\Claude\claude_desktop_config.json`
+on Windows, `~/Library/Application Support/Claude/claude_desktop_config.json` on macOS:
+
+```json
+{
+  "mcpServers": {
+    "coursera": {
+      "command": "/Users/you/.bun/bin/bun",
+      "args": ["/Users/you/coursera-cli/src/mcp/index.ts"]
+    }
+  }
+}
+```
+
+### Tools
 
 | Tool | Returns |
 |---|---|
@@ -179,6 +216,48 @@ believing it is empty.
 This CLI does not filter. It asks the video and reading microservices about every item
 directly and keeps whatever answers.
 
+## Architecture
+
+Four layers, one direction of dependency: commands and MCP call services, services call
+`http.ts`, `http.ts` calls the network. Commands never build URLs and services never print —
+that is what lets the CLI and the MCP server share every line of business logic.
+
+```
+index.ts             → CLI dispatcher (one file per command, lazily imported)
+src/
+  constants.ts       → base URL, user agent, rate limit, paths
+  config.ts          → session loading: env var, own store, legacy Python store
+  session.ts         → bridge between the stored session and the HTTP client
+  http.ts            → typed client; 200-with-HTML means a dead route, 401 a dead session
+  errors.ts          → error vocabulary: every failure has a code and a hint
+  output.ts          → flag parsing, table rendering, human vs JSON mode
+  endpoints.json     → the routes. A deprecation is fixed here, not in the code
+  services/          → business logic, shared by CLI and MCP
+    memberships.ts   → your enrolled courses, paginated and filtered
+    courses.ts       → the syllabus tree, rebuilt from flat linked lists
+    transcripts.ts   → probes video and reading microservices per item
+    download.ts      → writes files, records where each course landed
+    library.ts       → taxonomy cross-reference behind `coursera map`
+    partners.ts      → resolves institution names to ids
+  commands/          → one file per CLI command
+  mcp/index.ts       → MCP server, 6 tools
+  ui/
+    theme.ts         → colour tokens, truecolor detection
+    banner.ts        → wordmark and status dashboard
+  cli/               → cligentic blocks: json-mode, error-map, xdg-paths, doctor
+test/                → 87 tests against responses captured live from the API
+```
+
+## Tech Stack
+
+- [Bun](https://bun.sh) — runtime. TypeScript runs directly, no build step
+- [TypeScript](https://www.typescriptlang.org/) — strict mode, no `any`
+- [MCP SDK](https://modelcontextprotocol.io/) — the Claude integration, 6 tools
+- [picocolors](https://github.com/alexeyraspopov/picocolors) — the only runtime dependency
+  besides the MCP SDK. Truecolor is layered on top of it in `ui/theme.ts`
+- [cligentic](https://cligentic.railly.dev/) — copy-paste blocks for agent-facing CLI
+  concerns: structured output, typed errors, XDG paths, health checks
+
 ## Docs
 
 | File | Contents |
@@ -192,7 +271,7 @@ directly and keeps whatever answers.
 ## Tests
 
 ```bash
-bun test          # 76 tests against responses captured live from the API
+bun test          # 87 tests against responses captured live from the API
 bun run typecheck
 ```
 
