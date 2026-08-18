@@ -90,9 +90,9 @@ coursera doctor    # session + routes + paths, all at once
 ```
 
 ```
-[OK]   version: coursera-cli 0.3.1 on win32, bun 1.3.11
-[OK]   session-present: found via legacy, 108.2 h old
-[OK]   session-alive: 215 courses visible
+[OK]   version: coursera-cli 0.3.2 on win32, bun 1.3.11
+[OK]   session-present: found via cli, 12.4 h old
+[OK]   session-alive: 42 courses visible
 [OK]   endpoints: 10 routes declared, domains.v1 alive
 [OK]   paths: state C:\Users\you\AppData\Local\coursera-cli
 
@@ -143,23 +143,24 @@ coursera courses --university duke
 
 ## Library map
 
-`coursera map` cross-references your library against Coursera's own taxonomy:
+`coursera map` cross-references your library against Coursera's own taxonomy. The output
+below is an illustration — the figures are made up, not anyone's real library:
 
 ```
-215 courses in your library
-levels: beginner 99   intermediate 66   advanced 7   undeclared 43
-business                         158  ████████████████████████ 1366 h
-data-science                      90  ██████████████            735 h
-computer-science                  35  █████                     255 h
+42 courses in your library
+levels: beginner 18   intermediate 15   advanced 3   undeclared 6
+data-science                      21  ████████████████████████  310 h
+computer-science                  14  ████████████████          180 h
+business                           9  ██████████                 95 h
 
-SPECIALIZATIONS (15)
-  ✓ AI Product Management                            3/3  complete
-  ○ Digital Product Management                       3/5  2 missing
+SPECIALIZATIONS (4)
+  ✓ Foundations of Data Science                      4/4  complete
+  ○ Cloud Architecture                               2/5  3 missing
 ```
 
 Two caveats it prints itself, because both are real: a course filed under two branches
-counts in both, and hours come from Coursera's free-text workload field, which 78 of 215
-courses do not state readably.
+counts in both, and hours come from Coursera's free-text workload field, which a good
+third of courses do not state readably.
 
 ## MCP for Claude
 
