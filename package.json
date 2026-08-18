@@ -14,7 +14,7 @@
   },
   "type": "module",
   "bin": {
-    "coursera": "./index.ts"
+    "coursera": "index.ts"
   },
   "files": [
     "index.ts",
