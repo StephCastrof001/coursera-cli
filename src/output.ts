@@ -23,6 +23,10 @@ const KNOWN_BOOLEANS = new Set([
   "detail",
   "force",
   "help",
+  // picocolors reads these straight off argv. Declaring them here only stops
+  // the parser from treating them as flags that swallow the next token.
+  "color",
+  "no-color",
 ]);
 
 /**

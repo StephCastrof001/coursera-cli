@@ -23,6 +23,15 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   palette. The brand's `#002457` secondary is recorded but unused — on a dark terminal it
   sits near 1.5:1 contrast and disappears.
 
+### Fixed
+- 24-bit colour is now detected on Windows Terminal, VS Code, iTerm2, WezTerm, Hyper,
+  Ghostty and Tabby, not just on terminals that set `COLORTERM`. That variable is a Unix
+  convention Windows Terminal does not follow, so the brand blue was quietly degrading to
+  plain ANSI blue on the default terminal of this project's own author.
+- `--color` and `--no-color` are declared as boolean flags, so the argument parser stops
+  treating them as flags that swallow the following token. picocolors already honoured
+  both, along with `NO_COLOR` and `FORCE_COLOR`.
+
 ### Notes
 - Colour never reaches `--json`: structured output goes through the cligentic `json-mode`
   block, and picocolors already no-ops when stdout is not a TTY or `NO_COLOR` is set. Both

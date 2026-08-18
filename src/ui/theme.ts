@@ -34,12 +34,38 @@ export const BRAND_DEEP: Rgb = [0x00, 0x24, 0x57];
 const WHITE: Rgb = [0xff, 0xff, 0xff];
 
 /**
- * Terminals announce 24-bit support through COLORTERM. Windows Terminal, iTerm2
- * and every modern Linux emulator set it; the old conhost does not.
+ * Does this terminal do 24-bit colour?
+ *
+ * COLORTERM is the usual answer, but it is a Unix convention and Windows
+ * Terminal does not set it — despite rendering truecolor since 2019. Trusting
+ * COLORTERM alone silently downgrades the brand blue to plain ANSI blue on what
+ * is the default terminal of this project's own author. So each emulator that
+ * is known to support it is also asked by its own marker.
  */
-const TRUECOLOR =
-  pc.isColorSupported &&
-  (process.env.COLORTERM === "truecolor" || process.env.COLORTERM === "24bit");
+export function detectTruecolor(
+  env: NodeJS.ProcessEnv = process.env,
+  colorSupported: boolean = pc.isColorSupported,
+): boolean {
+  if (!colorSupported) return false;
+
+  const colorterm = env.COLORTERM?.toLowerCase() ?? "";
+  if (colorterm === "truecolor" || colorterm === "24bit") return true;
+
+  // Windows Terminal sets WT_SESSION and nothing else useful.
+  if (env.WT_SESSION) return true;
+
+  // VS Code's integrated terminal, iTerm2, Hyper, WezTerm, Ghostty, Tabby.
+  const program = env.TERM_PROGRAM?.toLowerCase() ?? "";
+  if (
+    ["vscode", "iterm.app", "hyper", "wezterm", "ghostty", "tabby"].includes(program)
+  ) {
+    return true;
+  }
+
+  return /24bit|truecolor|direct/.test(env.TERM?.toLowerCase() ?? "");
+}
+
+const TRUECOLOR = detectTruecolor();
 
 function rgb([r, g, b]: Rgb, text: string): string {
   if (!pc.isColorSupported) return text;
