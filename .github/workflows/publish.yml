@@ -5,6 +5,12 @@
 # registered for this package. That registration is per-package and cannot be
 # created before the package exists, so the very first release is published by
 # hand — this workflow takes over from the second one on.
+# BOOTSTRAP DEBT: publishConfig.provenance was removed from package.json so
+# the first release could be published by hand — npm hard-errors with
+# "provider: null" when provenance is demanded outside CI. Once 0.3.0 is on the
+# registry and the trusted publisher is registered, every release comes through
+# this workflow, so put "provenance": true back under publishConfig. It then
+# blocks an unsigned publish from a laptop instead of blocking the bootstrap.
 name: Publish
 
 on:
