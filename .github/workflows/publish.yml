@@ -7,10 +7,15 @@
 # hand — this workflow takes over from the second one on.
 # BOOTSTRAP DEBT: publishConfig.provenance was removed from package.json so
 # the first release could be published by hand — npm hard-errors with
-# "provider: null" when provenance is demanded outside CI. Once 0.3.0 is on the
-# registry and the trusted publisher is registered, every release comes through
-# this workflow, so put "provenance": true back under publishConfig. It then
-# blocks an unsigned publish from a laptop instead of blocking the bootstrap.
+# "provider: null" when provenance is demanded outside CI. That leaves a window
+# where a publish from a laptop succeeds unsigned.
+#
+# Close it at the registry, not in this file. Once the package exists and the
+# trusted publisher is registered, npmjs.com exposes Settings -> Publishing
+# access with "Require trusted publishing" and "Disallow tokens". Those are
+# enforced by npm itself, so they hold even if package.json is edited, which a
+# publishConfig field never could. Turn both on, then restore
+# "provenance": true under publishConfig as a second layer.
 name: Publish
 
 on:
