@@ -1,18 +1,51 @@
 {
   "name": "coursera-cli",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Your Coursera courses from the terminal: CLI + MCP server that pulls transcripts and readings from the courses you are enrolled in",
   "license": "MIT",
+  "author": "Stephanie Castro (https://github.com/StephCastrof001)",
+  "homepage": "https://github.com/StephCastrof001/coursera-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StephCastrof001/coursera-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/StephCastrof001/coursera-cli/issues"
+  },
   "type": "module",
   "bin": {
     "coursera": "./index.ts"
+  },
+  "files": [
+    "index.ts",
+    "src",
+    "endpoints.json",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "bun": ">=1.0.0"
   },
   "scripts": {
     "mcp": "bun run src/mcp/index.ts",
     "test": "bun test",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": ["coursera", "cli", "mcp", "transcripts", "bun"],
+  "keywords": [
+    "coursera",
+    "cli",
+    "mcp",
+    "transcripts",
+    "subtitles",
+    "model-context-protocol",
+    "claude",
+    "bun"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "picocolors": "^1.1.1"

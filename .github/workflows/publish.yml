@@ -1,0 +1,61 @@
+# Publishes to npm on a version tag, with no token anywhere.
+#
+# Authentication is npm trusted publishing: GitHub mints a short-lived OIDC
+# token at publish time and npm checks it against the trusted publisher
+# registered for this package. That registration is per-package and cannot be
+# created before the package exists, so the very first release is published by
+# hand — this workflow takes over from the second one on.
+name: Publish
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  # Mints the OIDC token. Without this the publish fails with a misleading
+  # "Not Found" rather than an auth error.
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Test
+        run: bun test
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          # Required: it writes the .npmrc that points at the registry. The
+          # OIDC handshake does not happen without it.
+          registry-url: "https://registry.npmjs.org"
+
+      # Trusted publishing needs npm >= 11.5.1.
+      - name: Use an npm new enough for trusted publishing
+        run: npm install -g npm@latest
+
+      - name: Verify the tag matches package.json
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pkg="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$pkg" ]; then
+            echo "tag $tag does not match package.json $pkg" >&2
+            exit 1
+          fi
+
+      - name: Publish
+        run: npm publish --provenance --access public

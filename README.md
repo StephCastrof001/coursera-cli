@@ -65,11 +65,31 @@ The CLI needs your account's `CAUTH` cookie. It looks in three places, in order:
 
 1. The `COURSERA_CAUTH` environment variable
 2. Its own store, under the platform config directory
-3. The store written by the Python recon repo (`~/.config/coursera_recon/session.json`)
+3. A store left by an earlier capture (`~/.config/coursera_recon/session.json`)
 
-If you have none, capture one with `capture_session.py` from the `coursera_recon` repo: it
-opens a visible Chromium, you log in by hand, and it saves the cookie. **Logging in is not
-automated** — typing credentials from a script is what triggers the CAPTCHA.
+### Getting the cookie
+
+**Logging in is not automated.** Typing credentials from a script is what triggers the
+CAPTCHA, so the cookie is copied by hand — once. It lasts days, not hours: the longest
+measured lifetime so far is 126 hours.
+
+1. Log in to [coursera.org](https://www.coursera.org) in your browser
+2. Open DevTools (`F12`) → **Application** tab on Chrome, **Storage** on Firefox
+3. **Cookies** → `https://www.coursera.org` → find the row named `CAUTH`
+4. Copy its **Value** — a long opaque string
+
+Then hand it to the CLI:
+
+```bash
+# macOS, Linux, Git Bash
+export COURSERA_CAUTH="paste-the-value-here"
+
+# PowerShell
+$env:COURSERA_CAUTH = "paste-the-value-here"
+```
+
+Make it permanent by adding that line to your shell profile, or keep it in the session
+store. Either way, `coursera session` tells you whether it worked:
 
 ```bash
 coursera session   # is it alive, where did it come from, how old is it

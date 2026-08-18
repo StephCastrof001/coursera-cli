@@ -3,9 +3,16 @@
 All notable changes to this project. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/);
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.3.0] — 2026-08-18
 
 ### Added
+- Packaged for npm as `coursera-cli`: a `files` allowlist trims the tarball from the
+  whole working tree to 43 kB, and `repository`, `homepage`, `bugs`, `author` and
+  `engines` are declared. `engines.bun` is the honest one — the bin is TypeScript behind
+  a `#!/usr/bin/env bun` shebang, so Bun is a requirement, not a preference.
+- A publish workflow that carries no token. GitHub mints a short-lived OIDC token and npm
+  checks it against the package's trusted publisher, so nothing long-lived is stored in
+  the repo. It also refuses to publish when the tag and `package.json` disagree.
 - A visual layer, in `src/ui/`. Bare `coursera` in a terminal now opens with the wordmark
   and a dashboard — session state and age, courses enrolled, courses cached locally —
   before the command list.
@@ -24,6 +31,10 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   sits near 1.5:1 contrast and disappears.
 
 ### Fixed
+- The README told readers to capture their cookie with `capture_session.py` from a
+  `coursera_recon` repo that was never published — an instruction nobody but the author
+  could follow. It now walks through reading `CAUTH` out of the browser's own devtools,
+  which needs no second repository and no Python.
 - 24-bit colour is now detected on Windows Terminal, VS Code, iTerm2, WezTerm, Hyper,
   Ghostty and Tabby, not just on terminals that set `COLORTERM`. That variable is a Unix
   convention Windows Terminal does not follow, so the brand blue was quietly degrading to
